@@ -1,7 +1,12 @@
+import Todo from "./Todo";
+
 const Home = () => {
   return (
     <>
-      <h1>Home Component</h1>
+      <h1>Home Component 1</h1>
+      <div>
+        <Todo />
+      </div>
     </>
   );
 };
