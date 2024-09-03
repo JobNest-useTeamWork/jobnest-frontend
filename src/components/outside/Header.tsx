@@ -3,9 +3,9 @@ import logo from "../../assets/logo.png";
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center h-[100px]">
+    <header className="flex justify-between items-center h-[70px]">
       <div>
-        <img className="w-[164px]" src={logo} alt="JonNest-Logo" />
+        <img className="h-[30px]" src={logo} alt="JonNest-Logo" />
       </div>
       <div className="flex justify-between items-center gap-[2rem]">
         <div className="flex justify-between items-center gap-[1.5rem]">
