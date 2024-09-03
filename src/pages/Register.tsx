@@ -1,7 +1,13 @@
+import Button from "../components/Register/Button";
+import SearchForm from "../components/Register/SearchForm";
+import Title from "../components/Register/Title";
+
 const Register = () => {
   return (
     <>
-      <h1>Register Component</h1>
+      <Title />
+      <Button className='w-[130px] h-[42px]'>열람내역</Button>
+      <SearchForm />
     </>
   );
 };
