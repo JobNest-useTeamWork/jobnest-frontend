@@ -13,7 +13,7 @@ const Checkbox = ({ className, children, ...rest }: CheckboxType) => {
       <input
         id={uid}
         className={twMerge(
-          "appearance-none w-4 h-4 border border-[#636363] rounded bg-[url('/check.svg')] bg-no-repeat bg-center checked:bg-[url('/check_blue.svg')]",
+          "appearance-none w-4 h-4 border border-[#636363] rounded bg-[url('/check.svg')] bg-no-repeat bg-center checked:bg-[url('/check_blue.svg')] shrink-0",
           className
         )}
         {...rest}

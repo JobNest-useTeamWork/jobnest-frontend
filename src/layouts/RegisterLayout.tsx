@@ -4,13 +4,16 @@ import Title from "../components/Register/Title";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
+  isOpenDetail: boolean;
 }
 
-const RegisterLayout = ({ children }: RegisterLayoutType) => {
+const RegisterLayout = ({ children, isOpenDetail }: RegisterLayoutType) => {
   return (
     <div className='flex flex-col w-full h-full'>
       <Title />
-      <Button className='w-[130px] h-[42px]'>열람내역</Button>
+      {!isOpenDetail && (
+        <Button className='w-[130px] h-[42px]'>열람내역</Button>
+      )}
       <SearchForm />
       {children}
     </div>

@@ -21,7 +21,7 @@ const RegisterList = () => {
           {/* 임시 data */}
           <div className='flex items-center gap-6'>
             <RegisterCircle text='등기' />
-            <span className='font-noto-sans-kr text-[#6f6f6f]'>
+            <span className='font-noto-sans-kr text-[#6f6f6f] line-clamp-1'>
               서울특별시 서초구 강남대로34길 66-4 [양재동 8-26]
             </span>
           </div>
