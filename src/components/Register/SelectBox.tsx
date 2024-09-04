@@ -1,3 +1,9 @@
+interface SelectboxType extends React.ComponentPropsWithoutRef<"select"> {
+  register: {
+    name: string;
+  };
+}
+
 const REGISTER_SELECTBOX_DATA = [
   {
     id: 1,
@@ -13,9 +19,13 @@ const REGISTER_SELECTBOX_DATA = [
   },
 ];
 
-const SelectBox = () => {
+const SelectBox = ({ register, ...rest }: SelectboxType) => {
   return (
-    <select className='font-suit w-28 h-full border border-[#cccccc]'>
+    <select
+      className='font-suit w-28 h-full border border-[#cccccc]'
+      {...register}
+      {...rest}
+    >
       {REGISTER_SELECTBOX_DATA.map((option) => (
         <option key={option.id}>{option.name}</option>
       ))}

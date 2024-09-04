@@ -1,12 +1,19 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithRef } from "react";
 
-interface InputType extends ComponentPropsWithoutRef<"input"> {
+interface InputType extends ComponentPropsWithRef<"input"> {
   type: "text";
+  register: {
+    name: string;
+  };
 }
 
-const Input = ({ ...rest }: InputType) => {
+const Input = ({ register, ...rest }: InputType) => {
   return (
-    <input className='w-full h-full px-4 border border-[#cccccc]' {...rest} />
+    <input
+      className='w-full h-full px-4 border border-[#cccccc]'
+      {...register}
+      {...rest}
+    />
   );
 };
 export default Input;
