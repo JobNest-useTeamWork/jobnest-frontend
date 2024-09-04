@@ -1,6 +1,6 @@
 const Title = () => {
   return (
-    <div className='flex items-end gap-8'>
+    <div className='flex items-end gap-8 mb-[100px]'>
       <h1 className='font-suit text-[40px] text-[#151515] font-extrabold leading-[49.92px] tracking-[-0.01em] shrink-0'>
         등기/대장 열람
       </h1>
