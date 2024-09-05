@@ -2,8 +2,13 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 import { twMerge } from "tailwind-merge";
 import RegisterListContent from "./RegisterListContent";
+import { RegisterType } from "../../types/register";
 
-const RegisterList = () => {
+type RegisterListProps = {
+  item: RegisterType;
+};
+
+const RegisterList = ({ item }: RegisterListProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckbox = () => {
     setIsChecked((prev) => !prev);
@@ -18,8 +23,7 @@ const RegisterList = () => {
     >
       <div className='flex items-center relative gap-4'>
         <Checkbox type='checkbox' onClick={handleCheckbox}>
-          {/* 임시 data */}
-          <RegisterListContent />
+          <RegisterListContent type={item.type} address={item.address} />
         </Checkbox>
       </div>
     </li>

@@ -1,15 +1,20 @@
 import { create } from "zustand";
-import { SearchRegisterInputs } from "../types/registerInputType";
+import { RegisterType, SearchRegisterInputs } from "../types/register";
+import { RegisterMockData } from "../data/register-mockup";
 
 interface RegisterStoreType {
-  searchedRegister: SearchRegisterInputs[];
-  setSearchedRegister: (data: SearchRegisterInputs[]) => void;
+  searchedRegister: RegisterType[];
+  searchRegister: (data: SearchRegisterInputs) => void;
 }
 
 export const useRegisterStore = create<RegisterStoreType>((set) => ({
   searchedRegister: [],
-  setSearchedRegister: (data: SearchRegisterInputs[]) =>
-    set({
-      searchedRegister: data,
-    }),
+  searchRegister: (data: SearchRegisterInputs) =>
+    set(() => ({
+      searchedRegister: RegisterMockData.list.filter(
+        (item) =>
+          item.address.includes(data.address) &&
+          item.type === data.register_type
+      ),
+    })),
 }));
