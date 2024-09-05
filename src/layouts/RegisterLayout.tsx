@@ -1,6 +1,6 @@
-import Button from "../components/Register/Button";
-import SearchForm from "../components/Register/SearchForm";
-import Title from "../components/Register/Title";
+import Button from "../components/register/Button";
+import SearchForm from "../components/register/SearchForm";
+import Title from "../components/register/Title";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
