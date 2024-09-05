@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Checkbox from "../components/register/Checkbox";
 import RegisterLists from "../components/register/RegisterLists";
 import SelectedDetail from "../components/register/SelectedDetail";
@@ -5,23 +6,47 @@ import RegisterLayout from "../layouts/RegisterLayout";
 import { useRegisterStore } from "../store/registerStore";
 
 const Register = () => {
-  const isOpenDetail = true;
+  const [openDetail, setOpenDetail] = useState(false);
+  const [isCheckedAll, setIsCheckedAll] = useState(false);
+
   const searchedRegister = useRegisterStore((state) => state.searchedRegister);
+  const toggleCheckboxAll = useRegisterStore(
+    (state) => state.toggleCheckboxAll
+  );
+
+  useEffect(() => {
+    const findCheckedItem = searchedRegister.some((item) => item.isChecked);
+    const findUnCheckedItem = searchedRegister.every((item) => item.isChecked);
+
+    setOpenDetail(findCheckedItem);
+    setIsCheckedAll(findUnCheckedItem);
+  }, [searchedRegister]);
+
+  const handleCheckboxAll = () => {
+    setIsCheckedAll((prev) => !prev);
+    toggleCheckboxAll(isCheckedAll);
+  };
 
   return (
-    <div className={isOpenDetail ? "flex justify-between gap-10" : ""}>
-      <RegisterLayout isOpenDetail={isOpenDetail}>
+    <div className={openDetail ? "flex justify-between gap-10" : ""}>
+      <RegisterLayout isOpenDetail={openDetail}>
         {searchedRegister.length !== 0 && (
           <div>
             <div className='flex items-center relative gap-[6px] mt-[100px] mb-[60px]'>
-              <Checkbox type='checkbox'>전체선택</Checkbox>
+              <Checkbox
+                type='checkbox'
+                onChange={handleCheckboxAll}
+                checked={isCheckedAll}
+              >
+                전체선택
+              </Checkbox>
             </div>
             <RegisterLists />
           </div>
         )}
       </RegisterLayout>
 
-      {isOpenDetail && <SelectedDetail />}
+      {openDetail && <SelectedDetail />}
     </div>
   );
 };

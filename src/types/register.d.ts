@@ -7,4 +7,5 @@ export interface RegisterType {
   id: number;
   address: string;
   type: string;
+  isChecked?: boolean;
 }
