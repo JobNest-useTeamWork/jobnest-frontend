@@ -1,6 +1,6 @@
-import Checkbox from "../components/Register/Checkbox";
-import RegisterLists from "../components/Register/RegisterLists";
-import SelectedDetail from "../components/Register/SelectedDetail";
+import Checkbox from "../components/register/Checkbox";
+import RegisterLists from "../components/register/RegisterLists";
+import SelectedDetail from "../components/register/SelectedDetail";
 import RegisterLayout from "../layouts/RegisterLayout";
 import { useRegisterStore } from "../store/registerStore";
 
