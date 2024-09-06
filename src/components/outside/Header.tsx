@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
 import { IoMenu, IoClose } from "react-icons/io5"; // 닫기 아이콘도 추가
+import HeaderMenu from "./HeaderMenu";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center h-[70px] p-[2.5rem] border-b border-[#EDEDED] max-sm:p-[1rem]">
+    <header className="flex justify-between items-center h-[100px] p-[2.5rem] border-b border-[#EDEDED] max-sm:p-[1rem]">
       <div>
         <img
           className="h-[30px] max-sm:h-[24px]"
@@ -19,7 +20,7 @@ const Header = () => {
           alt="JonNest-Logo"
         />
       </div>
-      <div className="flex justify-between items-center gap-[2rem] text-[18px] max-lg:text-[16px] max-lg:gap-[20px] transition-all duration-300 ease-in-out max-sm:gap-[1.2rem]">
+      <div className="relative flex justify-between items-center gap-[2rem] text-[18px] max-lg:text-[16px] max-lg:gap-[20px] transition-all duration-300 ease-in-out max-sm:gap-[1.2rem]">
         {/* 큰 화면에서 보여질 헤더 메뉴 */}
         <div
           className={`flex justify-between items-center gap-[1.5rem] max-md:hidden`}
@@ -49,22 +50,9 @@ const Header = () => {
             {isOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
           </button>
         </div>
+
         {/* 햄버거 메뉴 클릭 시 표시될 메뉴 */}
-        <div
-          className={`absolute top-[70px] right-0 bg-white shadow-md p-4 w-[200px] transition-all duration-300 ease-in-out lg:hidden ${
-            isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
-          }`}
-        >
-          <Link to="/" onClick={toggleMenu} className="hover:text-main-color">
-            매물 관리
-          </Link>
-          <Link to="/contract" onClick={toggleMenu}>
-            계약 관리
-          </Link>
-          <Link to="/register" onClick={toggleMenu}>
-            등기/대장 발급
-          </Link>
-        </div>
+        <HeaderMenu isOpen={isOpen} toggleMenu={toggleMenu} />
         {/* 핸드폰 번호 */}
         <address className="text-[#8894A0] max-sm:hidden not-italic">
           010-0000-0000
