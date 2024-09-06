@@ -6,8 +6,12 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Navigation />
-      <Outlet />
+      <section className="flex">
+        <Navigation />
+        <section className="p-[50px]">
+          <Outlet />
+        </section>
+      </section>
     </>
   );
 };
