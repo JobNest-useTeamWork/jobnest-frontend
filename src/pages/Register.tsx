@@ -4,6 +4,7 @@ import RegisterLists from "../components/register/RegisterLists";
 import SelectedDetail from "../components/register/SelectedDetail";
 import RegisterLayout from "../layouts/RegisterLayout";
 import { useRegisterStore } from "../store/registerStore";
+import { RegisterTitleData } from "../components/register/data/title";
 
 const Register = () => {
   const [openDetail, setOpenDetail] = useState(false);
@@ -29,10 +30,10 @@ const Register = () => {
 
   return (
     <div className={openDetail ? "flex justify-between gap-10" : ""}>
-      <RegisterLayout isOpenDetail={openDetail}>
+      <RegisterLayout isOpenDetail={openDetail} titleData={RegisterTitleData}>
         {searchedRegister.length !== 0 && (
           <div>
-            <div className='flex items-center relative gap-[6px] mt-[100px] mb-[60px]'>
+            <div className='flex items-center relative gap-[6px] mb-[60px]'>
               <Checkbox
                 type='checkbox'
                 onChange={handleCheckboxAll}

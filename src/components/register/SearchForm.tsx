@@ -18,7 +18,7 @@ const SearchForm = () => {
 
   return (
     <form
-      className='w-full h-11 flex items-center gap-4'
+      className='w-full h-11 flex items-center gap-4 mb-[100px]'
       onSubmit={handleSubmit(onSubmitSearchAddress)}
     >
       <SelectBox register={register("register_type")}></SelectBox>

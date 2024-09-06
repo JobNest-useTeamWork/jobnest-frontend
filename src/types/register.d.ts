@@ -1,3 +1,8 @@
+export type RegisterTitleType = {
+  title: string;
+  desc: string;
+};
+
 export interface SearchRegisterInputs {
   address: string;
   register_type: string;

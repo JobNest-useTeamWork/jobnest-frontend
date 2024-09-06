@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useRegisterStore } from "../../store/registerStore";
 import Button from "./Button";
 import RegisterListContent from "./RegisterListContent";
@@ -28,7 +29,13 @@ const SelectedDetail = () => {
           ))}
       </ul>
 
-      <Button className='h-11 mt-auto'>열람하기</Button>
+      <Link
+        to='/register/open'
+        className='mt-auto'
+        state={searchedRegister.filter((item) => item.isChecked)}
+      >
+        <Button className='h-11'>열람하기</Button>
+      </Link>
     </div>
   );
 };
