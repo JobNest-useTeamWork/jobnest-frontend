@@ -1,25 +1,81 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { useState } from "react";
+import { IoMenu, IoClose } from "react-icons/io5"; // 닫기 아이콘도 추가
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <header className="flex justify-between items-center h-[70px]">
+    <header className="flex justify-between items-center h-[70px] p-[2.5rem] border-b border-[#EDEDED] max-sm:p-[1rem]">
       <div>
-        <img className="h-[30px]" src={logo} alt="JonNest-Logo" />
+        <img
+          className="h-[30px] max-sm:h-[24px]"
+          src={logo}
+          alt="JonNest-Logo"
+        />
       </div>
-      <div className="flex justify-between items-center gap-[2rem]">
-        <div className="flex justify-between items-center gap-[1.5rem]">
-          <Link to="/">매물 관리</Link>
-          <Link to="/contract">계약 관리</Link>
-          <Link to="/register">등기/대장 발급</Link>
+      <div className="flex justify-between items-center gap-[2rem] text-[18px] max-lg:text-[16px] max-lg:gap-[20px] transition-all duration-300 ease-in-out max-sm:gap-[1.2rem]">
+        {/* 큰 화면에서 보여질 헤더 메뉴 */}
+        <div
+          className={`flex justify-between items-center gap-[1.5rem] max-md:hidden`}
+        >
+          <Link
+            to="/"
+            className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
+          >
+            매물관리
+          </Link>
+          <Link
+            to="/contract"
+            className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
+          >
+            계약 관리
+          </Link>
+          <Link
+            to="/register"
+            className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
+          >
+            등기/대장 발급
+          </Link>
         </div>
-        <div className="text-[#8894A0]">010-0000-0000</div>
-        <button className="w-[130px] h-[42px] bg-[#347fff] text-white">
+        {/* 반응형 - 햄버거 아이콘 */}
+        <div className="md:hidden transition-all duration-300 ease-in-out center-place">
+          <button onClick={toggleMenu} aria-label="Toggle Menu">
+            {isOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+          </button>
+        </div>
+        {/* 햄버거 메뉴 클릭 시 표시될 메뉴 */}
+        <div
+          className={`absolute top-[70px] right-0 bg-white shadow-md p-4 w-[200px] transition-all duration-300 ease-in-out lg:hidden ${
+            isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
+          }`}
+        >
+          <Link to="/" onClick={toggleMenu} className="hover:text-main-color">
+            매물 관리
+          </Link>
+          <Link to="/contract" onClick={toggleMenu}>
+            계약 관리
+          </Link>
+          <Link to="/register" onClick={toggleMenu}>
+            등기/대장 발급
+          </Link>
+        </div>
+        {/* 핸드폰 번호 */}
+        <address className="text-[#8894A0] max-sm:hidden not-italic">
+          010-0000-0000
+        </address>
+        {/* 로그인/로그아웃 버튼 */}
+        <button className="w-[130px] h-[42px] bg-main-color text-white max-lg:w-[112px] transition-all duration-300 ease-in-out max-sm:w-[100px]">
           로그아웃
         </button>
-        <div></div>
       </div>
     </header>
   );
 };
+
 export default Header;
