@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { RegisterType, SearchRegisterInputs } from "../types/register";
-import { RegisterMockData } from "../data/register-mockup";
+import { RegisterMockData } from "../components/register/data/register-mockup";
 
 interface RegisterStoreType {
   searchedRegister: RegisterType[];
