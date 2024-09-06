@@ -31,7 +31,7 @@ const HeaderMenu = ({
           isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
-        <address className="text-[#8894A0] max-sm:hidden not-italic border-b border-[#EDEDED] mb-[4px]">
+        <address className="text-[#8894A0] sm:hidden not-italic border-b border-[#EDEDED] mb-[4px]">
           010-0000-0000
         </address>
         <Link
