@@ -1,42 +1,41 @@
-import TodoInput from "./TodoInput";
 import { TodoItem } from "../types/types";
 
 interface TodoListPartProps {
   todos: TodoItem[];
-  onAddTodo: (text: string) => void;
   onToggleTodo: (id: number) => void;
+  className: string;
 }
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
   todos,
-  onAddTodo,
   onToggleTodo,
+  className,
 }) => {
   return (
-    <>
-    
-      <div>
-        할일 부분
-        <div>왼쪽 토글</div>
-        <TodoInput onAddTodo={onAddTodo} />
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              <span
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
-              >
-                {todo.text}
-              </span>
-              <button onClick={() => onToggleTodo(todo.id)}>
-                {todo.completed ? "Undo" : "Complete"}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className={`${className} flex flex-col`}>
+      <ul className="space-y-2">
+        {todos.map((todo) => (
+          <li
+            key={todo.id}
+            className="flex items-center justify-between p-2 bg-white rounded shadow"
+          >
+            <span
+              className={`${
+                todo.completed ? "line-through text-gray-500" : ""
+              }`}
+            >
+              {todo.text}
+            </span>
+            <button
+              onClick={() => onToggleTodo(todo.id)}
+              className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              {todo.completed ? "Undo" : "Complete"}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

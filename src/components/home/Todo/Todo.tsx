@@ -1,8 +1,9 @@
 import { useState } from "react";
 import TodoListPart from "./TodoList";
 import { TodoItem } from "../types/types";
+import TodoInput from "./TodoInput";
 
-const Todo = () => {
+const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   const addTodo = (text: string) => {
@@ -23,13 +24,17 @@ const Todo = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col w-[311px] bg-gray-200 p-2.5">
       <TodoListPart
+        className="bg-blue-100 p-6 flex-grow"
         todos={todos}
-        onAddTodo={addTodo}
         onToggleTodo={toggleTodoCompletion}
       />
-    </>
+      <TodoInput
+        onAddTodo={addTodo}
+        className="mt-4 h-[48px] border-[1px] w-full bg-gray-200 p-2.5"
+      />
+    </div>
   );
 };
 
