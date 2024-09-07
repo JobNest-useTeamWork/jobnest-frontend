@@ -24,7 +24,7 @@ const Todo: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-[311px] bg-gray-200 p-2.5">
+    <div className="relative flex flex-col w-[311px] h-[372px] bg-gray-200 ">
       <TodoListPart
         className="bg-blue-100 p-6 flex-grow"
         todos={todos}
@@ -32,7 +32,7 @@ const Todo: React.FC = () => {
       />
       <TodoInput
         onAddTodo={addTodo}
-        className="mt-4 h-[48px] border-[1px] w-full bg-gray-200 p-2.5"
+        className="absolute bottom-0 h-[48px] border-[1px] border-[#EDEDED] w-full bg-[#F8F8F8] "
       />
     </div>
   );

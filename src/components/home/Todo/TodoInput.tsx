@@ -17,17 +17,17 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo, className }) => {
   };
 
   return (
-    <form className={`${className} flex`} onSubmit={handleSubmit}>
+    <form className={`${className} `} onSubmit={handleSubmit}>
       <input
+        className="w-full h-full text-lg font-normal px-[10px]"
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="새로운 할 일 작성"
-        className="flex-grow p-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
+        className="absolute right-[10px] top-1/2 -translate-y-1/2 w-[44px] h-[34px] bg-[#347FFF] text-[#FFFFFF] rounded-[6px] font-extrabold"
         type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         입력
       </button>
