@@ -1,4 +1,5 @@
 import { TodoItem } from "../types/types";
+import TodoCheckbox, { testFunction, testFunction2 } from "./Checkbox";
 
 interface TodoListPartProps {
   todos: TodoItem[];
@@ -19,6 +20,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
             key={todo.id}
             className="flex items-center justify-between p-2 bg-white rounded shadow"
           >
+            <TodoCheckbox type="checkbox" />
             <span
               className={`${
                 todo.completed ? "line-through text-gray-500" : ""
@@ -29,9 +31,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
             <button
               onClick={() => onToggleTodo(todo.id)}
               className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              {todo.completed ? "Undo" : "Complete"}
-            </button>
+            ></button>
           </li>
         ))}
       </ul>
