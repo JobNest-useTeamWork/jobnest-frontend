@@ -4,6 +4,7 @@ import Contract from "../pages/Contract";
 import Register from "../pages/Register";
 import Layout from "../layouts/Layout";
 import NotFound from "../pages/NotFound";
+import RegisterOpen from "../pages/RegisterOpen";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/register/open",
+        element: <RegisterOpen />,
       },
       {
         path: "*",
