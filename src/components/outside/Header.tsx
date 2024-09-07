@@ -13,13 +13,13 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center h-[100px] p-[2.5rem] border-b border-[#EDEDED] max-sm:p-[1rem]">
-      <div>
+      <Link to="/">
         <img
           className="h-[30px] max-sm:h-[24px]"
           src={logo}
           alt="JonNest-Logo"
         />
-      </div>
+      </Link>
       <div className="relative flex justify-between items-center gap-[2rem] text-[18px] max-lg:text-[16px] max-lg:gap-[20px] transition-all duration-300 ease-in-out max-sm:gap-[1.2rem]">
         {/* 큰 화면에서 보여질 헤더 메뉴 */}
         <div
@@ -29,7 +29,7 @@ const Header = () => {
             to="/"
             className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
           >
-            매물관리
+            매물 관리
           </Link>
           <Link
             to="/contract"
