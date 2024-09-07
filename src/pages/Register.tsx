@@ -13,8 +13,8 @@ const Register = () => {
       <RegisterLayout isOpenDetail={isOpenDetail}>
         {searchedRegister.length !== 0 && (
           <div>
-            <div className='flex items-center relative gap-[6px] mt-[100px] mb-[60px]'>
-              <Checkbox type='checkbox'>전체선택</Checkbox>
+            <div className="flex items-center relative gap-[6px] mt-[100px] mb-[60px]">
+              <Checkbox type="checkbox">전체선택</Checkbox>
             </div>
             <RegisterLists />
           </div>
