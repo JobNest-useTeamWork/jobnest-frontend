@@ -1,3 +1,5 @@
+const { transform } = require("typescript");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,6 +11,24 @@ module.exports = {
         // 사용자 정의 색상 추가
         "main-color": "#347fff",
       },
+      transitionProperty: {
+        width: "width",
+      },
+      keyframes: {
+        slideInFromRightToLeft: {
+          "0%": {
+            transform: "translateX(100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+      },
+    },
+    animation: {
+      slideInFromRightToLeft: "slideInFromRightToLeft 1s ease-in-out forwards",
     },
   },
   plugins: [],
