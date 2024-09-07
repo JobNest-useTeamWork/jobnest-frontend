@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+<<<<<<< HEAD
       transitionProperty: {
         width: "width",
       },
@@ -25,12 +26,13 @@ module.exports = {
       animation: {
         slideInFromRightToLeft:
           "slideInFromRightToLeft 1s ease-in-out forwards",
+=======
+      colors: {
+        // 사용자 정의 색상 추가
+        "main-color": "#347fff",
+>>>>>>> develop
       },
     },
   },
   plugins: [],
-  // 모바일에선 hover 스타일 막기
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
 };
