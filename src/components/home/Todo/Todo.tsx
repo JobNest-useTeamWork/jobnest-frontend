@@ -11,6 +11,7 @@ const Todo: React.FC = () => {
       id: todos.length + 1,
       text,
       completed: false,
+      date: new Date(),
     };
     setTodos([...todos, newTodo]);
   };

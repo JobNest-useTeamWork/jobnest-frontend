@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import { TodoItem } from "../types/types";
 import TodoCheckbox from "./Checkbox";
 
 interface TodoListPartProps {
-  todos: TodoItem[];
+  todos: TodoItem[]; // todos 배열에는 날짜 정보도 포함되어 있다고 가정
   onToggleTodo: (id: number) => void;
   className: string;
 }
@@ -12,13 +13,50 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onToggleTodo,
   className,
 }) => {
+  const [selectedDay, setSelectedDay] = useState("오늘"); // 선택된 날짜 (오늘/지난 내역)
+
+  // 날짜 선택 변경 핸들러
+  const handleDaySelect = (day: string) => {
+    setSelectedDay(day);
+  };
+
+  // 날짜 필터링 로직
+  const filteredTodos = todos.filter((todo) => {
+    const todoDate = new Date(todo.date); // todo.date는 Date 객체라고 가정
+    const today = new Date();
+
+    if (selectedDay === "오늘") {
+      return (
+        todoDate.toDateString() === today.toDateString() // '오늘' 할 일 필터링
+      );
+    } else if (selectedDay === "지난 내역") {
+      return todoDate < today; // '지난 내역' 할 일 필터링
+    }
+    return true;
+  });
+
   return (
     <div className={`${className} flex flex-col`}>
-      {todos.length === 0 ? (
-        <p className="text-center text-gray-500">오늘 할 일 목록이 없습니다</p>
+      {/* 날짜 선택 드롭다운 */}
+      <div className="mb-4">
+        <select
+          value={selectedDay}
+          onChange={(e) => handleDaySelect(e.target.value)}
+          className="border border-gray-300 rounded-md p-2"
+        >
+          <option value="오늘">오늘</option>
+          <option value="지난 내역">지난 내역</option>
+        </select>
+      </div>
+
+      {/* 할 일 목록 표시 */}
+      {filteredTodos.length === 0 ? (
+        <p className="text-center text-gray-500">
+          {selectedDay} 할 일 목록이 없습니다
+        </p>
       ) : (
         <ul className="space-y-2">
-          {todos.map((todo) => (
+          {filteredTodos.map((todo) => (
             <li
               key={todo.id}
               className="flex items-center p-2 bg-white rounded shadow"
