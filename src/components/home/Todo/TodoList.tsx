@@ -14,6 +14,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   className,
 }) => {
   const [selectedDay, setSelectedDay] = useState("오늘"); // 선택된 날짜 (오늘/지난 내역)
+  const [isSelectVisible, setIsSelectVisible] = useState(false);
 
   // 날짜 선택 변경 핸들러
   const handleDaySelect = (day: string) => {
@@ -35,18 +36,58 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
     return true;
   });
 
+  const toggleSelect = () => {
+    setIsSelectVisible(!isSelectVisible);
+  };
+
   return (
-    <div className={`${className} flex flex-col`}>
-      {/* 날짜 선택 드롭다운 */}
-      <div className="mb-4">
-        <select
-          value={selectedDay}
-          onChange={(e) => handleDaySelect(e.target.value)}
-          className=" rounded-md "
+    <div className={`${className} `}>
+      {/* Toggle button and dropdown */}
+      <div className="mb-4 flex items-start">
+        <button
+          onClick={toggleSelect}
+          className="flex justify-between items-center bg-white text-gray-700 px-2 rounded leading-tight focus:outline-none focus:bg-white "
         >
-          <option value="오늘">오늘</option>
-          <option value="지난 내역">지난 내역</option>
-        </select>
+          <span>{selectedDay}</span>
+          <svg
+            className="w-4 h-4 ml-2 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+        {isSelectVisible && (
+          <div className="ml-1 bg-white border border-gray-300 rounded shadow-lg items-center">
+            <button
+              onClick={() => {
+                handleDaySelect("오늘");
+                toggleSelect();
+              }}
+              className={`block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap border ${
+                selectedDay === "오늘" ? "" : "text-gray-500"
+              }`}
+            >
+              오늘
+            </button>
+            <button
+              onClick={() => {
+                handleDaySelect("지난 내역");
+                toggleSelect();
+              }}
+              className={`block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap border ${
+                selectedDay === "지난 내역" ? "" : "text-gray-500"
+              }`}
+            >
+              지난 내역
+            </button>
+          </div>
+        )}
       </div>
 
       {/* 할 일 목록 표시 */}

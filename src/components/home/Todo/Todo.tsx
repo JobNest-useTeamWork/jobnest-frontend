@@ -25,12 +25,9 @@ const Todo: React.FC = () => {
   };
 
   return (
-    <div
-      className="relative flex flex-col w-[311px] h-[372px] bg-gray-100
-  "
-    >
+    <div className="relative flex flex-col w-[311px] h-[372px] bg-gray-100">
       <TodoListPart
-        className=" p-6 flex-grow"
+        className="p-6"
         todos={todos}
         onToggleTodo={toggleTodoCompletion}
       />
