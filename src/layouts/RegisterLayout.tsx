@@ -19,13 +19,13 @@ const RegisterLayout = ({
   const { title, desc } = titleData;
 
   return (
-    <div className="flex flex-col w-full h-full relative">
+    <div className='flex flex-col w-full h-full relative'>
       <Title title={title} desc={desc} />
       {!isOpenDetail && (
-        <Link to="/register/open">
+        <Link to='/register/open'>
           <Button
             className={twMerge(
-              "w-[130px] h-[42px] absolute top-1 right-10",
+              "w-[130px] h-[42px] absolute -top-10 right-10",
               title === "등기/대장 열람내역" && "hidden"
             )}
           >
@@ -34,8 +34,8 @@ const RegisterLayout = ({
         </Link>
       )}
       {title === "등기/대장 열람내역" && (
-        <Link to="/register">
-          <Button className="w-[130px] h-[42px] absolute top-1 right-10">
+        <Link to='/register'>
+          <Button className='w-[130px] h-[42px] absolute -top-10 right-10'>
             뒤로가기
           </Button>
         </Link>

@@ -18,7 +18,7 @@ const RegisterOpen = () => {
 
   return (
     <RegisterLayout titleData={RegisterOpenTitleData}>
-      <table className='text-sm text-center'>
+      <table className='text-sm text-center mx-10'>
         <thead>
           <tr>
             {titleHeader.map((item) => {

@@ -32,10 +32,10 @@ const Register = () => {
     <div className={openDetail ? "flex justify-between gap-10" : ""}>
       <RegisterLayout isOpenDetail={openDetail} titleData={RegisterTitleData}>
         {searchedRegister.length !== 0 && (
-          <div>
-            <div className="flex items-center relative gap-[6px] mb-[60px]">
+          <div className='ml-10 max-w-[1264px]'>
+            <div className='flex items-center relative gap-[6px] mb-[60px]'>
               <Checkbox
-                type="checkbox"
+                type='checkbox'
                 onChange={handleCheckboxAll}
                 checked={isCheckedAll}
               >
