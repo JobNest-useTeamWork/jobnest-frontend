@@ -42,7 +42,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
         <select
           value={selectedDay}
           onChange={(e) => handleDaySelect(e.target.value)}
-          className="border border-gray-300 rounded-md p-2"
+          className=" rounded-md "
         >
           <option value="오늘">오늘</option>
           <option value="지난 내역">지난 내역</option>
@@ -59,7 +59,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
           {filteredTodos.map((todo) => (
             <li
               key={todo.id}
-              className="flex items-center p-2 bg-white rounded shadow"
+              className="flex flex-start items-center  bg-white rounded "
             >
               <TodoCheckbox type="checkbox" />
               <span className="text-gray-500 ml-2">{todo.text}</span>
