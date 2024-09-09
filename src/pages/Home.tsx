@@ -1,8 +1,6 @@
 import BookmarkedList from "../components/bookmarkedList/BookmarkedList";
 
 
-import BookmarkedList from "../components/BookmarkedList";
-
 const Home = () => {
   return (
       <div className='flex flex-col w-full h-full relative px-[65px] pt-[50px]'>
