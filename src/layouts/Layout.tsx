@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  return (
+  return (    
     <>
       <h1>Layout Component</h1>
-      <Outlet />
+      <section className="">
+        <Outlet />
+      </section>
     </>
   );
 };
