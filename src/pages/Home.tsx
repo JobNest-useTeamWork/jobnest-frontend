@@ -1,4 +1,4 @@
-import BookmarkedList from "../components/bookmarkedList/BookmarkedList";
+import BookmarkedList from "../components/bookmark/BookmarkedList";
 
 
 const Home = () => {
