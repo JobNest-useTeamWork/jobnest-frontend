@@ -1,13 +1,15 @@
+import BookmarkedList from "../bookmark/BookmarkedList";
 import Todo from "./Todo/Todo";
+
 
 const Home = () => {
   return (
-    <>
-      <h1>Home Component 1</h1>
-      <div>
+      <div className='flex flex-col w-full h-full relative px-[65px] pt-[50px]'>
+        <h1 className="text-5xl font-bold">즐겨찾기</h1>
+        <BookmarkedList />
         <Todo />
       </div>
-    </>
-  );
+  )
 };
+
 export default Home;

@@ -3,13 +3,11 @@ import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
 import BookmarkedEachItem from './BookmarkedEachItem';
 import { BookmarkInterface, getBookmarks } from '../../hooks/useBookmarks';
-import { fetchOpenGraphData, OPEN_GRAPH_API_KEY } from '../../api/api';
-import { useQuery } from '@tanstack/react-query';
+import { fetchOpenGraphData } from '../../api/api';
 import ManageDetailModal from './ManageDetailModal';
 
 
 const BookmarkedList = () => {
-    //console.log(OPEN_GRAPH_API_KEY);  // 출력해서 값이 제대로 들어오는지 확인
 
     const [gridItem, setGridItem] = useState<BookmarkInterface[]>([]);
     const [fetchUrl, setFetchUrl] = useState('');
@@ -17,18 +15,19 @@ const BookmarkedList = () => {
 
     useEffect(() => {
         setGridItem(getBookmarks);
+        console.log(gridItem);
     },[]);
 
-    const {data, error, isLoading, refetch} = useQuery( {
-            queryKey: ['ogData', fetchUrl],
-            queryFn: () => fetchOpenGraphData(fetchUrl),
-            enabled: !!fetchUrl  // fetchUrl이 비어있지 않을 때만 쿼리를 실행하도록 설정
-        }
-    );
-    console.log(data);
+    // const {data, error, isLoading, refetch} = useQuery( {
+    //         queryKey: ['ogData', fetchUrl],
+    //         queryFn: () => fetchOpenGraphData(fetchUrl),
+    //         enabled: !!fetchUrl  // fetchUrl이 비어있지 않을 때만 쿼리를 실행하도록 설정
+    //     }
+    // );
+    // console.log(data);
   
     const addBookmarks = async() => {
-        //console.log(`clicked addBookmarks`);
+       
         if(fetchUrl) {
             try {
                 //get Open Graph Date
@@ -40,7 +39,6 @@ const BookmarkedList = () => {
                     img: data.hybridGraph.image || '',
                     title: data.hybridGraph.title || ''
                 };
-                console.log(`newBookmarksOpd`,newBookmarksOpd);
                 //add on Grid Item
                 setGridItem((prevItem) => [...prevItem, newBookmarksOpd]);
                 //initialize
@@ -49,20 +47,10 @@ const BookmarkedList = () => {
             } catch (error) {
                 console.log(`Failed to add OPD`,error);   
             }
-    }
+        }
 
     }
 
-
-    //const gridArr = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-    //temporary dummy bookmark data
-    // const dummy : BookmarkInterface[] = [
-    //     {id: 1, url : 'https://www.naver.com/', img: '', title : 'naver'},
-    //     {id: 2, url : 'https://www.notion.so/Jeong-Dasom-62a74a097ba44cbbb5cfee84c4dd4f59', img: '', title : 'JeongDasom'},
-    //     {id: 3, url : 'https://github.com/racheljeong?tab=repositories', img: '', title : 'myRepo'}
-    // ];
-
-   
 
     const handleDragEnd = (event : DragEndEvent) => {
         const {active, over} = event;
@@ -71,8 +59,6 @@ const BookmarkedList = () => {
             setGridItem((prevItem) => {
                 const oldIdx = prevItem.findIndex((item) => item.id === +active.id);
                 const newIdx = prevItem.findIndex((item) => item.id === +over.id);
-                console.log(`oldIdx :`, {oldIdx});
-                console.log(`newIdx :`, {newIdx});
 
                 return arrayMove(prevItem,oldIdx,newIdx);
             });
@@ -81,7 +67,6 @@ const BookmarkedList = () => {
 
     //즐겨찾기 모달창
     const openManageModal = () => {
-        console.log('clickedModal');
         setmodalYn((prev) => !prev);
 
     }

@@ -1,4 +1,3 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const PERSONAL_BOOKMARKS_KEY = 'personalBookmarks';
 

@@ -8,13 +8,10 @@ interface GridItemProps {
   title : string;
 }
 
-const BookmarkedEachItem = ({id,url,img,title} : GridItemProps) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
-  // const style = {
-  //   transform: CSS.Transform.toString(transform),
-  //   transition: transition ? transition : undefined,
-  // };
+const BookmarkedEachItem = ({id,url,img,title} : GridItemProps) => {
+  
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   return(
     <>    
