@@ -53,7 +53,10 @@ const BookmarkedList = () => {
                 </div>
                 </SortableContext>
             </DndContext>
-            <button onClick={openManageModal} className="w-[53px] h-[11px] bg-blue-500 m-5 font-suit font-semibold text-[15px] leading-[15px] flex items-center text-white">
+            <button onClick={openManageModal} 
+                    className="w-[93px] h-[35px] bg-blue-500 m-5 font-suit font-semibold 
+                                text-center text-[15px] leading-[15px] flex items-center
+                                 text-white rounded-md justify-center">
                 관리하기
             </button>
             {modalYn ? <ManageDetailModal closeModal={()=> setmodalYn(false)}/> : null}
