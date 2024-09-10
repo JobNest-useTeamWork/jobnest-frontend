@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import Button from "../components/register/Button";
-import SearchForm from "../components/register/SearchForm";
-import Title from "../components/register/Title";
-import { RegisterTitleType } from "../types/register";
 import { Link } from "react-router-dom";
+import { RegisterTitleType } from "../../types/register";
+import Title from "./Title";
+import Button from "./Button";
+import SearchForm from "./SearchForm";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface RegisterLayoutType {
   titleData: RegisterTitleType;
 }
 
-const RegisterLayout = ({
+const RegisterWrapper = ({
   children,
   isOpenDetail,
   titleData,
@@ -46,4 +46,4 @@ const RegisterLayout = ({
   );
 };
 
-export default RegisterLayout;
+export default RegisterWrapper;
