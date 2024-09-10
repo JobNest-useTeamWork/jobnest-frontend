@@ -88,7 +88,7 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
 
     // 모달 fixed top-1/2 left-1/2 추가필요
     return (
-        <div  style={{
+        <div style={{
               position: 'absolute', // 부모 모달의 위치를 설정
               top: '30%', 
               left: '60%',
