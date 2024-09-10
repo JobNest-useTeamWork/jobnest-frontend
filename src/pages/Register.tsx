@@ -33,9 +33,9 @@ const Register = () => {
       <RegisterLayout isOpenDetail={openDetail} titleData={RegisterTitleData}>
         {searchedRegister.length !== 0 && (
           <div>
-            <div className='flex items-center relative gap-[6px] mb-[60px]'>
+            <div className="flex items-center relative gap-[6px] mb-[60px]">
               <Checkbox
-                type='checkbox'
+                type="checkbox"
                 onChange={handleCheckboxAll}
                 checked={isCheckedAll}
               >
