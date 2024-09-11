@@ -24,3 +24,17 @@ export const searchRegister = async (search: SearchRegisterInputs) => {
     console.error("error", error);
   }
 };
+
+export const checkOpenedRegister = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/pdf-list`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("error", error);
+  }
+};

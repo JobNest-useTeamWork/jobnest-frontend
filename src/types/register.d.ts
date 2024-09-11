@@ -21,3 +21,18 @@ export type RegisterAPIType = {
   result: RegisterType[];
   status: number;
 };
+
+export type OpenedRegisterType = {
+  id: number;
+  category: string;
+  unique: string;
+  juso: string;
+  owner: string[];
+  is_change: boolean;
+  pdf_url: string;
+  created_at: string;
+};
+
+export type OpenedRegisterAPIType = {
+  result: OpenedRegisterType[];
+};

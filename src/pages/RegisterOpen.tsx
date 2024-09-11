@@ -1,9 +1,11 @@
 import Button from "../components/register/Button";
-import { RegisterType } from "../types/register";
+import { OpenedRegisterAPIType, RegisterType } from "../types/register";
 import SelectBox from "../components/register/SelectBox";
 import { useForm } from "react-hook-form";
 import RegisterWrapper from "../components/register/RegisterWrapper";
-import { useRegisterStore } from "../store/registerStore";
+import Checkbox from "../components/register/Checkbox";
+import { useEffect, useState } from "react";
+import { checkOpenedRegister } from "../api/register";
 
 export interface OpenedRegisterType extends RegisterType {
   serial_number: string;
@@ -23,9 +25,31 @@ const RegisterOpenTitleData = {
   desc: "",
 };
 
+const titleHeader = [
+  "체크",
+  "구분",
+  "고유번호",
+  "주소",
+  "소유자",
+  "변동정보",
+  "열람 날짜",
+  "등기 신규 열람",
+  "계약서 작성",
+  "다운로드",
+];
+
 const RegisterOpen = () => {
-  const openedRegister = useRegisterStore((state) => state.openedRegister);
+  const [openedRegister, setOpenedRegister] = useState<OpenedRegisterAPIType>();
+
   const { register } = useForm();
+
+  useEffect(() => {
+    checkOpenedRegister().then((data) => setOpenedRegister(data));
+  }, []);
+
+  const formattingDate = (date: string) => {
+    return date.split(" ")[0];
+  };
 
   return (
     <RegisterWrapper titleData={RegisterOpenTitleData}>
@@ -39,13 +63,13 @@ const RegisterOpen = () => {
           selectData={SELECT_DATA}
         ></SelectBox>
       </div>
-      {/* <table className='text-sm text-center mx-10'>
+      <table className='text-sm text-center mx-10'>
         <thead>
-          <tr>
+          <tr className='h-[30px]'>
             {titleHeader.map((item) => {
               if (item === "체크") {
                 return (
-                  <th className='h-[30px] px-1 border border-[#7f7f7f]'>
+                  <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
                     <Checkbox type='checkbox'></Checkbox>
                   </th>
                 );
@@ -56,28 +80,24 @@ const RegisterOpen = () => {
           </tr>
         </thead>
         <tbody className='border-b border-[#7f7f7f]'>
-          {openedRegister.map((register) => {
+          {openedRegister?.result.map((item) => {
             const registerData = [
               <Checkbox type='checkbox' />,
-              register.type,
-              register.id,
-              register.address,
-              register.owner,
-              register.changed,
-              register.createdAt,
-              (register.type === "등기" || register.type === "등기 + 대장") && (
-                <Button className='w-[68px] h-6 text-sm'>열람</Button>
-              ),
-              (register.type === "등기" || register.type === "등기 + 대장") && (
-                <Button className='w-[68px] h-6 text-sm'>작성</Button>
-              ),
+              "등기",
+              item.unique,
+              item.juso,
+              item.owner.join(", "),
+              item.is_change ? "있음" : "없음",
+              formattingDate(item.created_at),
+              <Button className='w-[68px] h-6 text-sm'>열람</Button>,
+              <Button className='w-[68px] h-6 text-sm'>작성</Button>,
               <Button className='w-[68px] h-6 text-sm'>다운로드</Button>,
             ];
 
             return (
-              <tr key={register.id}>
+              <tr key={item.id}>
                 {registerData.map((data) => (
-                  <td className='h-[30px] border-r border-l p-2 border-[#7f7f7f]'>
+                  <td className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'>
                     {data}
                   </td>
                 ))}
@@ -85,7 +105,7 @@ const RegisterOpen = () => {
             );
           })}
         </tbody>
-      </table> */}
+      </table>
     </RegisterWrapper>
   );
 };
