@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import Checkbox from "../components/register/Checkbox";
 import RegisterLists from "../components/register/RegisterLists";
 import SelectedDetail from "../components/register/SelectedDetail";
+import RegisterLayout from "../layouts/RegisterLayout";
 import { useRegisterStore } from "../store/registerStore";
 import { RegisterTitleData } from "../components/register/data/title";
-import RegisterWrapper from "../components/register/RegisterWrapper";
 
 const Register = () => {
   const [openDetail, setOpenDetail] = useState(false);
@@ -30,9 +30,9 @@ const Register = () => {
 
   return (
     <div className={openDetail ? "flex justify-between gap-10" : ""}>
-      <RegisterWrapper isOpenDetail={openDetail} titleData={RegisterTitleData}>
+      <RegisterLayout isOpenDetail={openDetail} titleData={RegisterTitleData}>
         {searchedRegister.length !== 0 && (
-          <div className='ml-10 max-w-[1264px]'>
+          <div>
             <div className='flex items-center relative gap-[6px] mb-[60px]'>
               <Checkbox
                 type='checkbox'
@@ -45,7 +45,7 @@ const Register = () => {
             <RegisterLists />
           </div>
         )}
-      </RegisterWrapper>
+      </RegisterLayout>
 
       {openDetail && <SelectedDetail />}
     </div>
