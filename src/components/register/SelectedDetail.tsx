@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useRegisterStore } from "../../store/registerStore";
 import Button from "./Button";
+import { useRegisterStore } from "../../store/registerStore";
 import RegisterListContent from "./RegisterListContent";
 
 const SelectedDetail = () => {
@@ -11,7 +11,7 @@ const SelectedDetail = () => {
   const navigate = useNavigate();
 
   const moveRegister = () => {
-    addOpenedRegister(searchedRegister.filter((item) => item.isChecked));
+    addOpenedRegister(searchedRegister.result.filter((item) => item.isChecked));
 
     navigate("/register/open");
   };
@@ -25,17 +25,23 @@ const SelectedDetail = () => {
         <p className='flex items-center font-inter font-normal text-sm leading-[16.94px] text-[#151515]'>
           <span className='pr-1'>총</span>
           <span>
-            {searchedRegister.filter((item) => item.isChecked === true).length}
+            {
+              searchedRegister.result.filter((item) => item.isChecked === true)
+                .length
+            }
           </span>
           <span>개</span>
         </p>
       </div>
 
       <ul className='flex flex-col gap-2 mb-10'>
-        {searchedRegister
+        {searchedRegister.result
           .filter((item) => item.isChecked === true)
           .map((item) => (
-            <RegisterListContent type={item.type} address={item.address} />
+            <RegisterListContent
+              register_type={item.register_type}
+              address={item.address}
+            />
           ))}
       </ul>
 

@@ -8,9 +8,16 @@ export interface SearchRegisterInputs {
   register_type: string;
 }
 
-export interface RegisterType {
-  id: number;
+export type RegisterType = {
+  unique: string;
+  kind: string;
   address: string;
-  type: string;
   isChecked?: boolean;
-}
+  register_type?: string;
+};
+
+export type RegisterAPIType = {
+  last_page: string;
+  result: RegisterType[];
+  status: number;
+};

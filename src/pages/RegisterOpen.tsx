@@ -1,12 +1,9 @@
-import { RegisterOpenTitleData } from "../components/register/data/title";
-import Checkbox from "../components/register/Checkbox";
 import Button from "../components/register/Button";
 import { RegisterType } from "../types/register";
-import { useRegisterStore } from "../store/registerStore";
-import { titleHeader } from "../components/register/data/table";
 import SelectBox from "../components/register/SelectBox";
 import { useForm } from "react-hook-form";
 import RegisterWrapper from "../components/register/RegisterWrapper";
+import { useRegisterStore } from "../store/registerStore";
 
 export interface OpenedRegisterType extends RegisterType {
   serial_number: string;
@@ -20,6 +17,11 @@ const SELECT_DATA = [
   { id: 2, name: "50개씩" },
   { id: 3, name: "100개씩" },
 ];
+
+const RegisterOpenTitleData = {
+  title: "등기/대장 열람내역",
+  desc: "",
+};
 
 const RegisterOpen = () => {
   const openedRegister = useRegisterStore((state) => state.openedRegister);
@@ -37,7 +39,7 @@ const RegisterOpen = () => {
           selectData={SELECT_DATA}
         ></SelectBox>
       </div>
-      <table className='text-sm text-center mx-10'>
+      {/* <table className='text-sm text-center mx-10'>
         <thead>
           <tr>
             {titleHeader.map((item) => {
@@ -83,7 +85,7 @@ const RegisterOpen = () => {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
     </RegisterWrapper>
   );
 };

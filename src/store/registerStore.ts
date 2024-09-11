@@ -1,47 +1,66 @@
 import { create } from "zustand";
-import { RegisterType, SearchRegisterInputs } from "../types/register";
-import { RegisterMockData } from "../components/register/data/register-mockup";
+import { RegisterAPIType, RegisterType } from "../types/register";
 import { OpenedRegisterType } from "../pages/RegisterOpen";
 
 interface RegisterStoreType {
-  searchedRegister: RegisterType[];
+  searchedRegister: RegisterAPIType;
   openedRegister: OpenedRegisterType[];
-  searchRegister: (data: SearchRegisterInputs) => void;
-  toggleCheckbox: (id: number) => void;
+  addSearchRegister: (data: RegisterAPIType, register_type: string) => void;
+  toggleCheckbox: (unique: string) => void;
   toggleCheckboxAll: (isCheckedAll: boolean) => void;
   addOpenedRegister: (searched: RegisterType[]) => void;
 }
 
 export const useRegisterStore = create<RegisterStoreType>((set) => ({
-  searchedRegister: [],
+  searchedRegister: {
+    last_page: "0",
+    result: [
+      {
+        unique: "",
+        address: "",
+        kind: "",
+      },
+    ],
+    status: 0,
+  },
   openedRegister: [],
-  searchRegister: (data: SearchRegisterInputs) =>
-    set(() => ({
-      searchedRegister: RegisterMockData.list
-        .filter(
-          (item) =>
-            item.address.includes(data.address) &&
-            item.type === data.register_type
-        )
-        .map((item) => ({
+  addSearchRegister: (data: RegisterAPIType, register_type) =>
+    set((state) => ({
+      searchedRegister: {
+        ...state.searchedRegister,
+        last_page: data.last_page,
+        status: data.status,
+        result: data.result.map((item) => ({
           ...item,
+          register_type: register_type,
           isChecked: false,
         })),
+      },
     })),
-  toggleCheckbox: (id: number) =>
+
+  toggleCheckbox: (unique: string) =>
     set((state) => ({
-      searchedRegister: state.searchedRegister.map((item) =>
-        item.id === id ? { ...item, isChecked: !item.isChecked } : item
-      ),
+      searchedRegister: {
+        ...state.searchedRegister,
+        result: state.searchedRegister.result.map((item) =>
+          item.unique === unique
+            ? { ...item, isChecked: !item.isChecked }
+            : item
+        ),
+      },
     })),
+
   toggleCheckboxAll: (isCheckedAll: boolean) =>
     set((state) => ({
-      searchedRegister: state.searchedRegister.map((item) => {
-        return isCheckedAll === false
-          ? { ...item, isChecked: true }
-          : { ...item, isChecked: false };
-      }),
+      searchedRegister: {
+        ...state.searchedRegister,
+        result: state.searchedRegister.result.map((item) => ({
+          ...item,
+          isChecked: !isCheckedAll,
+        })),
+      },
     })),
+
   addOpenedRegister: (data: any[]) =>
     set((state) => ({
       openedRegister: [
