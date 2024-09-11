@@ -53,7 +53,7 @@ const RegisterOpen = () => {
 
   return (
     <RegisterWrapper titleData={RegisterOpenTitleData}>
-      <div className='flex items-center justify-end mx-10 my-3 gap-[10px]'>
+      <div className='flex items-center justify-end max-w-[1264px] ml-10 my-3 gap-[10px]'>
         <Button className='w-[66px] h-[34px] rounded-md border border-[#cccccc] bg-white font-noto-sans-kr font-normal text-sm text-black'>
           삭제
         </Button>
@@ -63,7 +63,7 @@ const RegisterOpen = () => {
           selectData={SELECT_DATA}
         ></SelectBox>
       </div>
-      <table className='text-sm text-center mx-10'>
+      <table className='max-w-[1264px] text-sm text-center ml-10'>
         <thead>
           <tr className='h-[30px]'>
             {titleHeader.map((item) => {

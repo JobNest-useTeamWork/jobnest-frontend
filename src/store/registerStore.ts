@@ -6,20 +6,23 @@ interface RegisterStoreType {
   addSearchRegister: (data: RegisterAPIType, register_type: string) => void;
   toggleCheckbox: (unique: string) => void;
   toggleCheckboxAll: (isCheckedAll: boolean) => void;
+  resetSearchRegister: () => void;
 }
 
+const initialSearchedRegister = {
+  last_page: "0",
+  result: [
+    {
+      unique: "",
+      address: "",
+      kind: "",
+    },
+  ],
+  status: 0,
+};
+
 export const useRegisterStore = create<RegisterStoreType>((set) => ({
-  searchedRegister: {
-    last_page: "0",
-    result: [
-      {
-        unique: "",
-        address: "",
-        kind: "",
-      },
-    ],
-    status: 0,
-  },
+  searchedRegister: initialSearchedRegister,
 
   addSearchRegister: (data: RegisterAPIType, register_type) =>
     set((state) => ({
@@ -56,5 +59,10 @@ export const useRegisterStore = create<RegisterStoreType>((set) => ({
           isChecked: !isCheckedAll,
         })),
       },
+    })),
+
+  resetSearchRegister: () =>
+    set(() => ({
+      searchedRegister: initialSearchedRegister,
     })),
 }));
