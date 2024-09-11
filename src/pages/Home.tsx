@@ -1,5 +1,5 @@
 import BookmarkedList from "../components/BookmarkedList";
-import Todo from "../components/home/Todo/Todo";
+import Todo from "../components/home/todo/Todo";
 
 const Home = () => {
   return (
