@@ -1,10 +1,13 @@
 import React from "react";
 import { TodoItem } from "../../../types/todotypes";
 import TodoCheckbox from "./Checkbox";
+import EditDelete from "./EditDelete";
 
 interface TodoListPartProps {
   todos: TodoItem[]; // todos 배열에는 날짜 정보도 포함되어 있다고 가정
   onToggleTodo: (id: number) => void;
+  onEditTodo: (id: number) => void; // 수정 핸들러
+  onDeleteTodo: (id: number) => void; // 삭제 핸들러
   filteredTodos: TodoItem[];
   className: string;
   selectedDay: string;
@@ -12,6 +15,8 @@ interface TodoListPartProps {
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
   onToggleTodo,
+  onEditTodo,
+  onDeleteTodo,
   filteredTodos,
   className,
   selectedDay,
