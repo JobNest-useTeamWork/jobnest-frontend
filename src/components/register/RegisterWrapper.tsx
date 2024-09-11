@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import Button from "../components/register/Button";
-import SearchForm from "../components/register/SearchForm";
-import Title from "../components/register/Title";
-import { RegisterTitleType } from "../types/register";
 import { Link } from "react-router-dom";
+import { RegisterTitleType } from "../../types/register";
+import Title from "./Title";
+import Button from "./Button";
+import SearchForm from "./SearchForm";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface RegisterLayoutType {
   titleData: RegisterTitleType;
 }
 
-const RegisterLayout = ({
+const RegisterWrapper = ({
   children,
   isOpenDetail,
   titleData,
@@ -25,7 +25,7 @@ const RegisterLayout = ({
         <Link to='/register/open'>
           <Button
             className={twMerge(
-              "w-[130px] h-[42px] absolute top-1 right-10",
+              "w-[130px] h-[42px] absolute -top-10 right-10",
               title === "등기/대장 열람내역" && "hidden"
             )}
           >
@@ -35,7 +35,7 @@ const RegisterLayout = ({
       )}
       {title === "등기/대장 열람내역" && (
         <Link to='/register'>
-          <Button className='w-[130px] h-[42px] absolute top-1 right-10'>
+          <Button className='w-[130px] h-[42px] absolute -top-10 right-10'>
             뒤로가기
           </Button>
         </Link>
@@ -45,4 +45,5 @@ const RegisterLayout = ({
     </div>
   );
 };
-export default RegisterLayout;
+
+export default RegisterWrapper;
