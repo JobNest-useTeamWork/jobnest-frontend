@@ -18,7 +18,7 @@ const RegisterList = ({ item }: RegisterListProps) => {
   return (
     <li
       className={twMerge(
-        "w-full h-[58px] flex items-center border border-[#8894a0]",
+        "w-full h-[58px] pl-4 flex items-center border border-[#8894a0]",
         item.isChecked && "border-2 border-[#347fff]"
       )}
     >
