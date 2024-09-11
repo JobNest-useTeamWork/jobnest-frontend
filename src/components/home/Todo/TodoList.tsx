@@ -1,74 +1,42 @@
-import React, { useState } from "react";
+import TodoInput from "./TodoInput";
 import { TodoItem } from "../types/types";
-import TodoCheckbox from "./Checkbox";
 
 interface TodoListPartProps {
-  todos: TodoItem[]; // todos 배열에는 날짜 정보도 포함되어 있다고 가정
+  todos: TodoItem[];
+  onAddTodo: (text: string) => void;
   onToggleTodo: (id: number) => void;
-  className: string;
 }
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
-  todos = [],
+  todos,
+  onAddTodo,
   onToggleTodo,
-  className,
 }) => {
-  const [selectedDay, setSelectedDay] = useState("오늘"); // 선택된 날짜 (오늘/지난 내역)
-
-  // 날짜 선택 변경 핸들러
-  const handleDaySelect = (day: string) => {
-    setSelectedDay(day);
-  };
-
-  // 날짜 필터링 로직
-  const filteredTodos = todos.filter((todo) => {
-    const todoDate = new Date(todo.date); // todo.date는 Date 객체라고 가정
-    const today = new Date();
-
-    if (selectedDay === "오늘") {
-      return (
-        todoDate.toDateString() === today.toDateString() // '오늘' 할 일 필터링
-      );
-    } else if (selectedDay === "지난 내역") {
-      return todoDate < today; // '지난 내역' 할 일 필터링
-    }
-    return true;
-  });
-
   return (
-    <div className={`${className} flex flex-col`}>
-      {/* 날짜 선택 드롭다운 */}
-      <div className="mb-4">
-        <select
-          value={selectedDay}
-          onChange={(e) => handleDaySelect(e.target.value)}
-          className="border border-gray-300 rounded-md p-2"
-        >
-          <option value="오늘">오늘</option>
-          <option value="지난 내역">지난 내역</option>
-        </select>
-      </div>
-
-      {/* 할 일 목록 표시 */}
-      {filteredTodos.length === 0 ? (
-        <p className="text-center text-gray-500">
-          {selectedDay} 할 일 목록이 없습니다
-        </p>
-      ) : (
-        <ul className="space-y-2">
-          {filteredTodos.map((todo) => (
-            <li
-              key={todo.id}
-              className="flex items-center p-2 bg-white rounded shadow"
-            >
-              <TodoCheckbox type="checkbox" />
-              <span className="text-gray-500 ml-2">{todo.text}</span>
-              <button onClick={() => onToggleTodo(todo.id)}></button>
+    <>
+    
+      <div>
+        할일 부분
+        <div>왼쪽 토글</div>
+        <TodoInput onAddTodo={onAddTodo} />
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.id}>
+              <span
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "none",
+                }}
+              >
+                {todo.text}
+              </span>
+              <button onClick={() => onToggleTodo(todo.id)}>
+                {todo.completed ? "Undo" : "Complete"}
+              </button>
             </li>
           ))}
         </ul>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
