@@ -8,7 +8,9 @@ const RegisterListContent = ({ type, address }: RegisterListContentType) => {
       <div className='flex items-center justify-center px-3 min-w-[66px] h-[34px] rounded-[20px] border border-[#cccccc] shrink-0'>
         <span>{type}</span>
       </div>
-      <span className='font-noto-sans-kr text-[#6f6f6f]'>{address}</span>
+      <span className='font-noto-sans-kr text-[#6f6f6f] line-clamp-1'>
+        {address}
+      </span>
     </div>
   );
 };

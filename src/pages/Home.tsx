@@ -1,16 +1,11 @@
-import BookmarkedList from "../components/bookmark/BookmarkedList";
-import Todo from "../components/home/Todo/Todo";
-
-
+import BookmarkedList from "../components/BookmarkedList";
 
 const Home = () => {
   return (
-      <div className='flex flex-col w-full h-full relative px-[65px] pt-[50px]'>
-        <h1 className="text-5xl font-bold">즐겨찾기</h1>
-        <BookmarkedList />
-        <Todo />
-      </div>
-  )
+    <>
+      <h1>Home Component</h1>
+      <BookmarkedList/>
+    </>
+  );
 };
-
 export default Home;
