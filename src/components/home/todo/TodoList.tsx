@@ -1,5 +1,5 @@
 import React from "react";
-import { TodoItem } from "../types/types";
+import { TodoItem } from "../../../types/todotypes";
 import TodoCheckbox from "./Checkbox";
 
 interface TodoListPartProps {
@@ -34,13 +34,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
                 checked={todo.completed}
                 onChange={() => onToggleTodo(todo.id)}
               />
-              <span
-                className={`ml-2 ${
-                  todo.completed ? "text-gray-400" : "text-gray-700"
-                }`}
-              >
-                {todo.text}
-              </span>
+              <span className={`ml-2 text-[#8894A0]`}>{todo.text}</span>
             </li>
           ))}
         </ul>
