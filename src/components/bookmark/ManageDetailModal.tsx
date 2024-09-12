@@ -3,6 +3,8 @@ interface closeModalInterface {
     closeModal : () => void;
 }
 
+// console.log
+
 
 const ManageDetailModal = ({closeModal} : closeModalInterface) => {
 

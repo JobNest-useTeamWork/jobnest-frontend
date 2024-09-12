@@ -46,10 +46,11 @@ const Todo: React.FC = () => {
       <div className="flex-grow overflow-y-auto px-2 ">
         <TodoListPart
           className="w-full h-full"
-          todos={todos}
           onToggleTodo={toggleTodoCompletion}
           filteredTodos={filteredTodos}
           selectedDay={selectedDay}
+          onDeleteTodo={() => {}} //"deleteTodoId"
+          onEditTodo={() => {}}
         />
       </div>
       <TodoInput onAddTodo={addTodo} className="h-[48px] border-t border-[#EDEDED] w-full bg-[#F8F8F8] mt-4" />
