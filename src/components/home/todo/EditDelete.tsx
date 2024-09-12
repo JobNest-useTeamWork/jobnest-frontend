@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
 
 interface EditDeleteProps {
   todoId: number;
@@ -48,8 +49,11 @@ const EditDelete: React.FC<EditDeleteProps> = ({
         </div>
       ) : (
         <>
-          <button onClick={toggleDropdown} className="text-gray-500">
-            ...
+          <button
+            onClick={toggleDropdown}
+            className="flex items-center justify-center text-gray-500"
+          >
+            <BsThreeDots />
           </button>
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded-md shadow-lg z-10">
