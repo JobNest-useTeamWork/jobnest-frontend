@@ -43,7 +43,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
             className="mr-2 p-1 border rounded"
             autoFocus
           />
-          <button onClick={handleEditSubmit} className="text-blue-500">
+          <button onClick={handleEditSubmit} className="text-blue-200">
             저장
           </button>
         </div>
