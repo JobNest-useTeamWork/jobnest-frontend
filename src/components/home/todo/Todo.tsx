@@ -56,10 +56,11 @@ const Todo: React.FC = () => {
       <div className="flex-grow overflow-y-auto px-2 ">
         <TodoListPart
           className="w-full h-full"
-          todos={todos}
           onToggleTodo={toggleTodoCompletion}
           filteredTodos={filteredTodos}
           selectedDay={selectedDay}
+          onDeleteTodo={() => {}} //"deleteTodoId"
+          onEditTodo={() => {}}
         />
       </div>
       <TodoInput
