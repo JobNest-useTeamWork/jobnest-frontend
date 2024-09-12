@@ -1,4 +1,4 @@
-import { TodoItem } from "../../../types/todotypes";
+import { TodoItem } from "../types/types";
 import TodoCheckbox from "./Checkbox";
 
 interface TodoListPartProps {
