@@ -6,7 +6,7 @@ interface InputType extends ComponentPropsWithRef<"input"> {
   register: {
     name: string;
   };
-  resetField: any;
+  resetField: () => void;
 }
 
 const Input = ({ register, resetField, ...rest }: InputType) => {

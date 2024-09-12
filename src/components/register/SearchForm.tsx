@@ -1,9 +1,10 @@
-import { useRegisterStore } from "../../store/registerStore";
-import { SearchRegisterInputs } from "../../types/register";
+import { RegisterAPIType, SearchRegisterInputs } from "../../types/register";
 import Button from "./Button";
 import Input from "./Input";
 import SelectBox from "./SelectBox";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRegisterStore } from "../../store/registerStore";
+import { searchRegister } from "../../api/register";
 
 const SELECT_DATA = [
   { id: 1, name: "등기 + 대장" },
@@ -12,14 +13,23 @@ const SELECT_DATA = [
 ];
 
 const SearchForm = () => {
-  const { handleSubmit, register, resetField } = useForm<SearchRegisterInputs>({
-    mode: "onChange",
-  });
-  const searchRegister = useRegisterStore((state) => state.searchRegister);
+  const { handleSubmit, register, resetField, watch } =
+    useForm<SearchRegisterInputs>({
+      mode: "onChange",
+    });
+
+  const addSearchRegister = useRegisterStore(
+    (state) => state.addSearchRegister
+  );
 
   // 등기 또는 대장 검색
   const onSubmitSearchAddress: SubmitHandler<SearchRegisterInputs> = (data) => {
-    searchRegister(data);
+    console.log("searched data : ", data);
+
+    // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
+    searchRegister(data).then((data: RegisterAPIType) => {
+      addSearchRegister(data, watch("register_type"));
+    });
   };
 
   return (

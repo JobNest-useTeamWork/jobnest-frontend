@@ -1,9 +1,10 @@
 import { twMerge } from "tailwind-merge";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RegisterTitleType } from "../../types/register";
 import Title from "./Title";
 import Button from "./Button";
 import SearchForm from "./SearchForm";
+import { useRegisterStore } from "../../store/registerStore";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
@@ -17,6 +18,15 @@ const RegisterWrapper = ({
   titleData,
 }: RegisterLayoutType) => {
   const { title, desc } = titleData;
+  const resetSearchRegister = useRegisterStore(
+    (state) => state.resetSearchRegister
+  );
+  const navigate = useNavigate();
+
+  const moveRegisterPage = () => {
+    resetSearchRegister();
+    navigate("/register");
+  };
 
   return (
     <div className='flex flex-col w-full h-full relative'>
@@ -34,11 +44,12 @@ const RegisterWrapper = ({
         </Link>
       )}
       {title === "등기/대장 열람내역" && (
-        <Link to='/register'>
-          <Button className='w-[130px] h-[42px] absolute -top-10 right-10'>
-            뒤로가기
-          </Button>
-        </Link>
+        <Button
+          className='w-[130px] h-[42px] absolute -top-10 right-10'
+          onClick={moveRegisterPage}
+        >
+          뒤로가기
+        </Button>
       )}
       <SearchForm />
       {children}
