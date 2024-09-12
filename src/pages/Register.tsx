@@ -3,8 +3,12 @@ import Checkbox from "../components/register/Checkbox";
 import RegisterLists from "../components/register/RegisterLists";
 import SelectedDetail from "../components/register/SelectedDetail";
 import { useRegisterStore } from "../store/registerStore";
-import { RegisterTitleData } from "../components/register/data/title";
 import RegisterWrapper from "../components/register/RegisterWrapper";
+
+const RegisterTitleData = {
+  title: "등기/대장 열람",
+  desc: "동시에 여러 개의 등기 또는 대장을 발급받을 수 있어요.",
+};
 
 const Register = () => {
   const [openDetail, setOpenDetail] = useState(false);
@@ -16,8 +20,12 @@ const Register = () => {
   );
 
   useEffect(() => {
-    const findCheckedItem = searchedRegister.some((item) => item.isChecked);
-    const findUnCheckedItem = searchedRegister.every((item) => item.isChecked);
+    const findCheckedItem = searchedRegister.result.some(
+      (item) => item.isChecked
+    );
+    const findUnCheckedItem = searchedRegister.result.every(
+      (item) => item.isChecked
+    );
 
     setOpenDetail(findCheckedItem);
     setIsCheckedAll(findUnCheckedItem);
@@ -28,10 +36,12 @@ const Register = () => {
     toggleCheckboxAll(isCheckedAll);
   };
 
+  console.log("searched Register", searchedRegister);
+
   return (
     <div className={openDetail ? "flex justify-between gap-10" : ""}>
       <RegisterWrapper isOpenDetail={openDetail} titleData={RegisterTitleData}>
-        {searchedRegister.length !== 0 && (
+        {searchedRegister.result.length !== 1 && (
           <div className='ml-10 max-w-[1264px]'>
             <div className='flex items-center relative gap-[6px] mb-[60px]'>
               <Checkbox
@@ -42,6 +52,7 @@ const Register = () => {
                 전체선택
               </Checkbox>
             </div>
+
             <RegisterLists />
           </div>
         )}
