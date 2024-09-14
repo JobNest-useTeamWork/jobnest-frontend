@@ -1,9 +1,13 @@
 import { IoClose } from "react-icons/io5"; 
 import { BookmarkInterface } from "../../hooks/useBookmarks";
 import { useState } from "react";
-import { fetchOpenGraphData } from "../../api/api";
+import { useForm } from "react-hook-form";
+import { bookmarkDataFetch } from "../../api/bookmark";
 
-
+interface bookmarkDataInterface {
+    bookmarkTitle : string;
+    bookmarkURL : string;
+}
 
 interface closeModalInterface {
     closeModal : () => void;
@@ -26,6 +30,10 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
     const [fetchUrl, setFetchUrl] = useState('');
     const [addModalYn, setAddModalYn] = useState(false);
     const [dropDownState, setDropDownState] = useState<{[key : string] : boolean}>({});
+
+    const {register, handleSubmit} = useForm<bookmarkDataInterface>();
+
+    const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
 
     const tempArr = [
         { id: "1", title : "네이버"}, 
@@ -53,32 +61,39 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
 
     }
 
-
-    const addBookmarks = async() => {
-       
-        if(fetchUrl) {
-            try {
-                //get Open Graph Date
-                const data = await fetchOpenGraphData(fetchUrl);
-                //add bookmarks
-                const newBookmarksOpd : BookmarkInterface ={
-                    id: Date.now(),  // 고유한 ID 
-                    url: fetchUrl,
-                    img: data.hybridGraph.image || '',
-                    title: data.hybridGraph.title || ''
-                };
-                console.log(`newBookmarksOpd`, newBookmarksOpd);
-                //add on Grid Item
-                setListItem((prevItem) => [...prevItem, newBookmarksOpd]);
-                //initialize
-                setFetchUrl('');
-    
-            } catch (error) {
-                console.log(`Failed to add OPD`,error);   
-            }
-        }
-    
+    const onSubmit = (data : bookmarkDataInterface) => {
+        console.log(`bookmarkDataInterface`,data);
+        //url 받아서 bookmarkDataFetch 에 담아 넘기기
+        bookmarkDataFetch(data.bookmarkURL);
     }
+    
+
+    //OPEN GRAPH API ver
+    // const addBookmarks = async() => {
+       
+    //     if(fetchUrl) {
+    //         try {
+    //             //get Open Graph Date
+    //             const data = await fetchOpenGraphData(fetchUrl);
+    //             //add bookmarks
+    //             const newBookmarksOpd : BookmarkInterface ={
+    //                 id: Date.now(),  // 고유한 ID 
+    //                 url: fetchUrl,
+    //                 img: data.hybridGraph.image || '',
+    //                 title: data.hybridGraph.title || ''
+    //             };
+    //             console.log(`newBookmarksOpd`, newBookmarksOpd);
+    //             //add on Grid Item
+    //             setListItem((prevItem) => [...prevItem, newBookmarksOpd]);
+    //             //initialize
+    //             setFetchUrl('');
+    
+    //         } catch (error) {
+    //             console.log(`Failed to add OPD`,error);   
+    //         }
+    //     }
+    
+    // }
 
     const addBookmarksModal = () => {
         setAddModalYn((prev) => !prev);
@@ -138,22 +153,42 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
                     페이지 추가
                 </button>
                 {addModalYn && (
-                    <div style={{
-                          position: 'absolute', // 자식 모달의 위치를 설정
-                          top: '30%', 
-                          left: '110%',
-                          bottom: '30%',
-                          transform: 'translateX(0%)', // 자식 모달을 중앙에 위치시킵니다
-                      }} className="flex flex-col w-[311px] h-[220px] rounded-md border-[1px] border-black gap-2 justify-center">
+                    <form onSubmit={handleSubmit(onSubmit)}
+                            style={{
+                                position: 'absolute', // 자식 모달의 위치를 설정
+                                top: '30%', 
+                                left: '110%',
+                                bottom: '30%',
+                                transform: 'translateX(0%)', // 자식 모달을 중앙에 위치시킵니다
+                            }} className="flex flex-col w-[311px] h-[220px] rounded-md border-[1px] border-black gap-2 justify-center">
                         <div className="flex flex-col gap-2 items-center">
-                            <input type="text" className="w-[267px] h-[41px] rounded-md border-[1px] p-2" placeholder="사이트"/>
-                            <input type="text" value={fetchUrl} onChange={(e) => setFetchUrl(e.target.value)} className="w-[267px] h-[41px] rounded-md border-[1px] p-2" placeholder="URL"/>
+                            <input type="text" 
+                                   className="w-[267px] h-[41px] rounded-md border-[1px] p-2" 
+                                   {...register('bookmarkTitle', {
+                                    required : "타이틀을 작성해주세요."
+                                   })}/>
+                            <input type="text" 
+                                   id="bookmarkURL" 
+                                   placeholder="https://www.example.com"
+                                   value={fetchUrl} 
+                                   
+                                   className="w-[267px] h-[41px] rounded-md border-[1px] p-2" 
+                                   {...register('bookmarkURL', {
+                                    required : "URL을 입력해주세요",
+                                    pattern : { 
+                                        value : bookmarkUrlRegex,
+                                        message : "올바른 URL을 입력해주세요."
+                                    },onChange :(e) => {
+                                        setFetchUrl(e.target.value)
+                                    } 
+                                   })}/>
+                            
                         </div>
                         <div className="flex row-col gap-4 justify-center m-2">
                             <button onClick={closeModal} className="w-[58px] h-[34px] rounded-md border-[1px]">취소</button>
-                            <button onClick={addBookmarks} className="w-[58px] h-[34px] rounded-md bg-slate-400">저장</button>
+                            <button className="w-[58px] h-[34px] rounded-md bg-slate-400">저장</button>
                         </div>
-                    </div>
+                    </form>
                 )}
             </div>
         </div>
