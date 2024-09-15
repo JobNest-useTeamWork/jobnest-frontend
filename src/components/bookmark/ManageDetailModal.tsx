@@ -31,7 +31,12 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
     const [addModalYn, setAddModalYn] = useState(false);
     const [dropDownState, setDropDownState] = useState<{[key : string] : boolean}>({});
 
-    const {register, handleSubmit} = useForm<bookmarkDataInterface>();
+    const {register, handleSubmit, formState : {errors}} = useForm<bookmarkDataInterface>({
+        defaultValues : {
+            bookmarkTitle : '',
+            bookmarkURL : '',
+        }
+    });
 
     const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
 
@@ -63,7 +68,7 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
 
     const onSubmit = (data : bookmarkDataInterface) => {
         console.log(`bookmarkDataInterface`,data);
-        //url 받아서 bookmarkDataFetch 에 담아 넘기기
+        //url 받아서 bookmarkDataFetch 에 담아 넘기기 : 현재 cors에러 발생
         bookmarkDataFetch(data.bookmarkURL);
     }
     
@@ -167,12 +172,13 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
                                    {...register('bookmarkTitle', {
                                     required : "타이틀을 작성해주세요."
                                    })}/>
+                                   
                             <input type="text" 
                                    id="bookmarkURL" 
                                    placeholder="https://www.example.com"
                                    value={fetchUrl} 
                                    
-                                   className="w-[267px] h-[41px] rounded-md border-[1px] p-2" 
+                                   className={`w-[267px] h-[41px] rounded-md border-[1px] ${errors.bookmarkURL?.message?"border-red-500":"border-slate-600"} p-2`} 
                                    {...register('bookmarkURL', {
                                     required : "URL을 입력해주세요",
                                     pattern : { 
@@ -182,7 +188,7 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
                                         setFetchUrl(e.target.value)
                                     } 
                                    })}/>
-                            
+                                   {errors.bookmarkURL?.message ? <span className="text-red-500">{errors.bookmarkURL?.message}</span> : null}
                         </div>
                         <div className="flex row-col gap-4 justify-center m-2">
                             <button onClick={closeModal} className="w-[58px] h-[34px] rounded-md border-[1px]">취소</button>
