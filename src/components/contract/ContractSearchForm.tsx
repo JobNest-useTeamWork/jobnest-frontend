@@ -45,23 +45,16 @@ const ContractSearchForm = () => {
   const id = useId();
 
   return (
-    <section className="p-[16px] w-full h-[460px] bg-white mx-auto min-x-[1124px]">
+    <section className="p-[30px] w-full h-[460px] bg-white rounded-[10px]">
       <h2 className="text-[20px] font-semibold mb-[16px]">계약서 검색</h2>
       <form className={twMerge("text-[14px]")}>
         {/* 첫번째 행 */}
         <div
           className={twMerge(
-            "grid grid-cols-[100px_200px_1fr_1fr] gap-[10px] items-center h-[90px] border-t-2 border-black px-[4px] overflow-x-auto"
+            "grid grid-cols-[100px_300px_1fr] gap-[10px] items-center h-[90px] border-t-2 border-black px-[4px] overflow-x-auto"
           )}
         >
           <div className="font-semibold">날짜조회</div>
-          <select
-            name=""
-            id=""
-            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
-          >
-            <option value="">선택</option>
-          </select>
           <div className="flex items-center gap-[10px]">
             <input
               type="date"
@@ -106,7 +99,7 @@ const ContractSearchForm = () => {
           <select
             name=""
             id=""
-            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
+            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f] text-[14px]"
           >
             <option value="">선택</option>
             {contractCategory.map((type, index) => (
@@ -141,7 +134,7 @@ const ContractSearchForm = () => {
           <select
             name=""
             id=""
-            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
+            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f] text-[14px]"
           >
             <option value="">선택</option>
             <option value="">매매</option>

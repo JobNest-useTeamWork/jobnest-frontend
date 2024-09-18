@@ -12,10 +12,10 @@ const SideBar = () => {
     <>
       <nav
         className={twMerge(
-          "bg-[#f8f8f8] h-[100vh] fixed left-0 p-4 flex flex-col gap-[16px] items-center",
+          "bg-[#f8f8f8] h-[100vh] fixed left-0 p-4 flex flex-col gap-[16px] items-center z-[1000]",
           isFixed
             ? "w-[310px] block flex flex-col gap-[16px] "
-            : "w-[50px] hover:w-[310px] group transition-all duration-300 ease-in-out z-[1000] "
+            : "w-[50px] hover:w-[310px] group transition-all duration-300 ease-in-out "
         )}
       >
         <div className="flex self-start gap-[16px] items-center">
