@@ -11,8 +11,8 @@ type RegisterListProps = {
 const RegisterList = ({ item }: RegisterListProps) => {
   const toggleCheckbox = useRegisterStore((state) => state.toggleCheckbox);
 
-  const handleCheckbox = (id: number) => {
-    toggleCheckbox(id);
+  const handleCheckbox = (unique: string) => {
+    toggleCheckbox(unique);
   };
 
   return (
@@ -25,10 +25,13 @@ const RegisterList = ({ item }: RegisterListProps) => {
       <div className='flex items-center relative gap-4'>
         <Checkbox
           type='checkbox'
-          onClick={() => handleCheckbox(item.id)}
+          onClick={() => handleCheckbox(item.unique)}
           checked={item.isChecked}
         >
-          <RegisterListContent type={item.type} address={item.address} />
+          <RegisterListContent
+            register_type={item.register_type}
+            address={item.address}
+          />
         </Checkbox>
       </div>
     </li>

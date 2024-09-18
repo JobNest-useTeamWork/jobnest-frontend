@@ -6,7 +6,7 @@ const RegisterLists = () => {
 
   return (
     <ul className='w-full flex flex-col gap-[10px]'>
-      {searchedRegister.map((item) => (
+      {searchedRegister.result.map((item) => (
         <RegisterList item={item} />
       ))}
     </ul>

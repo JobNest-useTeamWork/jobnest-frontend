@@ -17,7 +17,7 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo, className }) => {
   };
 
   return (
-    <form className={`${className} `} onSubmit={handleSubmit}>
+    <form className={`${className} relative`} onSubmit={handleSubmit}>
       <input
         className="w-full h-full text-lg font-normal px-[10px]"
         type="text"
