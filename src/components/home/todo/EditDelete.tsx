@@ -56,10 +56,11 @@ const EditDelete: React.FC<EditDeleteProps> = ({
             <BsThreeDots />
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+            //text-center px-4 hover:bg-gray-100 whitespace-nowrap border
+            <div className="absolute right-0 mt-2 w-[66px] bg-white  shadow-lg z-10">
               <button
                 onClick={handleEdit}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200 border-b-0"
               >
                 수정
               </button>
@@ -68,7 +69,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
                   onDelete(todoId);
                   setDropdownOpen(false);
                 }}
-                className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200"
               >
                 삭제
               </button>

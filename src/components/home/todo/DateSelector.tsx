@@ -14,7 +14,7 @@ const DateOption: React.FC<{
 }> = ({ day, selectedDay, onSelect }) => (
   <button
     onClick={() => onSelect(day)}
-    className={`block w-full h-[30px] text-center px-4 hover:bg-gray-100 whitespace-nowrap border ${
+    className={`block w-full h-[30px] text-center px-4 hover:bg-gray-100 whitespace-nowrap border  ${
       selectedDay === day ? "" : "text-gray-500"
     }`}
   >
@@ -60,7 +60,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
       </button>
       {/* 날짜 선택 메뉴 */}
       {isSelectVisible && (
-        <div className="bg-white    border border-gray-300 rounded">
+        <div className="bg-white border-gray-200 rounded">
           <DateOption
             day="오늘"
             selectedDay={selectedDay}
