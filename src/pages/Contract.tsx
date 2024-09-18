@@ -7,7 +7,7 @@ const Contract = () => {
   return (
     <div className="bg-[#F7F8F9] w-full flex flex-col p-[50px]">
       {/* Title */}
-      <div className="flex justify-between w-[650px] mx-auto">
+      <div className="flex justify-between w-full mx-auto">
         <div className="flex items-center">
           <IoNewspaperOutline />
           <h1>계약관리</h1>

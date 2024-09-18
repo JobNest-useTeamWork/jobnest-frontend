@@ -1,6 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { GrPowerReset } from "react-icons/gr";
 import { LiaSearchSolid } from "react-icons/lia";
+import { useEffect, useId, useState } from "react";
 
 /*
 {
@@ -21,57 +22,146 @@ import { LiaSearchSolid } from "react-icons/lia";
 */
 
 const ContractSearchForm = () => {
+  const [currentDate, setCurrentDate] = useState("");
+
+  const contractCategory = [
+    "아파트",
+    "주상복합",
+    "오피스텔",
+    "도시형생활주택",
+    "상가",
+    "사무실",
+    "연립",
+    "다세대",
+    "아파트분양권",
+  ];
+
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
+    setCurrentDate(formattedDate);
+  }, []); // 컴포넌트가 처음 렌더링될 때 한 번 실행
+
+  const id = useId();
+
   return (
-    <section className="p-[16px] w-[650px] h-[460px bg-white mx-auto">
-      <h2>계약서 검색</h2>
-      <form className={twMerge("grid")}>
+    <section className="p-[16px] w-full h-[460px] bg-white mx-auto min-x-[1124px]">
+      <h2 className="text-[20px] font-semibold mb-[16px]">계약서 검색</h2>
+      <form className={twMerge("text-[14px]")}>
         {/* 첫번째 행 */}
-        <div>
-          <div>날짜조회</div>
-          <select name="" id=""></select>
-          <div className="flex">
-            <input type="date" />
+        <div
+          className={twMerge(
+            "grid grid-cols-[100px_200px_1fr_1fr] gap-[10px] items-center h-[90px] border-t-2 border-black px-[4px] overflow-x-auto"
+          )}
+        >
+          <div className="font-semibold">날짜조회</div>
+          <select
+            name=""
+            id=""
+            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
+          >
+            <option value="">선택</option>
+          </select>
+          <div className="flex items-center gap-[10px]">
+            <input
+              type="date"
+              className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
+              value={currentDate}
+              onChange={(e) => setCurrentDate(e.target.value)}
+            />
             <span>~</span>
-            <input type="date" />
+            <input
+              type="date"
+              className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
+              value={currentDate}
+              onChange={(e) => setCurrentDate(e.target.value)}
+            />
           </div>
-          <div>
-            <input type="radio" name="date" />
-            <label htmlFor="date">1개월</label>
-            <input type="radio" name="date" />
-            <label htmlFor="date">3개월</label>
-            <input type="radio" name="date" />
-            <label htmlFor="date">6개월</label>
-            <input type="radio" name="date" />
-            <label htmlFor="date">1년</label>
+          <div className="flex gap-[16px] min-w-[300px]">
+            <div className="flex gap-[6px] items-center">
+              <input type="radio" name="date" />
+              <label htmlFor="date">1개월</label>
+            </div>
+            <div className="flex gap-[6px] items-center">
+              <input type="radio" name="date" />
+              <label htmlFor="date">3개월</label>
+            </div>
+            <div className="flex gap-[6px] items-center">
+              <input type="radio" name="date" />
+              <label htmlFor="date">6개월</label>
+            </div>
+            <div className="flex gap-[6px] items-center">
+              <input type="radio" name="date" />
+              <label htmlFor="date">1년</label>
+            </div>
           </div>
         </div>
         {/* 두 번째 행 */}
-        <div>
-          <div>계약서 종류</div>
-          <select name="" id=""></select>
-          <div>
-            <div>계약서 상태</div>
-            <input type="checkbox" />
-            <label htmlFor="">전체</label>
-            <input type="checkbox" />
-            <label htmlFor="">계약중</label>
-            <input type="checkbox" />
-            <label htmlFor="">계약완료</label>
+        <div
+          className={twMerge(
+            "grid grid-cols-[100px_200px_1fr] gap-[10px] items-center h-[90px] border-t border-black border-opacity-30 px-[4px] overflow-x-auto"
+          )}
+        >
+          <div className="font-semibold">계약서 종류</div>
+          <select
+            name=""
+            id=""
+            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
+          >
+            <option value="">선택</option>
+            {contractCategory.map((type, index) => (
+              <option value={type} key={`${id}-${index}`}>
+                {type}
+              </option>
+            ))}
+          </select>
+          <div className="grid grid-cols-[100px_80px_80px_80px] gap-[20px] font-semibold">
+            <div className="min-w-[80px] ml-[20px]">계약서 상태</div>
+            <div className="flex gap-[8px] items-center">
+              <input type="checkbox" />
+              <label htmlFor="">전체</label>
+            </div>
+            <div className="flex gap-[8px] items-center">
+              <input type="checkbox" />
+              <label htmlFor="">계약중</label>
+            </div>
+            <div className="flex gap-[8px] items-center">
+              <input type="checkbox" />
+              <label htmlFor="">계약완료</label>
+            </div>
           </div>
         </div>
         {/* 세 번째 행 */}
-        <div>
-          <div>거래유형</div>
-          <select name="" id=""></select>
-          <div>
-            <div>중계유형</div>
-            <input type="checkbox" />
-            <label htmlFor="">공동중개</label>
-            <input type="checkbox" />
-            <label htmlFor="">단독중개</label>
+        <div
+          className={twMerge(
+            "grid grid-cols-[100px_200px_1fr] gap-[10px] items-center h-[90px] border-y border-black border-opacity-30 px-[4px] overflow-x-auto"
+          )}
+        >
+          <div className="font-semibold">거래유형</div>
+          <select
+            name=""
+            id=""
+            className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f]"
+          >
+            <option value="">선택</option>
+            <option value="">매매</option>
+            <option value="">전세</option>
+            <option value="">월세</option>
+            <option value="">연세</option>
+          </select>
+          <div className="grid grid-cols-[100px_80px_80px] gap-[20px] font-semibold">
+            <div className="ml-[20px]">중계유형</div>
+            <div className="flex gap-[8px] items-center">
+              <input type="checkbox" />
+              <label htmlFor="">공동중개</label>
+            </div>
+            <div className="flex gap-[8px] items-center">
+              <input type="checkbox" />
+              <label htmlFor="">단독중개</label>
+            </div>
           </div>
         </div>
-        <div className="center-place gap-[8px]">
+        <div className="center-place gap-[8px] mt-[22px]">
           <button
             type="reset"
             className="common-button gap-[16px] w-[96px] h-[36px]"
