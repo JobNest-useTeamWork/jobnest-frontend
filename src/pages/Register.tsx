@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Checkbox from "../components/register/Checkbox";
-import RegisterLists from "../components/register/RegisterLists";
 import SelectedDetail from "../components/register/SelectedDetail";
 import { useRegisterStore } from "../store/registerStore";
 import RegisterWrapper from "../components/register/RegisterWrapper";
+import PaginationNav from "../components/register/PaginationNav";
+import RegisterLists from "../components/register/RegisterLists";
 
 const RegisterTitleData = {
   title: "등기/대장 열람",
@@ -36,8 +37,6 @@ const Register = () => {
     toggleCheckboxAll(isCheckedAll);
   };
 
-  console.log("searched Register", searchedRegister);
-
   return (
     <div className={openDetail ? "flex justify-between gap-10" : ""}>
       <RegisterWrapper isOpenDetail={openDetail} titleData={RegisterTitleData}>
@@ -53,7 +52,11 @@ const Register = () => {
               </Checkbox>
             </div>
 
+            {/** 검색한 리스트 출력 */}
             <RegisterLists />
+
+            {/** 페이지네이션 조작 Nav */}
+            <PaginationNav />
           </div>
         )}
       </RegisterWrapper>

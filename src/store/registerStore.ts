@@ -1,7 +1,9 @@
 import { create } from "zustand";
-import { RegisterAPIType } from "../types/register";
+import { RegisterAPIType, SearchRegisterInputs } from "../types/register";
 
 interface RegisterStoreType {
+  searchData: SearchRegisterInputs;
+  setSearchData: (searchData: SearchRegisterInputs) => void;
   searchedRegister: RegisterAPIType;
   addSearchRegister: (data: RegisterAPIType, register_type: string) => void;
   toggleCheckbox: (unique: string) => void;
@@ -23,7 +25,15 @@ const initialSearchedRegister = {
 
 export const useRegisterStore = create<RegisterStoreType>((set) => ({
   searchedRegister: initialSearchedRegister,
+  searchData: { address: "", register_type: "" },
 
+  setSearchData: (searchData) =>
+    set(() => ({
+      searchData: {
+        address: searchData.address,
+        register_type: searchData.register_type,
+      },
+    })),
   addSearchRegister: (data: RegisterAPIType, register_type) =>
     set((state) => ({
       searchedRegister: {

@@ -1,8 +1,4 @@
-import { SearchRegisterInputs } from "../types/register";
-
-export const searchRegister = async (search: SearchRegisterInputs) => {
-  search.address = "궁동 401-2";
-
+export const searchRegister = async (search: string, page_no: number) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BASE_URL}/juso/search`,
@@ -12,8 +8,8 @@ export const searchRegister = async (search: SearchRegisterInputs) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          juso: search.address,
-          page_no: 5,
+          juso: search,
+          page_no: page_no,
         }),
       }
     );
