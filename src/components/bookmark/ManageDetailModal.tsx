@@ -66,7 +66,7 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
 
     }
 
-    const onSubmit = (data : bookmarkDataInterface) => {
+    const onValid = (data : bookmarkDataInterface) => {
         console.log(`bookmarkDataInterface`,data);
         //url 받아서 bookmarkDataFetch 에 담아 넘기기 : 현재 cors에러 발생
         bookmarkDataFetch(data.bookmarkURL);
@@ -158,7 +158,7 @@ const ManageDetailModal = ({closeModal} : closeModalInterface) => {
                     페이지 추가
                 </button>
                 {addModalYn && (
-                    <form onSubmit={handleSubmit(onSubmit)}
+                    <form onSubmit={handleSubmit(onValid)}
                             style={{
                                 position: 'absolute', // 자식 모달의 위치를 설정
                                 top: '30%', 
