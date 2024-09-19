@@ -1,7 +1,7 @@
 export const searchRegister = async (search: string, page_no: number) => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/juso/search`,
+      `${import.meta.env.VITE_BASE_URL}juso/search`,
       {
         method: "POST",
         headers: {
