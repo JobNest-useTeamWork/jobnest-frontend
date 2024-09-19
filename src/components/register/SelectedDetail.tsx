@@ -24,7 +24,7 @@ const SelectedDetail = () => {
         </p>
       </div>
 
-      <ul className='flex flex-col gap-2 mb-10'>
+      <ul className='flex flex-col gap-2 mb-10 flex-grow'>
         {searchedRegister.result
           .filter((item) => item.isChecked === true)
           .map((item) => (
@@ -35,7 +35,7 @@ const SelectedDetail = () => {
           ))}
       </ul>
 
-      <Link to='/register/open'>
+      <Link to='/register/open' className='mt-auto'>
         <Button className='h-11'>열람하기</Button>
       </Link>
     </div>
