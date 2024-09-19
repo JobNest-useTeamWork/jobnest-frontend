@@ -5,6 +5,7 @@ import { searchRegister } from "../../api/register";
 import { useRegisterStore } from "../../store/registerStore";
 import { RegisterAPIType } from "../../types/register";
 import RegisterLists from "./RegisterLists";
+import LoadingSpinner from "./LoadingSpinner";
 
 const PaginationNav = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +63,7 @@ const PaginationNav = () => {
     return pageNumbers;
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error occurred</div>;
 
   return (

@@ -26,10 +26,19 @@ module.exports = {
             opacity: "1",
           },
         },
+        spin: {
+          from: {
+            transform: "rotate(0deg)",
+          },
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
       },
     },
     animation: {
       slideInFromRightToLeft: "slideInFromRightToLeft 1s ease-in-out forwards",
+      spin: "spin 1s linear infinite",
     },
   },
   plugins: [],
