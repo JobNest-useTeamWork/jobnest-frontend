@@ -3,7 +3,7 @@ import TodoListPart from "./TodoList";
 
 import TodoInput from "./TodoInput";
 import DateSelector from "./DateSelector";
-import { TodoItem } from "../types/types";
+import { TodoItem } from "../../../types/todotypes";
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);

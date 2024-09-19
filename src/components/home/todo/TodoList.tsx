@@ -8,7 +8,7 @@ import {
   isSignedIn,
   fetchGoogleTasks,
 } from "../../../utils/googleAuth";
-import { TodoItem } from "../types/types";
+import { TodoItem } from "../../../types/todotypes";
 
 interface TodoListPartProps {
   onToggleTodo: (id: number) => void;
