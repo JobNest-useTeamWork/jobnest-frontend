@@ -1,8 +1,9 @@
 import { useState } from "react";
 import TodoListPart from "./TodoList";
-import { TodoItem } from "../../../types/todotypes";
+
 import TodoInput from "./TodoInput";
 import DateSelector from "./DateSelector";
+import { TodoItem } from "../types/types";
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);

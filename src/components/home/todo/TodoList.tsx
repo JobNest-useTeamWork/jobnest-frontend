@@ -28,6 +28,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onEditTodo,
 }) => {
   const [isGoogleSignedIn, setIsGoogleSignedIn] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [googleTasks, setGoogleTasks] = useState<any[]>([]);
 
   useEffect(() => {
