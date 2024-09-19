@@ -1,7 +1,7 @@
 import React from "react";
-import { TodoItem } from "../../../types/todotypes";
 import TodoCheckbox from "./Checkbox";
 import EditDelete from "./EditDelete";
+import { TodoItem } from "../types/types";
 
 interface TodoListPartProps {
   onToggleTodo: (id: number) => void;
