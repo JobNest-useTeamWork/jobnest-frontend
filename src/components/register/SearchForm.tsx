@@ -22,18 +22,25 @@ const SearchForm = () => {
     (state) => state.addSearchRegister
   );
   const setSearchData = useRegisterStore((state) => state.setSearchData);
+  const setLoading = useRegisterStore((state) => state.setLoading);
 
   // 등기 또는 대장 검색
   const onSubmitSearchAddress: SubmitHandler<SearchRegisterInputs> = (data) => {
+    setLoading(true);
+
     setSearchData({
       address: data.address,
       register_type: data.register_type,
     });
 
     // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
-    searchRegister(data.address, 1).then((data: RegisterAPIType) => {
-      addSearchRegister(data, watch("register_type"));
-    });
+    searchRegister(data.address, 1)
+      .then((data: RegisterAPIType) => {
+        addSearchRegister(data, watch("register_type"));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
