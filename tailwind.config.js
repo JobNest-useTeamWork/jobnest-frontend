@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         // 사용자 정의 색상 추가
         "main-color": "#347fff",
+        "boder-color": "#D9D9D9",
       },
       transitionProperty: {
         width: "width",

@@ -1,13 +1,15 @@
 import React from "react";
-import { TodoItem } from "../types/types";
+import { TodoItem } from "../../../types/todotypes";
 import TodoCheckbox from "./Checkbox";
+import EditDelete from "./EditDelete";
 
 interface TodoListPartProps {
-  todos: TodoItem[]; // todos 배열에는 날짜 정보도 포함되어 있다고 가정
   onToggleTodo: (id: number) => void;
   filteredTodos: TodoItem[];
   className: string;
   selectedDay: string;
+  onDeleteTodo: (id: number) => void;
+  onEditTodo: (id: number, newText: string) => void;
 }
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
@@ -15,9 +17,11 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   filteredTodos,
   className,
   selectedDay,
+  onDeleteTodo,
+  onEditTodo,
 }) => {
   return (
-    <div className={`${className} `}>
+    <div className={`${className}`}>
       {filteredTodos.length === 0 ? (
         <p className="text-center text-gray-500">
           {selectedDay} 할 일 목록이 없습니다
@@ -27,20 +31,24 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
           {filteredTodos.map((todo) => (
             <li
               key={todo.id}
-              className="flex flex-start items-center bg-white rounded"
+              className="flex items-center justify-between bg-white rounded p-2"
             >
-              <TodoCheckbox
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => onToggleTodo(todo.id)}
+              <div className="flex items-center flex-grow">
+                <TodoCheckbox
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => onToggleTodo(todo.id)}
+                />
+                <span className="ml-2 text-[#8894A0] flex-grow">
+                  {todo.text}
+                </span>
+              </div>
+              <EditDelete
+                todoId={todo.id}
+                todoText={todo.text}
+                onEdit={onEditTodo}
+                onDelete={onDeleteTodo}
               />
-              <span
-                className={`ml-2 ${
-                  todo.completed ? "text-gray-400" : "text-gray-700"
-                }`}
-              >
-                {todo.text}
-              </span>
             </li>
           ))}
         </ul>
