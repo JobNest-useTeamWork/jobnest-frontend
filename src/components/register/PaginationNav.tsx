@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { searchRegister } from "../../api/register";
 import { useRegisterStore } from "../../store/registerStore";
 import { RegisterAPIType } from "../../types/register";
+import RegisterLists from "./RegisterLists";
 
 const PaginationNav = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,31 +66,37 @@ const PaginationNav = () => {
   if (error) return <div>Error occurred</div>;
 
   return (
-    <div className='flex items-center justify-center mt-6'>
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`p-2 text-[#7f7f7f] ${
-          currentPage === 1 ? "opacity-50" : ""
-        }`}
-      >
-        <FaLongArrowAltLeft />
-      </button>
+    <>
+      {/** 검색한 리스트 출력 */}
+      <RegisterLists />
 
-      <div className='flex items-center p-1 rounded-full bg-[#f8f8f8]'>
-        {renderPageNumbers()}
+      {/** 페이지네이션 nav */}
+      <div className='flex items-center justify-center mt-6'>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`p-2 text-[#7f7f7f] ${
+            currentPage === 1 ? "opacity-50" : ""
+          }`}
+        >
+          <FaLongArrowAltLeft />
+        </button>
+
+        <div className='flex items-center p-1 rounded-full bg-[#f8f8f8]'>
+          {renderPageNumbers()}
+        </div>
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === Number(registers?.last_page)}
+          className={`p-2 text-[#7f7f7f] ${
+            currentPage === Number(registers?.last_page) ? "opacity-50" : ""
+          }`}
+        >
+          <FaLongArrowAltRight />
+        </button>
       </div>
-
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === Number(registers?.last_page)}
-        className={`p-2 text-[#7f7f7f] ${
-          currentPage === Number(registers?.last_page) ? "opacity-50" : ""
-        }`}
-      >
-        <FaLongArrowAltRight />
-      </button>
-    </div>
+    </>
   );
 };
 export default PaginationNav;
