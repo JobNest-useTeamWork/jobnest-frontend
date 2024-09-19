@@ -21,13 +21,17 @@ const SearchForm = () => {
   const addSearchRegister = useRegisterStore(
     (state) => state.addSearchRegister
   );
+  const setSearchData = useRegisterStore((state) => state.setSearchData);
 
   // 등기 또는 대장 검색
   const onSubmitSearchAddress: SubmitHandler<SearchRegisterInputs> = (data) => {
-    console.log("searched data : ", data);
+    setSearchData({
+      address: data.address,
+      register_type: data.register_type,
+    });
 
     // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
-    searchRegister(data).then((data: RegisterAPIType) => {
+    searchRegister(data.address, 1).then((data: RegisterAPIType) => {
       addSearchRegister(data, watch("register_type"));
     });
   };
