@@ -7,7 +7,7 @@ import { TodoItem } from "../../../types/todotypes";
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
-  const [selectedDay, setSelectedDay] = useState("오늘"); // 선택된 날짜 (오늘/지난 내역)
+  const [selectedDay, setSelectedDay] = useState("오늘");
 
   const addTodo = (text: string) => {
     const newTodo: TodoItem = {
@@ -29,6 +29,16 @@ const Todo: React.FC = () => {
 
   const handleDaySelect = (day: string) => {
     setSelectedDay(day);
+  };
+
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const editTodo = (id: number, newText: string) => {
+    setTodos(
+      todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
+    );
   };
 
   const filteredTodos = todos.filter((todo) => {
@@ -60,8 +70,8 @@ const Todo: React.FC = () => {
           onToggleTodo={toggleTodoCompletion}
           filteredTodos={filteredTodos}
           selectedDay={selectedDay}
-          onDeleteTodo={() => {}} //"deleteTodoId"
-          onEditTodo={() => {}}
+          onDeleteTodo={deleteTodo}
+          onEditTodo={editTodo}
         />
       </div>
       <TodoInput

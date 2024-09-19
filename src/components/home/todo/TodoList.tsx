@@ -19,6 +19,13 @@ interface TodoListPartProps {
   onEditTodo: (id: number, newText: string) => void;
 }
 
+// 일시적으로 타입지정
+interface GoogleTask {
+  id: number;
+  status: string;
+  title: string;
+}
+
 const TodoListPart: React.FC<TodoListPartProps> = ({
   onToggleTodo,
   filteredTodos,
@@ -28,8 +35,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onEditTodo,
 }) => {
   const [isGoogleSignedIn, setIsGoogleSignedIn] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [googleTasks, setGoogleTasks] = useState<any[]>([]);
+  const [googleTasks, setGoogleTasks] = useState<GoogleTask[]>([]);
 
   useEffect(() => {
     initializeGoogleAuth()
