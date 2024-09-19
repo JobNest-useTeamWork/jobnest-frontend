@@ -8,7 +8,7 @@ const Home = () => {
       <h1 className="text-5xl font-bold">즐겨찾기</h1>
       <BookmarkedList />
       <Todo />
-      <div className="flex">
+      <div className="flex justify-end">
         <HomeButton>구글 달력</HomeButton>
         <HomeButton>오늘 할 일 메모</HomeButton>
       </div>
