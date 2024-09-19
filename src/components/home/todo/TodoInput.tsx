@@ -1,20 +1,20 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 interface TodoInputProps {
-  onAddTodo?: (text: string) => void
-  className?: string
+  onAddTodo?: (text: string) => void;
+  className?: string;
 }
 
 const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo, className }) => {
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (text.trim()) {
-      onAddTodo?.(text)
-      setText("")
+      onAddTodo?.(text);
+      setText("");
     }
-  }
+  };
 
   return (
     <form className={`${className} relative`} onSubmit={handleSubmit}>
@@ -32,7 +32,7 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAddTodo, className }) => {
         입력
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default TodoInput
+export default TodoInput;
