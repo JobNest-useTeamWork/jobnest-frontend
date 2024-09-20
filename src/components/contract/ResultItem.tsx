@@ -15,7 +15,7 @@ const ResultItem = ({
 }: contractType) => {
   return (
     <>
-      <div className="contract-search-grid px-[2px] py-[4px] min-w-max">
+      <div className="contract-search-grid px-[2px] py-[4px]">
         <input type="checkbox" />
         <div>{contract_date}</div>
         <div>{balance_date}</div>
