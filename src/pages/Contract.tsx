@@ -17,9 +17,9 @@ const Contract = () => {
     }
   };
   return (
-    <div className="bg-[#F7F8F9] w-full flex flex-col p-[50px]">
+    <div className="bg-[#F7F8F9] max-w-[1200px] flex flex-col p-[50px] h-lvh">
       {/* Title */}
-      <div className="flex justify-between w-full mx-auto mb-[12px]">
+      <div className="flex justify-between mb-[12px]">
         <div className="flex items-center gap-[4px] font-semibold">
           <img src={contractIcon} alt="계약관리 아이콘" />
           <h1>계약관리</h1>
@@ -38,7 +38,7 @@ const Contract = () => {
           </div>
         )}
       </div>
-      <section className="flex flex-col gap-[26px] min-x-[1124px] ">
+      <section className="flex flex-col gap-[26px]">
         <ContractSearchForm />
         <ContractSearchResult />
       </section>
