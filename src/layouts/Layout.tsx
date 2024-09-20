@@ -3,12 +3,12 @@ import Header from "../components/outside/Header";
 import SideBar from "../components/outside/SideBar";
 
 const Layout = () => {
-  return (    
+  return (
     <>
       <Header />
       <section className="flex">
         <SideBar />
-        <section className="p-[50px] w-full h-full">
+        <section className="w-screen h-lvh">
           <Outlet />
         </section>
       </section>
