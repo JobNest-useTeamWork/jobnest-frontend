@@ -17,7 +17,7 @@ const Contract = () => {
     }
   };
   return (
-    <div className="bg-[#F7F8F9] max-w-[1080px] flex flex-col p-[50px] h-lvh">
+    <div className="bg-[#F7F8F9] max-w-[800px] flex flex-col p-[50px] h-lvh">
       {/* Title */}
       <div className="flex justify-between mb-[12px]">
         <div className="flex items-center gap-[4px] font-semibold">
