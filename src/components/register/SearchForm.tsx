@@ -12,11 +12,18 @@ const SELECT_DATA = [
   { id: 3, name: "대장" },
 ];
 
+const ERROR_MESSAGE_REQUIRED = "필수로 입력해야하는 필드입니다.";
+
 const SearchForm = () => {
-  const { handleSubmit, register, resetField, watch } =
-    useForm<SearchRegisterInputs>({
-      mode: "onChange",
-    });
+  const {
+    handleSubmit,
+    register,
+    resetField,
+    watch,
+    formState: { errors },
+  } = useForm<SearchRegisterInputs>({
+    mode: "onChange",
+  });
 
   const addSearchRegister = useRegisterStore(
     (state) => state.addSearchRegister
@@ -52,12 +59,20 @@ const SearchForm = () => {
         selectData={SELECT_DATA}
         register={register("register_type")}
       ></SelectBox>
-      <Input
-        type='text'
-        placeholder='주소를 입력해주세요.'
-        register={register("address")}
-        resetField={() => resetField("address")}
-      />
+      <div className='w-full h-full'>
+        <Input
+          type='text'
+          placeholder='주소를 입력해주세요.'
+          className={errors.address && "border-red-500"}
+          register={register("address", {
+            required: ERROR_MESSAGE_REQUIRED,
+          })}
+          resetField={() => resetField("address")}
+        />
+        {errors.address && (
+          <p className='text-sm mt-1 text-red-500'>{errors.address?.message}</p>
+        )}
+      </div>
       <Button className='w-24 rounded-md'>검색</Button>
     </form>
   );
