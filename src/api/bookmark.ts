@@ -1,5 +1,4 @@
 
-
 export const bookmarkDataFetch = async(url : string) => {
  
     try {
