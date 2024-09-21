@@ -2,8 +2,8 @@ import { IoClose } from "react-icons/io5";
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { bookmarkDataFetch } from "../../api/bookmark";
-import { bookmarkDataInterface, getBookmarks, saveBookmarks } from "../../hooks/useBookmarks";
-import { manageModalInterface } from "./BookmarkedList";
+import { getBookmarks, saveBookmarks } from "../../hooks/useBookmarks";
+import { bookmarkDataInterface, manageModalInterface } from "../../types/bookmark";
 
 
 

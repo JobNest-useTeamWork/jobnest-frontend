@@ -1,20 +1,7 @@
+import { bookmarkDataInterface } from "../types/bookmark";
 
 const PERSONAL_BOOKMARKS_KEY = 'personalBookmarks';
 
-// export interface BookmarkInterface {
-//     id : number;
-//     url : string;
-//     img : string;
-//     title : string;
-// }
-
-export interface bookmarkDataInterface {
-    bookmarkId : string;
-    bookmarkTitle : string;
-    bookmarkURL : string;
-    bookmarkOgImg : string;
-    checked ? : boolean;
-}
 
 
 //get BookmarkList

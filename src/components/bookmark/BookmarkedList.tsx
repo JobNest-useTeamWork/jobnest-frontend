@@ -2,14 +2,8 @@ import {DndContext, DragEndEvent} from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import {useState } from 'react';
 import BookmarkedEachItem from './BookmarkedEachItem';
-import { bookmarkDataInterface } from '../../hooks/useBookmarks';
 import ManageDetailModal from './ManageDetailModal';
-
-export interface manageModalInterface {
-    closeModal : () => void;
-    handleCheckedItems : (items : bookmarkDataInterface[]) => void;
-    gridItems?: bookmarkDataInterface[]; // 부모로부터 받은 그리드 항목
-}
+import { bookmarkDataInterface } from '../../types/bookmark';
 
 
 const BookmarkedList = () => {
