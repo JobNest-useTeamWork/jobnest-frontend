@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { bookmarkDataInterface } from "../../hooks/useBookmarks";
+import { bookmarkDataFetch } from "../../api/bookmark";
 
 interface ModalProps {
     modalType : 'add' | 'edit' | 'delete';
@@ -7,14 +9,11 @@ interface ModalProps {
  //   onCancel :
 }
 
-interface bookmarkDataInterface {
-    bookmarkTitle : string;
-    bookmarkURL : string;
-}
-
 const ActionDetailModal = ({modalType} : ModalProps) => {
 
     const [fetchUrl, setFetchUrl] = useState('');
+    const [listItem, setListItem] = useState<bookmarkDataInterface[]>([]);
+
     
     const {register, handleSubmit, formState : {errors}} = useForm<bookmarkDataInterface>({
         defaultValues : {
@@ -26,18 +25,24 @@ const ActionDetailModal = ({modalType} : ModalProps) => {
     const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
 
 
-    const modalHandleFunc = () => {
-        if(modalType === 'add' || modalType === 'edit'){
-            //저장 로직
-        }else if (modalType === 'delete'){
-            //삭제로직
-        }
-    }
+    // const modalHandleFunc = () => {
+    //     if(modalType === 'add' || modalType === 'edit'){
+    //         //저장 로직
+    //     }else if (modalType === 'delete'){
+    //         //삭제로직
+    //     }
+    // }
 
-    const onValid = (data : bookmarkDataInterface) => {
+    const onValid = async (data : bookmarkDataInterface) => {
         console.log(`bookmarkDataInterface`,data);
-        //url 받아서 bookmarkDataFetch 에 담아 넘기기 : 현재 cors에러 발생
-        //bookmarkDataFetch(data.bookmarkURL);
+        try {
+            const newBookmark = await bookmarkDataFetch(data.bookmarkURL);
+            if(newBookmark) {
+                setListItem((prevItems) => [...prevItems, newBookmark]);
+            }
+        } catch (error) {
+            
+        }
     }
 
     return(
@@ -50,8 +55,6 @@ const ActionDetailModal = ({modalType} : ModalProps) => {
                 bottom: '30%',
                 transform: 'translateX(0%)', // 자식 모달을 중앙에 위치시킵니다
             }} className="flex flex-col w-[311px] h-[220px] rounded-md border-[1px] border-black gap-2 justify-center">
-        
-        
         <div className="flex flex-col gap-2 items-center">
             <input type="text" 
                     className="w-[267px] h-[41px] rounded-md border-[1px] p-2" 
@@ -88,3 +91,6 @@ const ActionDetailModal = ({modalType} : ModalProps) => {
 }
 
 export default ActionDetailModal;
+
+
+
