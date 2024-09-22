@@ -18,7 +18,7 @@ export type RegisterType = {
 
 export type RegisterAPIType = {
   last_page: string;
-  result: RegisterType[] | string;
+  result: RegisterType[];
   status: number;
 };
 
