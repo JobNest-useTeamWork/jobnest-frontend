@@ -57,17 +57,17 @@ const BookmarkedList = () => {
                                 />
                             </div>
                         ))}
+                          <div className="outline-dotted outline-slate-500 flex justify-center items-center w-[180px] h-[180px] mb-[12px] bg-slate-100">
+                            <button
+                                className="w-[93px] h-[35px] bg-blue-500 m-5 font-suit font-semibold text-center text-[15px] leading-[15px] flex items-center text-white rounded-md justify-center"
+                                onClick={openManageModal}>
+                                관리하기
+                            </button>
+                        </div>
                     </div>
                 </SortableContext>
             </DndContext>
-            <div className="border-slate-800 border-dashed flex justify-center items-center w-[180px] h-[180px] mb-[12px] bg-slate-100">
-                <button
-                    className="w-[93px] h-[35px] bg-blue-500 m-5 font-suit font-semibold text-center text-[15px] leading-[15px] flex items-center text-white rounded-md justify-center"
-                    onClick={openManageModal}
-                >
-                    관리하기
-                </button>
-            </div>
+          
             {modalYn ? <ManageDetailModal closeModal={() => setmodalYn(false)}/> : null}
         </>
     );
