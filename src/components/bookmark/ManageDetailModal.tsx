@@ -163,7 +163,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
         top: '30%',
       }} className="w-[311px] h-[566px] bg-white border border-black transform -translate-x-1/2 -translate-y-1/2">
         <div className="w-full h-[51px] flex justify-between p-2">
-          <span className="w-[120px] h-[22px] text-center font-medium text-lg">즐겨찾기 관리</span>
+          <span className="w-[120px] h-[22px] text-center font-semibold text-lg">즐겨찾기 관리</span>
           <span onClick={closeModal} className="w-[25px] h-[17px]">
             <IoClose size={28} />
           </span>
@@ -171,10 +171,10 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
         <hr />
         {listItem.map((item) => (
           <div key={item.bookmarkId} className="group flex flex-row justify-between p-1 m-1">
-            <label className="text-gray-500 rounded-sm" key={item.bookmarkId}>
+            <label className="text-gray-500 rounded-sm items-center flex space-x-2" key={item.bookmarkId}>
               <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                 id={item.bookmarkId} checked={item.checked || false} onChange={(e) => { chkBookmarkedOne(e.target.checked, item) }} />
-              {item.bookmarkTitle}
+              <span>{item.bookmarkTitle}</span>
             </label>
             {/* 점 세개 버튼 */}
             <div className="relative flex items-center justify-center">

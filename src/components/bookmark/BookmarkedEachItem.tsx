@@ -9,7 +9,7 @@ const BookmarkedEachItem = ({bookmarkId,bookmarkOgImg,bookmarkTitle} : bookmarkD
 
   return(
     <>    
-        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-black border-[1px]"
+        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-black border-[1px] rounded-lg"
              style={{ backgroundImage: `url(${bookmarkOgImg})`,transform: CSS.Transform.toString(transform), transition: transition ? transition : undefined}}
                         ref={setNodeRef} {...attributes} {...listeners}>
         </div>
