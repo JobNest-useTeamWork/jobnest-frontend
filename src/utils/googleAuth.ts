@@ -1,7 +1,7 @@
 import { gapi } from "gapi-script";
 
 const CLIENT_ID =
-  "851060147388-buk6h7qbd73n8a5de82vh6en17h4vvr5.apps.googleusercontent.com";
+  "851060147388-8tl0fa5scviqmehsn5hodac94n837q35.apps.googleusercontent.com";
 const API_KEY = "AIzaSyAup6YXbC4T9H_FO62Qo2d9lXCe0ajdYcU";
 const DISCOVERY_DOC =
   "https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest";
@@ -11,14 +11,16 @@ export const initializeGoogleAuth = () => {
   return new Promise<void>((resolve, reject) => {
     gapi.load("client:auth2", async () => {
       try {
-        await gapi.client.init({
+        const google = await gapi.client.init({
           apiKey: API_KEY,
           clientId: CLIENT_ID,
           discoveryDocs: [DISCOVERY_DOC],
           scope: SCOPES,
         });
+        console.log(google);
         resolve();
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });

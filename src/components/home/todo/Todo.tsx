@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoListPart from "./TodoList";
-
 import TodoInput from "./TodoInput";
 import DateSelector from "./DateSelector";
 import { TodoItem } from "../../../types/todotypes";
 
 const Todo: React.FC = () => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [todos, setTodos] = useState<TodoItem[]>(
+    localStorage.getItem("todos")
+      ? JSON.parse(localStorage.getItem("todos")!)
+      : []
+  );
   const [selectedDay, setSelectedDay] = useState("오늘");
+
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (text: string) => {
     const newTodo: TodoItem = {
@@ -56,7 +71,7 @@ const Todo: React.FC = () => {
   });
 
   return (
-    <div className="relative w-[311px] min-h-[372px] bg-gray-100 h-auto shadow-2xl flex flex-col">
+    <div className="relative w-[311px] min-h-[372px] h-auto shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.5)]  flex flex-col">
       <div className="flex justify-between items-center px-2">
         <DateSelector
           selectedDay={selectedDay}
@@ -74,6 +89,7 @@ const Todo: React.FC = () => {
           onEditTodo={editTodo}
         />
       </div>
+
       <TodoInput
         onAddTodo={addTodo}
         className="h-[48px] border-t border-[#EDEDED] w-full bg-[#F8F8F8] mt-4 "
