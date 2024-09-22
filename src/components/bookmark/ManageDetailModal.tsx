@@ -7,66 +7,101 @@ import { bookmarkDataInterface, manageModalInterface } from "../../types/bookmar
 
 
 
-const ManageDetailModal = ({ closeModal, handleCheckedItems }: manageModalInterface) => {
-  const [listItem, setListItem] = useState<bookmarkDataInterface[]>([]);
+const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
+  
+  const [listItem, setListItem] = useState<bookmarkDataInterface[]>([]); //추가된 리스트
   const [fetchUrl, setFetchUrl] = useState('');
-  const [addModalYn, setAddModalYn] = useState(false);
+  const [addModalYn, setAddModalYn] = useState(false); 
   const [isEditing, setIsEditing] = useState(false);  // 수정 모드 여부
   const [editBookmarkId, setEditBookmarkId] = useState<string | null>(null);  // 수정 중인 북마크 ID
   const [dropDownState, setDropDownState] = useState<{ [key: string]: boolean }>({});
-  const [checkedItems, setCheckedItems] = useState<bookmarkDataInterface[]>([]);
   const dropDownRef = useRef<HTMLDivElement>(null); // 드롭다운 감지할 ref
+  const [checkedItems, setCheckedItems] = useState<bookmarkDataInterface[]>([]);
 
-  // 모달이 열릴 때 로컬 스토리지에서 북마크 리스트를 불러옴
-  useEffect(() => {
-    const savedBookmarks = getBookmarks();
-    setListItem(savedBookmarks);
-  }, []);
+  
+  const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
 
-  // checkedItems가 업데이트될 때마다 부모로 전달
-  useEffect(() => {
-    handleCheckedItems(checkedItems);
-  }, [checkedItems, handleCheckedItems]);
-
-  // 드롭다운 외부 클릭 감지
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
-        setDropDownState({});
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  // 체크된 북마크 처리
-  const chkBookmarkedOne = (checked: boolean, item: bookmarkDataInterface) => {
-    if (checked) {
-      setCheckedItems((prev) => [...prev, item]);
-    } else {
-      setCheckedItems((prev) => prev.filter((i) => i.bookmarkId !== item.bookmarkId));
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<bookmarkDataInterface>({
+    defaultValues: {
+      bookmarkTitle: '',
+      bookmarkURL: '',
     }
-    handleCheckedItems(checkedItems);
-  };
+  });
 
-  // 드롭다운 토글
-  const toggleDropdown = (id: string) => {
-    setDropDownState((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
 
-  // 수정 모드 활성화
-  const onEdit = (bookmark: bookmarkDataInterface) => {
-    setIsEditing(true);
-    setEditBookmarkId(bookmark.bookmarkId);
-    setFetchUrl(bookmark.bookmarkURL);  // URL을 input에 넣기
-    reset({ bookmarkTitle: bookmark.bookmarkTitle, bookmarkURL: bookmark.bookmarkURL });  // 타이틀과 URL을 input에 설정
-    setAddModalYn(true);  // 자식 모달 열기
-  };
+
+    // 모달이 열릴 때 로컬 스토리지에서 북마크 리스트를 불러옴 -> 수정필요: 체크된 요소 저장해서 모두가져오기
+    useEffect(() => {
+      const savedBookmarks = getBookmarks();
+      setListItem(savedBookmarks);
+    }, []);
+
+    // checkedItems가 업데이트될 때마다 부모로 전달
+    // useEffect(() => {
+    //   handleCheckedItems(checkedItems);
+    // }, [checkedItems, handleCheckedItems]);
+
+    // 드롭다운 외부 클릭 감지
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+          setDropDownState({});
+        }
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+
+    // 오버레이 클릭 시 모달 닫기
+    const handleOverlayClick = (
+        e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        if (e.target === e.currentTarget) {
+        closeModal();
+        }
+    };
+
+    // 체크된 북마크 처리
+    const chkBookmarkedOne = (checked: boolean, item: bookmarkDataInterface) => {
+
+      const updatedBookmarks = listItem.map((bookmark) =>
+        bookmark.bookmarkId === item.bookmarkId ? { ...bookmark, checked } : bookmark
+      );
+    
+
+       // listItem 상태 업데이트
+      setListItem(updatedBookmarks);
+
+      // 업데이트된 북마크를 로컬 스토리지에 저장
+      saveBookmarks(updatedBookmarks);
+      console.log('chkBookmarkedOne', updatedBookmarks);
+
+      if (checked) {
+        setCheckedItems((prev) => [...prev, { ...item, checked }]);
+      } else {
+        setCheckedItems((prev) => prev.filter((i) => i.bookmarkId !== item.bookmarkId));
+      }
+      //handleCheckedItems(checkedItems);
+    };
+
+    // 드롭다운 토글
+    const toggleDropdown = (id: string) => {
+      setDropDownState((prev) => ({
+        ...prev,
+        [id]: !prev[id]
+      }));
+    };
+
+    // 수정 모드 활성화
+    const onEdit = (bookmark: bookmarkDataInterface) => {
+      setIsEditing(true);
+      setEditBookmarkId(bookmark.bookmarkId);
+      setFetchUrl(bookmark.bookmarkURL);  // URL을 input에 넣기
+      reset({ bookmarkTitle: bookmark.bookmarkTitle, bookmarkURL: bookmark.bookmarkURL });  // 타이틀과 URL을 input에 설정
+      setAddModalYn(true);  // 자식 모달 열기
+    };
 
   // 수정 내용 저장
   const onSaveEdit = (data: bookmarkDataInterface) => {
@@ -78,7 +113,7 @@ const ManageDetailModal = ({ closeModal, handleCheckedItems }: manageModalInterf
     });
 
     saveBookmarks(updatedBookmarks); // 로컬 스토리지에 저장
-    setListItem(updatedBookmarks); // 상태 업데이트
+    setListItem(updatedBookmarks); // 리스트에 업데이트
     setIsEditing(false);
     setAddModalYn(false);  // 자식 모달 닫기
   };
@@ -87,25 +122,22 @@ const ManageDetailModal = ({ closeModal, handleCheckedItems }: manageModalInterf
   const onDelete = (bookmarkId: string) => {
     const updatedBookmarks = listItem.filter((bookmark) => bookmark.bookmarkId !== bookmarkId);
     saveBookmarks(updatedBookmarks); // 로컬 스토리지에 저장
-    setListItem(updatedBookmarks); // 상태 업데이트
+    setListItem(updatedBookmarks); // 리스트 업데이트
   };
 
-  // 북마크 추가
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<bookmarkDataInterface>({
-    defaultValues: {
-      bookmarkTitle: '',
-      bookmarkURL: '',
-    }
-  });
-
-  const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
-
+ 
+  
   const onValid = async (data: bookmarkDataInterface) => {
     try {
       const newBookmark = await bookmarkDataFetch(data.bookmarkURL);
       if (newBookmark) {
+        const bookmarkWithChecked: bookmarkDataInterface = {
+          ...newBookmark,
+          checked: false,  // 새로운 북마크의 기본 checked 값을 false로 설정
+        };
+
         const existingBookmarks = getBookmarks();
-        const updatedBookmarks = [...existingBookmarks, newBookmark];
+        const updatedBookmarks = [...existingBookmarks, bookmarkWithChecked];
 
         saveBookmarks(updatedBookmarks); // 로컬 스토리지에 저장
         setListItem(updatedBookmarks); // 상태 업데이트
@@ -121,14 +153,7 @@ const ManageDetailModal = ({ closeModal, handleCheckedItems }: manageModalInterf
     setAddModalYn((prev) => !prev);
   };
 
-  // 오버레이 클릭 시 모달 닫기
-  const handleOverlayClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-) => {
-    if (e.target === e.currentTarget) {
-    closeModal();
-    }
-};
+  
 
   return (
     <div className="modal-overlay fixed justify-center items-center flex inset-0"
@@ -148,7 +173,7 @@ const ManageDetailModal = ({ closeModal, handleCheckedItems }: manageModalInterf
           <div key={item.bookmarkId} className="group flex flex-row justify-between p-1 m-1">
             <label className="text-gray-500 rounded-sm" key={item.bookmarkId}>
               <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                id={item.bookmarkId} onChange={(e) => { chkBookmarkedOne(e.target.checked, item) }} />
+                id={item.bookmarkId} checked={item.checked || false} onChange={(e) => { chkBookmarkedOne(e.target.checked, item) }} />
               {item.bookmarkTitle}
             </label>
             {/* 점 세개 버튼 */}

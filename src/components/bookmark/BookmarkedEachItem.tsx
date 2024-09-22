@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { bookmarkDataInterface } from '../../hooks/useBookmarks';
+import { bookmarkDataInterface } from '../../types/bookmark';
+
 
 const BookmarkedEachItem = ({bookmarkId,bookmarkOgImg,bookmarkTitle} : bookmarkDataInterface) => {
   
