@@ -1,18 +1,11 @@
 import Button from "../components/register/Button";
-import { OpenedRegisterAPIType, RegisterType } from "../types/register";
+import { OpenedRegisterAPIType } from "../types/register";
 import SelectBox from "../components/register/SelectBox";
 import { useForm } from "react-hook-form";
 import RegisterWrapper from "../components/register/RegisterWrapper";
 import Checkbox from "../components/register/Checkbox";
 import { useMemo } from "react";
 import LoadingSpinner from "../components/register/LoadingSpinner";
-
-export interface OpenedRegisterType extends RegisterType {
-  serial_number: string;
-  owner: string;
-  changed: "있음" | "없음";
-  createdAt: string;
-}
 
 const SELECT_DATA = [
   { id: 1, name: "10개씩" },
