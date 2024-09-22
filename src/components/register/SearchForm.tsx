@@ -43,6 +43,10 @@ const SearchForm = () => {
     // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
     searchRegister(data.address, 1)
       .then((data: RegisterAPIType) => {
+        if (typeof data.result === "string") {
+          alert(data.result);
+        }
+
         addSearchRegister(data, watch("register_type"));
       })
       .finally(() => {
