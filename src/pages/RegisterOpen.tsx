@@ -4,8 +4,8 @@ import SelectBox from "../components/register/SelectBox";
 import { useForm } from "react-hook-form";
 import RegisterWrapper from "../components/register/RegisterWrapper";
 import Checkbox from "../components/register/Checkbox";
-import { useEffect, useState } from "react";
-import { checkOpenedRegister } from "../api/register";
+import { useMemo } from "react";
+import LoadingSpinner from "../components/register/LoadingSpinner";
 
 export interface OpenedRegisterType extends RegisterType {
   serial_number: string;
@@ -39,17 +39,27 @@ const titleHeader = [
 ];
 
 const RegisterOpen = () => {
-  const [openedRegister, setOpenedRegister] = useState<OpenedRegisterAPIType>();
+  const readLocalStorageRegister = () => {
+    const localStorageRegister = localStorage.getItem("openedRegisters");
+
+    return localStorageRegister ? JSON.parse(localStorageRegister) : [];
+  };
+
+  const localRegister: OpenedRegisterAPIType = useMemo(
+    () => readLocalStorageRegister(),
+    []
+  );
+
+  // pdf-list API 사용 로직
+  // const [openedRegister, setOpenedRegister] = useState<OpenedRegisterAPIType>();
+
+  // useEffect(() => {
+  //   checkOpenedRegister().then((data) => {
+  //     setOpenedRegister(data);
+  //   });
+  // }, []);
 
   const { register } = useForm();
-
-  useEffect(() => {
-    checkOpenedRegister().then((data) => setOpenedRegister(data));
-  }, []);
-
-  const formattingDate = (date: string) => {
-    return date.split(" ")[0];
-  };
 
   const handlePrintPdf = (pdf_url: string) => {
     window.open(
@@ -62,68 +72,84 @@ const RegisterOpen = () => {
   return (
     <div className='p-[50px]'>
       <RegisterWrapper titleData={RegisterOpenTitleData}>
-        <div className='flex items-center justify-end max-w-[1264px] mx-10 my-3 gap-[10px]'>
-          <Button className='w-[66px] h-[34px] rounded-md border border-[#cccccc] bg-white font-noto-sans-kr font-normal text-sm text-black'>
-            삭제
-          </Button>
-          <SelectBox
-            className='w-32 h-[34px] px-2 border border-[#cccccc] rounded-md text-sm text-[#6f6f6f]'
-            register={register("register_open_count")}
-            selectData={SELECT_DATA}
-          ></SelectBox>
-        </div>
-        <div className='max-w-[1264px] mx-10'>
-          <table className='text-sm text-center w-full'>
-            <thead>
-              <tr className='h-[30px]'>
-                {titleHeader.map((item) => {
-                  if (item === "체크") {
-                    return (
-                      <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
-                        <Checkbox type='checkbox'></Checkbox>
-                      </th>
-                    );
-                  } else {
-                    return (
-                      <th className='px-2 border border-[#7f7f7f]'>{item}</th>
-                    );
-                  }
-                })}
-              </tr>
-            </thead>
-            <tbody className='border-b border-[#7f7f7f]'>
-              {openedRegister?.result.map((item) => {
-                const registerData = [
-                  <Checkbox type='checkbox' />,
-                  "등기",
-                  item.unique,
-                  item.juso,
-                  item.owner.join(", "),
-                  item.is_change ? "있음" : "없음",
-                  formattingDate(item.created_at),
-                  <Button className='w-[68px] h-6 text-sm'>열람</Button>,
-                  <Button className='w-[68px] h-6 text-sm'>작성</Button>,
-                  <Button
-                    className='w-[68px] h-6 text-sm'
-                    onClick={() => handlePrintPdf(item.pdf_url)}
-                  >
-                    다운로드
-                  </Button>,
-                ];
-
-                return (
-                  <tr key={item.id}>
-                    {registerData.map((data) => (
-                      <td className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'>
-                        {data}
-                      </td>
-                    ))}
+        {localRegister ? (
+          <>
+            <div className='flex items-center justify-end max-w-[1264px] mx-10 my-3 gap-[10px]'>
+              <Button className='w-[66px] h-[34px] rounded-md border border-[#cccccc] bg-white font-noto-sans-kr font-normal text-sm text-black'>
+                삭제
+              </Button>
+              <SelectBox
+                className='w-32 h-[34px] px-2 border border-[#cccccc] rounded-md text-sm text-[#6f6f6f]'
+                register={register("register_open_count")}
+                selectData={SELECT_DATA}
+              ></SelectBox>
+            </div>
+            <div className='max-w-[1264px] mx-10'>
+              <table className='text-sm text-center w-full'>
+                <thead>
+                  <tr className='h-[30px]'>
+                    {titleHeader.map((item) => {
+                      if (item === "체크") {
+                        return (
+                          <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
+                            <Checkbox type='checkbox'></Checkbox>
+                          </th>
+                        );
+                      } else {
+                        return (
+                          <th className='px-2 border border-[#7f7f7f]'>
+                            {item}
+                          </th>
+                        );
+                      }
+                    })}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                </thead>
+                <tbody className='border-b border-[#7f7f7f]'>
+                  {localRegister?.result.map((item) => {
+                    const registerData = [
+                      <Checkbox type='checkbox' />,
+                      item.register_type,
+                      item.unique,
+                      item.juso,
+                      item.owner.join(", "),
+                      item.is_change ? "있음" : "없음",
+                      item.created_at,
+                      item.register_type?.includes("등기") ? (
+                        <Button className='w-[68px] h-6 text-sm'>열람</Button>
+                      ) : (
+                        "-"
+                      ),
+                      item.register_type?.includes("등기") ? (
+                        <Button className='w-[68px] h-6 text-sm'>작성</Button>
+                      ) : (
+                        "-"
+                      ),
+                      <Button
+                        className='w-[68px] h-6 text-sm'
+                        onClick={() => handlePrintPdf(item.pdf_url)}
+                      >
+                        다운로드
+                      </Button>,
+                    ];
+
+                    return (
+                      <tr key={item.id}>
+                        {registerData.map((data) => (
+                          <td className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'>
+                            {data}
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <LoadingSpinner />
+        )}
       </RegisterWrapper>
     </div>
   );

@@ -23,7 +23,8 @@ export type RegisterAPIType = {
 };
 
 export type OpenedRegisterType = {
-  id: number;
+  id: number | string;
+  register_type?: string;
   category: string;
   unique: string;
   juso: string;
