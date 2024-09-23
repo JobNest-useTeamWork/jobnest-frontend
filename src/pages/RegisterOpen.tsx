@@ -6,6 +6,7 @@ import RegisterWrapper from "../components/register/RegisterWrapper";
 import Checkbox from "../components/register/Checkbox";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/register/LoadingSpinner";
+import { useRegisterStore } from "../store/registerStore";
 
 const SELECT_DATA = [
   { id: 1, name: "10개씩" },
@@ -42,6 +43,22 @@ const RegisterOpen = () => {
     readLocalStorageRegister
   );
   const [isCheckedAll, setIsCheckedAll] = useState(false);
+
+  const searchOpenRegisterData = useRegisterStore(
+    (state) => state.searchOpenRegisterData
+  );
+  const setSearchOpenRegisterData = useRegisterStore(
+    (state) => state.setSearchOpenRegisterData
+  );
+
+  useEffect(() => {
+    setSearchOpenRegisterData({
+      address: "",
+      register_type: "",
+    });
+  }, []);
+
+  console.log(searchOpenRegisterData);
 
   useEffect(() => {
     setLocalRegister((prev) => ({
@@ -123,6 +140,22 @@ const RegisterOpen = () => {
     }));
   };
 
+  // 필터링된 데이터 계산
+  const filteredData = localRegister?.result.filter((item) => {
+    // 주소 필터링
+    const isAddressMatched =
+      searchOpenRegisterData.address === "" ||
+      item.juso.includes(searchOpenRegisterData.address);
+
+    // register_type 필터링
+    const isRegisterTypeMatched =
+      searchOpenRegisterData.register_type === "" ||
+      item.register_type === searchOpenRegisterData.register_type;
+
+    // 두 조건이 모두 만족하는 경우에만 필터링
+    return isAddressMatched && isRegisterTypeMatched;
+  });
+
   return (
     <div className='p-[50px]'>
       <RegisterWrapper titleData={RegisterOpenTitleData}>
@@ -167,47 +200,63 @@ const RegisterOpen = () => {
                   </tr>
                 </thead>
                 <tbody className='border-b border-[#7f7f7f]'>
-                  {localRegister?.result.map((item) => {
-                    const registerData = [
-                      <Checkbox
-                        type='checkbox'
-                        checked={item.isChecked}
-                        onClick={() => toggleCheckbox(item.unique)}
-                      />,
-                      item.register_type,
-                      item.unique,
-                      item.juso,
-                      item.owner.join(", "),
-                      item.is_change ? "있음" : "없음",
-                      getCurrentDate(item.created_at),
-                      item.register_type?.includes("등기") ? (
-                        <Button className='w-[68px] h-6 text-sm'>열람</Button>
-                      ) : (
-                        "-"
-                      ),
-                      item.register_type?.includes("등기") ? (
-                        <Button className='w-[68px] h-6 text-sm'>작성</Button>
-                      ) : (
-                        "-"
-                      ),
-                      <Button
-                        className='w-[68px] h-6 text-sm'
-                        onClick={() => handlePrintPdf(item.pdf_url)}
+                  {filteredData.length === 0 ? (
+                    // 검색 결과가 없을 경우
+                    <tr key='no-result'>
+                      <td
+                        colSpan={10}
+                        className='h-[60px] text-center border-r border-l p-2 border-[#7f7f7f]'
                       >
-                        다운로드
-                      </Button>,
-                    ];
+                        검색 내용이 없습니다
+                      </td>
+                    </tr>
+                  ) : (
+                    // 검색 결과가 있을 경우
+                    filteredData.map((item) => {
+                      const registerData = [
+                        <Checkbox
+                          type='checkbox'
+                          checked={item.isChecked}
+                          onClick={() => toggleCheckbox(item.unique)}
+                        />,
+                        item.register_type,
+                        item.unique,
+                        item.juso,
+                        item.owner.join(", "),
+                        item.is_change ? "있음" : "없음",
+                        getCurrentDate(item.created_at),
+                        item.register_type?.includes("등기") ? (
+                          <Button className='w-[68px] h-6 text-sm'>열람</Button>
+                        ) : (
+                          "-"
+                        ),
+                        item.register_type?.includes("등기") ? (
+                          <Button className='w-[68px] h-6 text-sm'>작성</Button>
+                        ) : (
+                          "-"
+                        ),
+                        <Button
+                          className='w-[68px] h-6 text-sm'
+                          onClick={() => handlePrintPdf(item.pdf_url)}
+                        >
+                          다운로드
+                        </Button>,
+                      ];
 
-                    return (
-                      <tr key={item.id}>
-                        {registerData.map((data) => (
-                          <td className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'>
-                            {data}
-                          </td>
-                        ))}
-                      </tr>
-                    );
-                  })}
+                      return (
+                        <tr key={item.id}>
+                          {registerData.map((data, index) => (
+                            <td
+                              key={index}
+                              className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'
+                            >
+                              {data}
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })
+                  )}
                 </tbody>
               </table>
             </div>
