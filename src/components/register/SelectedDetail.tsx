@@ -38,15 +38,6 @@ const SelectedDetail = () => {
     localStorage.setItem("openedRegisters", JSON.stringify(localRegisters));
   }, [localRegisters]);
 
-  const getCurrentDate = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
   // 등기대장 구조 변경
   const transformRegisters = (registers: RegisterType[]) => {
     return {
@@ -58,8 +49,9 @@ const SelectedDetail = () => {
         juso: registers.address,
         owner: ["-"],
         is_change: false,
+        isChecked: false,
         pdf_url: "",
-        created_at: getCurrentDate(),
+        created_at: new Date(),
       })),
     };
   };

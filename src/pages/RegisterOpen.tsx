@@ -4,7 +4,7 @@ import SelectBox from "../components/register/SelectBox";
 import { useForm } from "react-hook-form";
 import RegisterWrapper from "../components/register/RegisterWrapper";
 import Checkbox from "../components/register/Checkbox";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/register/LoadingSpinner";
 
 const SELECT_DATA = [
@@ -38,10 +38,33 @@ const RegisterOpen = () => {
     return localStorageRegister ? JSON.parse(localStorageRegister) : [];
   };
 
-  const localRegister: OpenedRegisterAPIType = useMemo(
-    () => readLocalStorageRegister(),
-    []
+  const [localRegister, setLocalRegister] = useState<OpenedRegisterAPIType>(
+    readLocalStorageRegister
   );
+  const [isCheckedAll, setIsCheckedAll] = useState(false);
+
+  useEffect(() => {
+    setLocalRegister((prev) => ({
+      ...prev,
+      result: prev.result.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      ),
+    }));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("openedRegisters", JSON.stringify(localRegister));
+  }, [localRegister]);
+
+  useEffect(() => {
+    // const findCheckedItem = localRegister.result.some((item) => item.isChecked);
+    const findUnCheckedItem = localRegister.result.every(
+      (item) => item.isChecked
+    );
+
+    setIsCheckedAll(findUnCheckedItem);
+  }, [localRegister]);
 
   // pdf-list API 사용 로직
   // const [openedRegister, setOpenedRegister] = useState<OpenedRegisterAPIType>();
@@ -54,6 +77,15 @@ const RegisterOpen = () => {
 
   const { register } = useForm();
 
+  const getCurrentDate = (now: Date) => {
+    const date = new Date(now);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   const handlePrintPdf = (pdf_url: string) => {
     window.open(
       pdf_url,
@@ -62,13 +94,45 @@ const RegisterOpen = () => {
     );
   };
 
+  const handleDeleteRow = () => {
+    console.log("delete");
+    setLocalRegister((prev) => ({
+      ...prev,
+      result: prev.result.filter((item) => !item.isChecked),
+    }));
+  };
+
+  const toggleCheckbox = (unique: string) => {
+    setLocalRegister((prev) => ({
+      ...prev,
+      result: prev.result.map((item) =>
+        item.unique === unique ? { ...item, isChecked: !item.isChecked } : item
+      ),
+    }));
+  };
+
+  const toggleCheckboxAll = () => {
+    setIsCheckedAll((prev) => !prev);
+
+    setLocalRegister((prev) => ({
+      ...prev,
+      result: prev.result.map((item) => ({
+        ...item,
+        isChecked: !isCheckedAll,
+      })),
+    }));
+  };
+
   return (
     <div className='p-[50px]'>
       <RegisterWrapper titleData={RegisterOpenTitleData}>
         {localRegister ? (
           <>
             <div className='flex items-center justify-end max-w-[1264px] mx-10 my-3 gap-[10px]'>
-              <Button className='w-[66px] h-[34px] rounded-md border border-[#cccccc] bg-white font-noto-sans-kr font-normal text-sm text-black'>
+              <Button
+                onClick={handleDeleteRow}
+                className='w-[66px] h-[34px] rounded-md border border-[#cccccc] bg-white font-noto-sans-kr font-normal text-sm text-black'
+              >
                 삭제
               </Button>
               <SelectBox
@@ -85,7 +149,11 @@ const RegisterOpen = () => {
                       if (item === "체크") {
                         return (
                           <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
-                            <Checkbox type='checkbox'></Checkbox>
+                            <Checkbox
+                              type='checkbox'
+                              onClick={toggleCheckboxAll}
+                              checked={isCheckedAll}
+                            ></Checkbox>
                           </th>
                         );
                       } else {
@@ -101,13 +169,17 @@ const RegisterOpen = () => {
                 <tbody className='border-b border-[#7f7f7f]'>
                   {localRegister?.result.map((item) => {
                     const registerData = [
-                      <Checkbox type='checkbox' />,
+                      <Checkbox
+                        type='checkbox'
+                        checked={item.isChecked}
+                        onClick={() => toggleCheckbox(item.unique)}
+                      />,
                       item.register_type,
                       item.unique,
                       item.juso,
                       item.owner.join(", "),
                       item.is_change ? "있음" : "없음",
-                      item.created_at,
+                      getCurrentDate(item.created_at),
                       item.register_type?.includes("등기") ? (
                         <Button className='w-[68px] h-6 text-sm'>열람</Button>
                       ) : (
