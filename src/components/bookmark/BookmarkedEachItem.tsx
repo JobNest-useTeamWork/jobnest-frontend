@@ -20,7 +20,7 @@ const BookmarkedEachItem = ({bookmarkId,bookmarkOgImg,bookmarkTitle} : bookmarkD
                     }}
                         ref={setNodeRef} {...attributes} {...listeners}>
         </div>
-        <button className="absolute w-[181px] h-[34px] text-center">{bookmarkTitle}</button>
+        <span className="absolute w-[181px] h-[34px] text-center py-3">{bookmarkTitle}</span>
     </>
 
   );
