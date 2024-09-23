@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { bookmarkDataFetch } from "../../api/bookmark";
 import { getBookmarks, saveBookmarks } from "../../hooks/useBookmarks";
 import { bookmarkDataInterface, manageModalInterface } from "../../types/bookmark";
+import logo from "../../assets/logo.png";
 
 
 
@@ -18,7 +19,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
   const dropDownRef = useRef<HTMLDivElement>(null); // 드롭다운 감지할 ref
   const [checkedItems, setCheckedItems] = useState<bookmarkDataInterface[]>([]);
 
-  
+
   const bookmarkUrlRegex = /^(https?):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<bookmarkDataInterface>({
@@ -132,6 +133,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       if (newBookmark) {
         const bookmarkWithChecked: bookmarkDataInterface = {
           ...newBookmark,
+          bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? logo : newBookmark.bookmarkOgImg,
           checked: false,  // 새로운 북마크의 기본 checked 값을 false로 설정
         };
 
