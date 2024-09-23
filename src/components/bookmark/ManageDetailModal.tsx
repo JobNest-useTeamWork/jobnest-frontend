@@ -170,6 +170,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
           </span>
         </div>
         <hr />
+        <div className="overflow-y-auto" style={{ maxHeight: '430px' }}>
         {listItem.map((item) => (
           <div key={item.bookmarkId} className="group flex flex-row justify-between p-1 m-1">
             <label className="text-gray-500 rounded-sm items-center flex space-x-2" key={item.bookmarkId}>
@@ -193,6 +194,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
             )}
           </div>
         ))}
+        </div>
         <div className="flex justify-center">
           <button onClick={addBookmarksModal} className="absolute bottom-3 w-[271px] h-[53px] bg-slate-50 text-main-color border-[1px] ">
             페이지 추가
