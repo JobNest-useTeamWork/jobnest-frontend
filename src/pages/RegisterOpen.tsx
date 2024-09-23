@@ -7,6 +7,7 @@ import Checkbox from "../components/register/Checkbox";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/register/LoadingSpinner";
 import { useRegisterStore } from "../store/registerStore";
+import OpenRegisterPaginationNav from "../components/register/OpenRegisterPaginationNav";
 
 const SELECT_DATA = [
   { id: 1, name: "10개씩" },
@@ -43,6 +44,7 @@ const RegisterOpen = () => {
     readLocalStorageRegister
   );
   const [isCheckedAll, setIsCheckedAll] = useState(false);
+  const [pageCount, setPageCount] = useState(10);
 
   const searchOpenRegisterData = useRegisterStore(
     (state) => state.searchOpenRegisterData
@@ -57,8 +59,6 @@ const RegisterOpen = () => {
       register_type: "",
     });
   }, []);
-
-  console.log(searchOpenRegisterData);
 
   useEffect(() => {
     setLocalRegister((prev) => ({
@@ -112,7 +112,6 @@ const RegisterOpen = () => {
   };
 
   const handleDeleteRow = () => {
-    console.log("delete");
     setLocalRegister((prev) => ({
       ...prev,
       result: prev.result.filter((item) => !item.isChecked),
@@ -138,6 +137,12 @@ const RegisterOpen = () => {
         isChecked: !isCheckedAll,
       })),
     }));
+  };
+
+  const handleSelectPageCount = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const numberOnlyReg = /[^0-9]/g;
+
+    setPageCount(Number(e.target.value.replace(numberOnlyReg, "")));
   };
 
   // 필터링된 데이터 계산
@@ -172,94 +177,106 @@ const RegisterOpen = () => {
                 className='w-32 h-[34px] px-2 border border-[#cccccc] rounded-md text-sm text-[#6f6f6f]'
                 register={register("register_open_count")}
                 selectData={SELECT_DATA}
+                onChange={handleSelectPageCount}
               ></SelectBox>
             </div>
-            <div className='max-w-[1264px] mx-10'>
-              <table className='text-sm text-center w-full'>
-                <thead>
-                  <tr className='h-[30px]'>
-                    {titleHeader.map((item) => {
-                      if (item === "체크") {
-                        return (
-                          <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
+            <OpenRegisterPaginationNav
+              filteredData={filteredData}
+              pageCount={pageCount}
+            >
+              {(currentData) => (
+                <div className='max-w-[1264px] mx-10'>
+                  <table className='text-sm text-center w-full'>
+                    <thead>
+                      <tr className='h-[30px]'>
+                        {titleHeader.map((item) => {
+                          if (item === "체크") {
+                            return (
+                              <th className='border border-[#7f7f7f] px-1 translate-y-0.5'>
+                                <Checkbox
+                                  type='checkbox'
+                                  onClick={toggleCheckboxAll}
+                                  checked={isCheckedAll}
+                                ></Checkbox>
+                              </th>
+                            );
+                          } else {
+                            return (
+                              <th className='px-2 border border-[#7f7f7f]'>
+                                {item}
+                              </th>
+                            );
+                          }
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody className='border-b border-[#7f7f7f]'>
+                      {currentData.length === 0 ? (
+                        // 검색 결과가 없을 경우
+                        <tr key='no-result'>
+                          <td
+                            colSpan={10}
+                            className='h-[60px] text-center border-r border-l p-2 border-[#7f7f7f]'
+                          >
+                            검색 내용이 없습니다
+                          </td>
+                        </tr>
+                      ) : (
+                        // 검색 결과가 있을 경우
+                        currentData.map((item) => {
+                          const registerData = [
                             <Checkbox
                               type='checkbox'
-                              onClick={toggleCheckboxAll}
-                              checked={isCheckedAll}
-                            ></Checkbox>
-                          </th>
-                        );
-                      } else {
-                        return (
-                          <th className='px-2 border border-[#7f7f7f]'>
-                            {item}
-                          </th>
-                        );
-                      }
-                    })}
-                  </tr>
-                </thead>
-                <tbody className='border-b border-[#7f7f7f]'>
-                  {filteredData.length === 0 ? (
-                    // 검색 결과가 없을 경우
-                    <tr key='no-result'>
-                      <td
-                        colSpan={10}
-                        className='h-[60px] text-center border-r border-l p-2 border-[#7f7f7f]'
-                      >
-                        검색 내용이 없습니다
-                      </td>
-                    </tr>
-                  ) : (
-                    // 검색 결과가 있을 경우
-                    filteredData.map((item) => {
-                      const registerData = [
-                        <Checkbox
-                          type='checkbox'
-                          checked={item.isChecked}
-                          onClick={() => toggleCheckbox(item.unique)}
-                        />,
-                        item.register_type,
-                        item.unique,
-                        item.juso,
-                        item.owner.join(", "),
-                        item.is_change ? "있음" : "없음",
-                        getCurrentDate(item.created_at),
-                        item.register_type?.includes("등기") ? (
-                          <Button className='w-[68px] h-6 text-sm'>열람</Button>
-                        ) : (
-                          "-"
-                        ),
-                        item.register_type?.includes("등기") ? (
-                          <Button className='w-[68px] h-6 text-sm'>작성</Button>
-                        ) : (
-                          "-"
-                        ),
-                        <Button
-                          className='w-[68px] h-6 text-sm'
-                          onClick={() => handlePrintPdf(item.pdf_url)}
-                        >
-                          다운로드
-                        </Button>,
-                      ];
-
-                      return (
-                        <tr key={item.id}>
-                          {registerData.map((data, index) => (
-                            <td
-                              key={index}
-                              className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'
+                              checked={item.isChecked}
+                              onClick={() => toggleCheckbox(item.unique)}
+                            />,
+                            item.register_type,
+                            item.unique,
+                            item.juso,
+                            item.owner.join(", "),
+                            item.is_change ? "있음" : "없음",
+                            getCurrentDate(item.created_at),
+                            item.register_type?.includes("등기") ? (
+                              <Button className='w-[68px] h-6 text-sm'>
+                                열람
+                              </Button>
+                            ) : (
+                              "-"
+                            ),
+                            item.register_type?.includes("등기") ? (
+                              <Button className='w-[68px] h-6 text-sm'>
+                                작성
+                              </Button>
+                            ) : (
+                              "-"
+                            ),
+                            <Button
+                              className='w-[68px] h-6 text-sm'
+                              onClick={() => handlePrintPdf(item.pdf_url)}
                             >
-                              {data}
-                            </td>
-                          ))}
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
+                              다운로드
+                            </Button>,
+                          ];
+
+                          return (
+                            <tr key={item.id}>
+                              {registerData.map((data, index) => (
+                                <td
+                                  key={index}
+                                  className='h-[30px] max-w-[310px] border-r border-l p-2 border-[#7f7f7f]'
+                                >
+                                  {data}
+                                </td>
+                              ))}
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </OpenRegisterPaginationNav>
           </>
         ) : (
           <LoadingSpinner />
