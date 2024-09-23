@@ -4,12 +4,12 @@ import EditDelete from "./EditDelete";
 import { TodoItem } from "../../../types/todotypes";
 
 interface TodoListPartProps {
-  onToggleTodo: (id: number) => void;
+  onToggleTodo: (id: string) => void;
   filteredTodos: TodoItem[];
   className: string;
   selectedDay: string;
-  onDeleteTodo: (id: number) => void;
-  onEditTodo: (id: number, newText: string) => void;
+  onDeleteTodo: (id: string) => void;
+  onEditTodo: (id: string, newText: string) => void;
 }
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
@@ -20,7 +20,8 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onDeleteTodo,
   onEditTodo,
 }) => {
-  const [hoveredTodoId, setHoveredTodoId] = useState<number | null>(null);
+  const [hoveredTodoId, setHoveredTodoId] = useState<string | null>(null);
+  const [, setIsEditDeleteClicked] = useState<boolean>(false);
 
   return (
     <div className={`${className} mt-3`}>
@@ -35,7 +36,6 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
               key={todo.id}
               className="flex items-center justify-between h-[25px] bg-white rounded p-2"
               onMouseEnter={() => setHoveredTodoId(todo.id)}
-              onMouseLeave={() => setHoveredTodoId(null)}
             >
               <div className="flex items-center flex-grow">
                 <TodoCheckbox
@@ -53,6 +53,9 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
                   todoText={todo.text}
                   onEdit={onEditTodo}
                   onDelete={onDeleteTodo}
+                  onClick={() => setIsEditDeleteClicked(true)}
+                  onMouseEnter={() => setIsEditDeleteClicked(true)}
+                  onMouseLeave={() => setIsEditDeleteClicked(false)}
                 />
               )}
             </li>
