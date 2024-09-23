@@ -69,7 +69,6 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       const updatedBookmarks = listItem.map((bookmark) =>
         bookmark.bookmarkId === item.bookmarkId ? { ...bookmark, checked } : bookmark
       );
-    
 
        // listItem 상태 업데이트
       setListItem(updatedBookmarks);

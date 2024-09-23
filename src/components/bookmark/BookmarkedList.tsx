@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import BookmarkedEachItem from './BookmarkedEachItem';
 import ManageDetailModal from './ManageDetailModal';
 import { bookmarkDataInterface } from '../../types/bookmark';
-import { getBookmarks, saveBookmarks } from '../../hooks/useBookmarks';
+import { getBookmarks } from '../../hooks/useBookmarks';
 
 const BookmarkedList = () => {
     const [gridItem, setGridItem] = useState<bookmarkDataInterface[]>([]); // 그리드 요소
@@ -14,7 +14,7 @@ const BookmarkedList = () => {
     useEffect(() => {
         const saved = getBookmarks();
         const chkFiltered = saved.filter((item) => item.checked); // checked가 true인 항목만 필터링
-        setGridItem(chkFiltered); // 그리드에 반영
+        setGridItem(chkFiltered); 
     }, [modalYn]); // 모달 상태가 바뀔 때마다 실행
 
     // 체크된 항목으로 상태 업데이트
@@ -57,7 +57,7 @@ const BookmarkedList = () => {
                                 />
                             </div>
                         ))}
-                          <div className="outline-dotted outline-slate-500 flex justify-center items-center w-[180px] h-[180px] mb-[12px] bg-slate-100">
+                          <div className="outline-dotted outline-slate-500 flex justify-center items-center w-[180px] h-[180px] mb-[12px] bg-slate-100 rounded-lg">
                             <button
                                 className="w-[93px] h-[35px] bg-blue-500 m-5 font-suit font-semibold text-center text-[15px] leading-[15px] flex items-center text-white rounded-md justify-center"
                                 onClick={openManageModal}>
