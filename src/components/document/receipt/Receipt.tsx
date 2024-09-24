@@ -1,6 +1,6 @@
 const Receipt = () => {
   return (
-    <div>
+    <div className="h-full">
       {/* Title */}
       <h1 className="text-[40px] text-center font-medium border border-[#CCCCCC] rounded-[6px] mb-[40px]">
         영수증

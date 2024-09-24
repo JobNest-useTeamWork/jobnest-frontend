@@ -2,11 +2,11 @@ const SecondTable = () => {
   return (
     <section className="grid grid-rows-[repeat(4,_1fr)_2fr_1fr]">
       {/* 매매대금 */}
-      <div className="grid grid-cols-[115px_auto] border border-line-color">
+      <div className="grid grid-cols-[110px_auto] border border-line-color">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           매매대금
         </div>
-        <div className="grid grid-cols-[16px_480px_50px_auto] gap-[6px] items-center p-2 border-r border-line-color">
+        <div className="grid grid-cols-[16px_400px_50px_auto] gap-[6px] items-center p-2">
           <span>金</span>
           <input
             type="text"
@@ -20,11 +20,11 @@ const SecondTable = () => {
         </div>
       </div>
       {/* 계약금 */}
-      <div className="grid grid-cols-[115px_3fr_114px_1fr] border border-line-color">
+      <div className="grid grid-cols-[110px_750px_90px_250px] border-x border-b border-line-color">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           계약금
         </div>
-        <div className="grid grid-cols-[16px_480px_200px] gap-[6px] items-center p-2 border-r border-line-color">
+        <div className="grid grid-cols-[16px_400px_220px] gap-[6px] items-center p-2 border-r border-line-color">
           <span>金</span>
           <input
             type="text"
@@ -35,7 +35,7 @@ const SecondTable = () => {
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           영수자
         </div>
-        <div className="grid grid-cols-[auto_20px] items-center p-2 gap-[6px]">
+        <div className="grid grid-cols-[200px_20px] items-center p-2 gap-[6px]">
           <input
             type="text"
             className="border border-line-color rounded-[4px] h-[32px]"
@@ -44,11 +44,11 @@ const SecondTable = () => {
         </div>
       </div>
       {/* 융자금 */}
-      <div className="grid grid-cols-[115px_auto] border border-line-color">
+      <div className="grid grid-cols-[110px_auto] border-x border-b border-line-color">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           융자금
         </div>
-        <div className="grid grid-cols-[16px_480px_50px_auto] gap-[6px] items-center p-2 border-r border-line-color">
+        <div className="grid grid-cols-[16px_400px_50px_auto] gap-[6px] items-center p-2">
           <span>金</span>
           <input
             type="text"
@@ -61,11 +61,11 @@ const SecondTable = () => {
         </div>
       </div>
       {/* 현 임대 보증금 */}
-      <div className="grid grid-cols-[115px_auto] border border-line-color">
+      <div className="grid grid-cols-[110px_auto] border-x border-b border-line-color">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           현 임대 보증금
         </div>
-        <div className="grid grid-cols-[16px_480px_50px_auto] gap-[6px] items-center p-2 border-r border-line-color">
+        <div className="grid grid-cols-[16px_400px_50px_auto] gap-[6px] items-center p-2">
           <span>金</span>
           <input
             type="text"
@@ -80,12 +80,12 @@ const SecondTable = () => {
         </div>
       </div>
       {/* 중도금 */}
-      <div className="grid grid-cols-[115px_auto] border border-line-color rows-span-2">
+      <div className="grid grid-cols-[110px_auto] border-x border-b border-line-color rows-span-2">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           중도금
         </div>
         <div>
-          <div className="grid grid-cols-[16px_480px_50px_180px_auto] gap-[6px] gap-[6px] items-center p-2 border-b border-r border-line-color">
+          <div className="grid grid-cols-[16px_400px_50px_180px_auto] gap-[6px] gap-[6px] items-center p-2 border-b">
             <span>金</span>
             <input
               type="text"
@@ -99,7 +99,7 @@ const SecondTable = () => {
             <span>에 지급하며,</span>
           </div>
 
-          <div className="grid grid-cols-[16px_480px_50px_180px_auto] gap-[6px] gap-[6px] items-center p-2 border-r border-line-color">
+          <div className="grid grid-cols-[16px_400px_50px_180px_auto] gap-[6px] gap-[6px] items-center p-2">
             <span>金</span>
             <input
               type="text"
@@ -115,11 +115,11 @@ const SecondTable = () => {
         </div>
       </div>
       {/* 잔금 */}
-      <div className="grid grid-cols-[115px_auto] border border-line-color">
+      <div className="grid grid-cols-[110px_auto] border-x border-b border-line-color">
         <div className="border-r border-line-color bg-[#E5E6EB] p-2 flex items-center">
           잔금
         </div>
-        <div className="grid grid-cols-[16px_480px_50px_180px_auto] gap-[6px] items-center p-2 border-r border-line-color">
+        <div className="grid grid-cols-[16px_400px_50px_180px_auto] gap-[6px] items-center p-2">
           <span>金</span>
           <input
             type="text"

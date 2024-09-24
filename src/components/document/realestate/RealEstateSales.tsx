@@ -50,7 +50,7 @@ const RealEstateSales = () => {
   return (
     <div className="flex flex-col gap-[40px] h-lvh">
       {/* Title */}
-      <h1 className="text-[40px] text-center font-medium border border-[#CCCCCC] rounded-[6px]">
+      <h1 className="center-place text-[40px] p-2 font-medium border border-[#CCCCCC] rounded-[6px] leading-[60px]">
         부동산({`${data?.contract_type}`}) {`${data?.transition_type}`} 계약서
       </h1>
       {/* 1. 부동산의 표시 */}

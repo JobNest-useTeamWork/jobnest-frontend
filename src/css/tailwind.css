@@ -72,12 +72,16 @@
 }
 
 @media print {
-  .print-hidden {
-    display: none !important;
+  /* 인쇄할 때 특정 컨테이너의 너비를 조정 */
+  .print-container {
+    width: 100%; /* 요소가 페이지 끝에 맞도록 설정 */
+    height: 1800px;
+    margin: 0; /* 여백 제거 */
+    border: none; /* 불필요한 경계선 제거 */
   }
 
-  .print-visible {
-    display: block !important;
+  .print-hidden {
+    display: none !important;
   }
 
   body {

@@ -27,12 +27,6 @@ const CreateContract = () => {
     const element = printRef.current;
     if (!element) return;
 
-    // 포함시키지 않을 요소를 숨김
-    const excludedElements = document.querySelectorAll(".print-hidden");
-    excludedElements.forEach((el) => {
-      (el as HTMLElement).style.display = "none";
-    });
-
     const canvas = await html2canvas(element, {
       scale: 2, // 해상도를 높이기 위해 스케일링 (옵션)
     });
@@ -46,11 +40,6 @@ const CreateContract = () => {
 
     pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfImageHeight);
     pdf.save("document.pdf");
-
-    // 숨겼던 요소를 다시 보이게 설정
-    excludedElements.forEach((el) => {
-      (el as HTMLElement).style.display = "";
-    });
   };
 
   // 인쇄 핸들러
@@ -70,7 +59,7 @@ const CreateContract = () => {
   };
 
   return (
-    <div className="bg-[#F7F8F9] w-full flex justify-center min-h-[1800px]">
+    <div className="bg-[#F7F8F9] w-full flex justify-center]">
       <div className="p-[24px] flex flex-col gap-[24px] w-[1400px]">
         <div className="flex items-center gap-[8px] text-[20px] font-semibold px-[24px]">
           <img src={writingIcon} alt="계약서 작성 아이콘" />
@@ -107,16 +96,16 @@ const CreateContract = () => {
         </div>
         <section
           ref={printRef}
-          className="w-[1300px] min-h-[1800px] mx-auto bg-white p-[50px] w-[1200px] flex flex-col gap-[40px] text-[14px] rounded-[10px] border border-[#CCCCCC] border-opacity-80"
+          className="print-container w-[1300px] h-[1800px] mx-auto bg-white p-[50px] w-[1200px] flex flex-col gap-[40px] text-[14px] rounded-[10px] border border-[#CCCCCC] border-opacity-80"
         >
           {/* 머리말 */}
-          <div className="flex justify-between items-center border-b border-[#CCCCCC] pb-[14px]">
+          <div className="print-hidden flex justify-between items-center border-b border-[#CCCCCC] pb-[14px]">
             <div>
               {selectedButton === "contract" &&
                 `${data?.juso} |
           계약서 종류 : ${data?.contract_type} | 거래유형 : ${data?.transition_type}`}
             </div>
-            <div className="flex gap-2 print-hidden">
+            <div className="flex gap-2">
               <button
                 onClick={handlePrint}
                 className="border border-[#D9D9D9] rounded-[6px] w-[100px] h-[40px] text-[#335995] text-[14px]"
