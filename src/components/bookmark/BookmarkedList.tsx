@@ -6,6 +6,7 @@ import ManageDetailModal from './ManageDetailModal';
 import { bookmarkDataInterface } from '../../types/bookmark';
 import { getBookmarks } from '../../hooks/useBookmarks';
 
+
 const BookmarkedList = () => {
     const [gridItem, setGridItem] = useState<bookmarkDataInterface[]>([]); // 그리드 요소
     const [modalYn, setmodalYn] = useState(false);

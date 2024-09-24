@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { bookmarkDataFetch } from "../../api/bookmark";
 import { getBookmarks, saveBookmarks } from "../../hooks/useBookmarks";
 import { bookmarkDataInterface, manageModalInterface } from "../../types/bookmark";
-import logo from "../../assets/logo.png";
-
+//import logo from "../../assets/logo.png";
+//import { FaBookBookmark } from "react-icons/fa6";
 
 
 const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
@@ -133,7 +133,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       if (newBookmark) {
         const bookmarkWithChecked: bookmarkDataInterface = {
           ...newBookmark,
-          bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? logo : newBookmark.bookmarkOgImg,
+          //bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? <FaBookBookmark /> : newBookmark.bookmarkOgImg,
           checked: false,  // 새로운 북마크의 기본 checked 값을 false로 설정
         };
 
@@ -208,7 +208,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
                 left: '110%',
                 bottom: '30%',
                 transform: 'translateX(0%)',
-              }} className="flex flex-col w-[311px] h-[220px] rounded-md border-[1px] bg-white border-black gap-2 justify-center">
+              }} className="flex flex-col w-[311px] h-[220px] rounded-md bg-white gap-2 justify-center">
               <div className="flex flex-col gap-2 items-center">
                 <input type="text"
                   className="w-[267px] h-[41px] rounded-md border-[1px] p-2"
