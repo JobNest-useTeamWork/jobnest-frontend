@@ -52,7 +52,7 @@ const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
         <button
           className="font-medium bg-[#335995] text-white rounded-[6px] w-[120px] h-[36px]"
           onClick={() =>
-            navigate("/contract/create", {
+            navigate("/create/contract", {
               state: {
                 contract_type: "아파트",
                 transition_type: "매매",

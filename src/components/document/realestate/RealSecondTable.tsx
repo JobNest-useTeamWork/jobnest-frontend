@@ -1,4 +1,4 @@
-const SecondTable = () => {
+const RealSecondTable = () => {
   return (
     <section className="grid grid-rows-[repeat(4,_1fr)_2fr_1fr]">
       {/* 매매대금 */}
@@ -136,4 +136,4 @@ const SecondTable = () => {
     </section>
   );
 };
-export default SecondTable;
+export default RealSecondTable;

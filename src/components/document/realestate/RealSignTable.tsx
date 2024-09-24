@@ -1,4 +1,4 @@
-const LastSign = () => {
+const RealSignTable = () => {
   return (
     <section>
       <button className="contract-input center-place w-[140px] px-2 mb-2 ml-auto print-hidden">
@@ -59,4 +59,4 @@ const LastSign = () => {
     </section>
   );
 };
-export default LastSign;
+export default RealSignTable;

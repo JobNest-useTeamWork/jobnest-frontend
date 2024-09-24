@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom";
-import FirstTable from "./FirstTable";
-import SecondTable from "./SecondTable";
-import LastSign from "./LastSign";
+import RealFirstTable from "./RealFirstTable";
+import RealSecondTable from "./RealSecondTable";
+import RealSignTable from "./RealSignTable";
 import { useId } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import AgentTable from "./AgentTable";
+import RealAgentTable from "./RealAgentTable";
 
 const clause = [
   [
@@ -73,7 +73,7 @@ const RealEstateSales = () => {
           </p>
         </div>
         {/* 표 */}
-        <FirstTable />
+        <RealFirstTable />
         <p>원정 은 계약 시에 지급하고 영수함.</p>
       </section>
       {/* 2. 계약내용 */}
@@ -84,7 +84,7 @@ const RealEstateSales = () => {
           매매 대금을 아래와 같이 지급하기로 한다.
         </p>
         {/* 표 */}
-        <SecondTable />
+        <RealSecondTable />
         <p>
           제2조 [소유권 이전 등] 매도인은 매매대금의 잔금 수령과 동시에
           매수인에게 소유권 이전등기에 필요한 모든 서류를 교부하고 등기절차에
@@ -156,9 +156,9 @@ const RealEstateSales = () => {
         <input type="date" className="contract-input w-[180px]" />
       </section>
       {/* 매도인/매수인/공인중개사 서명 */}
-      <LastSign />
-      <LastSign />
-      <AgentTable />
+      <RealSignTable />
+      <RealSignTable />
+      <RealAgentTable />
     </div>
   );
 };

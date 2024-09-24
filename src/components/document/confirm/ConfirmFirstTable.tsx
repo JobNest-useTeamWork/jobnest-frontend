@@ -1,56 +1,67 @@
-import { useId } from "react";
-
+import { IoAlertCircleOutline } from "react-icons/io5";
 const ConfirmFirstTable = () => {
-  const useid = useId();
-  const selectData = [
-    "등기 권리증",
-    "등기사항증명서",
-    "토지대장",
-    "건축물대장",
-    "지적도",
-    "임야도",
-    "토지이용계획확인서",
-    "확정일자 부여현황",
-    "전입세대 확인서",
-    "국세납세 증명서",
-    "지방세납세 증명서",
-  ];
-  const dataRequire =
-    "거래당사자는 위 확인·설명근거자료 등에 대한 사항을 발급/열람, 검색을 통해 확인하였으며, 물건의 현장답사를 통해 육안으로 확인/인지한 후 개업공인중개사가 작성한 아래 10-14항에 대한 설명을 통해 각 항목 기재 사항을 확인하고 내용에 동의함.(등기권리증 미제출)";
   return (
-    <section className="grid grid-cols-[140px_180px_auto] grid-rows-[80px_70px] border-y border-black">
-      <div className="row-span-2 border-r border-black center-place">
-        확인·설명 자료
-      </div>
-      <div className="border-b border-black center-place">
-        확인·설명 근거자료 등
-      </div>
-      <div className="flex flex-col border-b border-black justify-center gap-[4px]">
-        <div className="flex gap-[4px] flex-wrap">
-          {selectData.map((val, index) => (
-            <div
-              key={`${useid}-${index}`}
-              className="flex items-center gap-[4px]"
-            >
-              <input type="checkbox" id={val} />
-              <label htmlFor={val}>{val}</label>
-            </div>
-          ))}
+    <section className="grid grid-cols-[130px_80px_130px_300px_70px_130px_auto] border-y border-black items-center">
+      <div className="row-span-3">
+        <div className="center-place">
+          대상 물건의
+          <br />
+          표시
         </div>
-        <div className="flex items-center gap-[4px]">
-          <input type="checkbox" />
-          <label htmlFor="">그 밖의 자료</label>
-          (<input type="text" />)
+        <button className="blue-button">PDF 열람 및 연동</button>
+      </div>
+      {/* 토지 내용 */}
+      <div className="row-span-2">
+        <div className="center-place">토지</div>
+        <div className="center-place">
+          공부연동
+          <br />
+          가능 항목
         </div>
       </div>
-      <div className="center-place flex-col">
-        <span>대상물건의 상태에 관한</span>
-        <span>자료요구 사항</span>
+      {/* 첫 번째 행 */}
+      <div className="center-place">소재지</div>
+      <div className="col-span-4">
+        <input type="text" className="contract-input" />
       </div>
+      {/* 두 번째 행 & 세 번째 행 */}
       <div className="center-place">
-        <textarea className="w-full border border-[#D9D9D9] rounded-[4px] p-2">
-          {dataRequire}
-        </textarea>
+        <span>면적(m2)</span>
+        <IoAlertCircleOutline />
+      </div>
+      <div>
+        <input type="text" />
+      </div>
+      <div className="center-place">지목</div>
+      <div className="center-place">
+        <span>공부상 지목</span>
+        <IoAlertCircleOutline />
+      </div>
+      <div>
+        <select name="" id="">
+          <option value="대">대</option>
+        </select>
+      </div>
+      <div className="center-place">실제 이용 상태</div>
+      <div>
+        <input type="text" />
+      </div>
+      {/* 건축물 내용 */}
+      <div>
+        <div>건축물</div>
+        <div>
+          공부연동
+          <br />
+          가능 항목
+        </div>
+      </div>
+      <div className="center-place">전용면적(m2)</div>
+      <div>
+        <input type="text" />
+      </div>
+      <div className="col-span-2 center-place">대지지분(m2)</div>
+      <div>
+        <input type="text" />
       </div>
     </section>
   );

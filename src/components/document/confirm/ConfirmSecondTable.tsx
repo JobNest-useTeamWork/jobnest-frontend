@@ -1,27 +1,64 @@
+import { IoAlertCircleOutline } from "react-icons/io5";
 const ConfirmSecondTable = () => {
   return (
-    <section className="grid grid-cols-[180px_auto] border border-[#CCCCCC]">
-      <div className="col-span-2 bg-[#E5E6EB] center-place p-2">유의사항</div>
-      <div className="border-b border-r border-[#CCCCCC] flex-col center-place p-2">
-        <span>개업공인중개사의</span>
-        <span>확인·설명 의무</span>
+    <section className="grid grid-cols-[130px_210px_130px_1fr_130px_1fr] grid-rows-[40px_170px_170px] border-y border-black">
+      <div className="row-span-3 border-r border-black center-place flex-col gap-2">
+        <div>권리관계</div>
+        <button className="blue-button p-2">PDF 열람 및 연동</button>
       </div>
-      <div className="border-b border-[#CCCCCC] flex items-center p-2">
-        개업공인중개사는 중개대상물에 관한 권리를 취득하려는 중개의뢰인에게
-        성실·정확하게 설명하고,
-        <br />
-        토지대장 등본, 등기사항증명서 등 설명의 근거자료를 제시해야 합니다.
+      <div className="row-span-3 border-r border-black center-place flex-col">
+        <div>등기부 기재사항</div>
+        <div className="text-[#335995]">공부연동 가능 항목</div>
       </div>
-      <div className="border-r border-[#CCCCCC] flex-col center-place p-2">
-        <span>실제 거래가격</span>
-        <span>신고</span>
+      <div className="col-span-2 border-r border-b border-black center-place">
+        소재지
       </div>
-      <div className="flex items-center p-2">
-        「부동산 거래신고 등에 관한 법률」 제3조 및 같은 법 시행령 별표 1
-        제1호마목에 따른 실제 거래가격은 매수인이 매수한 부동산을 양도하는 경우
-        「소득세법」 제97조제1항과 같은 법 시행 령 제163조제11항제2호에 따라
-        취득 당시의 실제 거래가액으로 보아 양도차익이 계산될 수 있음을
-        유의하시기 바랍니다.
+      <div className="col-span-2 border-b border-black center-place">
+        소유권 외의 권리사항
+      </div>
+      <div className="border-r border-b border-black center-place flex gap-1">
+        <div>토지</div>
+        <IoAlertCircleOutline />
+      </div>
+      <div className="p-1 border-b border-r border-black center-place">
+        <textarea
+          name=""
+          id=""
+          className="contract-input h-full resize-none focus:outline-[#747474]"
+        ></textarea>
+      </div>
+      <div className="border-r border-b border-black center-place flex gap-1">
+        <div>토지</div>
+        <IoAlertCircleOutline />
+      </div>
+      <div className="p-1 border-b border-black">
+        <textarea
+          name=""
+          id=""
+          className="contract-input h-full resize-none focus:outline-[#747474]"
+        ></textarea>
+      </div>
+      <div className="border-r border-black center-place flex gap-1">
+        <div>건축물</div>
+        <IoAlertCircleOutline />
+      </div>
+      <div className="p-1 border-r border-black">
+        <textarea
+          name=""
+          id=""
+          className="contract-input h-full resize-none focus:outline-[#747474]"
+        ></textarea>
+      </div>
+      <div className="border-r border-black center-place flex gap-1">
+        <div>건축물</div>
+        <IoAlertCircleOutline />
+      </div>
+      <div className="p-1">
+        <textarea
+          name=""
+          id=""
+          className="contract-input h-full resize-none focus:outline-[#747474]"
+        ></textarea>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-const AgentTable = () => {
+const RealAgentTable = () => {
   return (
     <section className="grid grid-cols-[190px_190px_190px_100px_auto_120px_200px] grid-rows-[44px_44px_44px] border border-line-color">
       <div className="row-span-3 bg-[#E5E6EB] center-place text-center">
@@ -50,4 +50,4 @@ const AgentTable = () => {
     </section>
   );
 };
-export default AgentTable;
+export default RealAgentTable;

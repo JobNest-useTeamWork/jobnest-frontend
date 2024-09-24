@@ -1,5 +1,5 @@
 import { IoAlertCircleOutline } from "react-icons/io5";
-const FirstTable = () => {
+const RealFirstTable = () => {
   return (
     <section className="grid grid-rows-[44px_44px_44px] grid-cols-[110px_70px_200px_100px_auto_100px_auto_100px_auto] border border-line-color">
       {/* <!-- 소재지 --> */}
@@ -89,4 +89,4 @@ const FirstTable = () => {
     </section>
   );
 };
-export default FirstTable;
+export default RealFirstTable;

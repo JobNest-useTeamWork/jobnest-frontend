@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoWarningOutline } from "react-icons/io5";
 import ResultItem from "./ResultItem";
 import { contractType } from "../../types/contract";
@@ -6,12 +6,20 @@ import { contractType } from "../../types/contract";
 const ContractSearchResult = () => {
   const [resultList, setResultList] = useState<contractType[]>([]);
   useEffect(() => {
-    fetch("/search.json")
+    // fetch(`${import.meta.env.VITE_BASE_URL}/contract-list`) //
+    fetch("/search.json") //
       .then((response) => response.json())
       .then((data) => setResultList(data.result));
   }, []);
 
-  console.log(resultList);
+  // 개인정보 활용 동의서
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const handlePrint = () => {
+    if (iframeRef.current) {
+      iframeRef.current.focus();
+      iframeRef.current.contentWindow?.print(); // iframe 내부에서 print 실행
+    }
+  };
 
   return (
     <>
@@ -23,7 +31,10 @@ const ContractSearchResult = () => {
           </div>
           {resultList.length !== 0 && (
             <div className="flex gap-[14px]">
-              <button className="output-button px-[10px] py-[4px]">
+              <button
+                className="output-button px-[10px] py-[4px]"
+                onClick={handlePrint}
+              >
                 개인정보 수집 및 이용 동의서 출력
               </button>
               <button className="common-button px-[10px] py-[4px]">
@@ -34,8 +45,14 @@ const ContractSearchResult = () => {
               </select>
             </div>
           )}
+          <iframe
+            ref={iframeRef}
+            src="/private_document.pdf"
+            className="hidden"
+            title="print-pdf"
+          />
         </div>
-        <form className="text-[14px] text-center overflow-auto relative">
+        <section className="text-[14px] text-center overflow-auto relative">
           <div className="contract-search-grid font-semibold bg-[#D9D9D9] rounded-[10px] px-[2px] py-[10px] min-w-max">
             <input type="checkbox" />
             <div>계약일</div>
@@ -62,7 +79,7 @@ const ContractSearchResult = () => {
               <ResultItem key={contract.id} {...contract} />
             ))
           )}
-        </form>
+        </section>
       </section>
     </>
   );
