@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { BsThreeDots } from "react-icons/bs";
+import React, { useState } from "react"
+import { BsThreeDots } from "react-icons/bs"
 
 interface EditDeleteProps {
-  todoId: number;
-  todoText: string;
-  onEdit: (id: number, newText: string) => void;
-  onDelete: (id: number) => void;
+  todoId: string
+  todoText: string
+  onEdit: (id: string, newText: string) => void
+  onDelete: (id: string) => void
+  onClick: () => void // Add this prop
+  className?: string
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }
 
 const EditDelete: React.FC<EditDeleteProps> = ({
@@ -13,27 +17,31 @@ const EditDelete: React.FC<EditDeleteProps> = ({
   todoText,
   onEdit,
   onDelete,
+  onClick,
+  className,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(todoText);
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editText, setEditText] = useState(todoText)
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+    setDropdownOpen(!dropdownOpen)
+  }
 
   const handleEdit = () => {
-    setIsEditing(true);
-    setDropdownOpen(false);
-  };
+    setIsEditing(true)
+    setDropdownOpen(false)
+  }
 
   const handleEditSubmit = () => {
-    onEdit(todoId, editText);
-    setIsEditing(false);
-  };
+    onEdit(todoId, editText)
+    setIsEditing(false)
+  }
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {isEditing ? (
         <div className="flex items-center">
           <input
@@ -49,26 +57,24 @@ const EditDelete: React.FC<EditDeleteProps> = ({
         </div>
       ) : (
         <>
-          <button
-            onClick={toggleDropdown}
-            className="flex items-center justify-center text-gray-500"
-          >
+          <button onClick={toggleDropdown} className="flex items-center justify-center text-gray-500">
             <BsThreeDots />
           </button>
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+            //text-center px-4 hover:bg-gray-100 whitespace-nowrap border
+            <div className="absolute right-0 mt-2 w-[66px] bg-white  shadow-lg z-10">
               <button
                 onClick={handleEdit}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200 border-b-0"
               >
                 수정
               </button>
               <button
                 onClick={() => {
-                  onDelete(todoId);
-                  setDropdownOpen(false);
+                  onDelete(todoId)
+                  setDropdownOpen(false)
                 }}
-                className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200"
               >
                 삭제
               </button>
@@ -77,7 +83,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default EditDelete;
+export default EditDelete

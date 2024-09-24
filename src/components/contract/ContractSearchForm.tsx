@@ -45,7 +45,7 @@ const ContractSearchForm = () => {
   const id = useId();
 
   return (
-    <section className="p-[30px] w-full h-[460px] bg-white rounded-[10px]">
+    <section className="p-[30px] h-[460px] bg-white rounded-[10px] max-w-full">
       <h2 className="text-[20px] font-semibold mb-[16px]">계약서 검색</h2>
       <form className={twMerge("text-[14px]")}>
         {/* 첫번째 행 */}

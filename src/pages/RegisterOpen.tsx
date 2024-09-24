@@ -51,6 +51,14 @@ const RegisterOpen = () => {
     return date.split(" ")[0];
   };
 
+  const handlePrintPdf = (pdf_url: string) => {
+    window.open(
+      pdf_url,
+      "_blank",
+      "width=800, height=600, toolbar=no, scrollbars=yes, resizable=yes"
+    );
+  };
+
   return (
     <RegisterWrapper titleData={RegisterOpenTitleData}>
       <div className='flex items-center justify-end max-w-[1264px] ml-10 my-3 gap-[10px]'>
@@ -91,7 +99,12 @@ const RegisterOpen = () => {
               formattingDate(item.created_at),
               <Button className='w-[68px] h-6 text-sm'>열람</Button>,
               <Button className='w-[68px] h-6 text-sm'>작성</Button>,
-              <Button className='w-[68px] h-6 text-sm'>다운로드</Button>,
+              <Button
+                className='w-[68px] h-6 text-sm'
+                onClick={() => handlePrintPdf(item.pdf_url)}
+              >
+                다운로드
+              </Button>,
             ];
 
             return (

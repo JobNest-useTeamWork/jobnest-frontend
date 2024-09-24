@@ -31,7 +31,9 @@ const CreateContract = () => {
           영수증
         </button>
       </div>
-      <RealEstateSales />
+      <section className="bg-white p-[50px] rounded-[10px] border border-[#CCCCCC] border-opacity-80">
+        <RealEstateSales />
+      </section>
     </div>
   );
 };
