@@ -1,5 +1,6 @@
 import { ComponentPropsWithRef } from "react";
 import { IoMdClose } from "react-icons/io";
+import { twMerge } from "tailwind-merge";
 
 interface InputType extends ComponentPropsWithRef<"input"> {
   type: "text";
@@ -9,9 +10,14 @@ interface InputType extends ComponentPropsWithRef<"input"> {
   resetField: () => void;
 }
 
-const Input = ({ register, resetField, ...rest }: InputType) => {
+const Input = ({ register, className, resetField, ...rest }: InputType) => {
   return (
-    <div className='relative w-full h-full border border-[#cccccc]'>
+    <div
+      className={twMerge(
+        "relative w-full h-full border border-[#cccccc]",
+        className
+      )}
+    >
       <input className='w-full h-full px-4' {...register} {...rest} />
       <IoMdClose
         className='absolute top-1/2 -translate-y-1/2 right-2 text-2xl text-[#6f6f6f] cursor-pointer'

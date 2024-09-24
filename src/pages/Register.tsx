@@ -6,6 +6,7 @@ import RegisterWrapper from "../components/register/RegisterWrapper";
 import PaginationNav from "../components/register/PaginationNav";
 import LoadingSpinner from "../components/register/LoadingSpinner";
 import { twMerge } from "tailwind-merge";
+import RegisterLists from "../components/register/RegisterLists";
 
 const RegisterTitleData = {
   title: "등기/대장 열람",
@@ -51,10 +52,10 @@ const Register = () => {
           <LoadingSpinner />
         ) : (
           searchedRegister.result.length !== 1 && (
-            <div className="ml-10 max-w-[1264px]">
-              <div className="flex items-center relative gap-[6px] mb-[60px]">
+            <div className='ml-10 max-w-[1264px]'>
+              <div className='flex items-center relative gap-[6px] mb-[60px]'>
                 <Checkbox
-                  type="checkbox"
+                  type='checkbox'
                   onChange={handleCheckboxAll}
                   checked={isCheckedAll}
                 >
@@ -63,7 +64,9 @@ const Register = () => {
               </div>
 
               {/** 페이지네이션 조작 Nav */}
-              <PaginationNav />
+              <PaginationNav>
+                <RegisterLists />
+              </PaginationNav>
             </div>
           )
         )}

@@ -51,7 +51,7 @@ const RegisterWrapper = ({
           뒤로가기
         </Button>
       )}
-      <SearchForm />
+      <SearchForm title={title} />
       {children}
     </div>
   );

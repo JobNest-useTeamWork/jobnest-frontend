@@ -12,35 +12,67 @@ const SELECT_DATA = [
   { id: 3, name: "대장" },
 ];
 
-const SearchForm = () => {
-  const { handleSubmit, register, resetField, watch } =
-    useForm<SearchRegisterInputs>({
-      mode: "onChange",
-    });
+const ERROR_MESSAGE_REQUIRED = "필수로 입력해야하는 필드입니다.";
+
+const SearchForm = ({ title }: { title: string }) => {
+  const {
+    handleSubmit,
+    register,
+    resetField,
+    watch,
+    formState: { errors },
+  } = useForm<SearchRegisterInputs>({
+    mode: "onChange",
+  });
 
   const addSearchRegister = useRegisterStore(
     (state) => state.addSearchRegister
   );
   const setSearchData = useRegisterStore((state) => state.setSearchData);
+  const serSearchOpenRegisterData = useRegisterStore(
+    (state) => state.setSearchOpenRegisterData
+  );
   const setLoading = useRegisterStore((state) => state.setLoading);
 
   // 등기 또는 대장 검색
   const onSubmitSearchAddress: SubmitHandler<SearchRegisterInputs> = (data) => {
-    setLoading(true);
+    if (title === "등기/대장 열람") {
+      setLoading(true);
 
-    setSearchData({
-      address: data.address,
-      register_type: data.register_type,
-    });
-
-    // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
-    searchRegister(data.address, 1)
-      .then((data: RegisterAPIType) => {
-        addSearchRegister(data, watch("register_type"));
-      })
-      .finally(() => {
-        setLoading(false);
+      setSearchData({
+        address: data.address,
+        register_type: data.register_type,
       });
+
+      // API에서 주소 검색 후 받아온 data를 searchedRegister에 등록
+      searchRegister(data.address, 1)
+        .then((data: RegisterAPIType) => {
+          if (typeof data.result === "string") {
+            alert(data.result);
+          }
+
+          addSearchRegister(data, watch("register_type"));
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+
+    if (title === "등기/대장 열람내역") {
+      serSearchOpenRegisterData({
+        address: data.address,
+        register_type: data.register_type,
+      });
+    }
+  };
+
+  // resetField와 동시에 SearchOpenRegisterData 초기화
+  const handleResetField = (fieldName: keyof SearchRegisterInputs) => {
+    resetField(fieldName); // 기존 resetField 호출
+    serSearchOpenRegisterData({
+      address: "",
+      register_type: "",
+    }); // serSearchOpenRegisterData 초기화
   };
 
   return (
@@ -52,12 +84,20 @@ const SearchForm = () => {
         selectData={SELECT_DATA}
         register={register("register_type")}
       ></SelectBox>
-      <Input
-        type='text'
-        placeholder='주소를 입력해주세요.'
-        register={register("address")}
-        resetField={() => resetField("address")}
-      />
+      <div className='w-full h-full'>
+        <Input
+          type='text'
+          placeholder='주소를 입력해주세요.'
+          className={errors.address && "border-red-500"}
+          register={register("address", {
+            required: ERROR_MESSAGE_REQUIRED,
+          })}
+          resetField={() => handleResetField("address")}
+        />
+        {errors.address && (
+          <p className='text-sm mt-1 text-red-500'>{errors.address?.message}</p>
+        )}
+      </div>
       <Button className='w-24 rounded-md'>검색</Button>
     </form>
   );
