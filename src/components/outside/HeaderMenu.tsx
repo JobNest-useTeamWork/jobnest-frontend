@@ -13,7 +13,7 @@ const HeaderMenu = ({
     const handleClickOutside = (event: MouseEvent) => {
       // 해당 이벤트가 영역 밖이라면
       if (outRef.current && !outRef.current.contains(event.target as Node)) {
-        isOpen && toggleMenu();
+        // isOpen && toggleMenu(!isOpen);
       }
     };
 
