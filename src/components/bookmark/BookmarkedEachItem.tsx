@@ -1,25 +1,25 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-
-interface GridItemProps {
-  id: number;
-  url : string;
-  img : string;
-  title : string;
-}
+import { bookmarkDataInterface } from '../../types/bookmark';
 
 
-const BookmarkedEachItem = ({id,url,img,title} : GridItemProps) => {
+const BookmarkedEachItem = ({bookmarkId,bookmarkOgImg,bookmarkTitle} : bookmarkDataInterface) => {
   
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({id : bookmarkId });
+ 
 
   return(
     <>    
-        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-black border-[1px]"
-             style={{ backgroundImage: `url(${img})`,transform: CSS.Transform.toString(transform), transition: transition ? transition : undefined}}
+        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-black border-[1px] rounded-lg"
+             style={{ backgroundImage: `url(${bookmarkOgImg})`,
+                      backgroundSize: 'contain', // 이미지를 컨테이너에 맞추기
+                      backgroundRepeat: 'no-repeat', // 반복 방지
+                      transform: CSS.Transform.toString(transform), 
+                      transition: transition ? transition : undefined
+                    }}
                         ref={setNodeRef} {...attributes} {...listeners}>
         </div>
-        <button className="absolute w-[181px] h-[34px] text-center">{title}</button>
+        <span className="absolute w-[181px] h-[34px] text-center py-3">{bookmarkTitle}</span>
     </>
 
   );

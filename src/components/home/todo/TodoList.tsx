@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TodoCheckbox from "./Checkbox";
 import EditDelete from "./EditDelete";
-import {
-  initializeGoogleAuth,
-  signIn,
-  signOut,
-  isSignedIn,
-  fetchGoogleTasks,
-} from "../../../utils/googleAuth";
 import { TodoItem } from "../../../types/todotypes";
 
 interface TodoListPartProps {
-  onToggleTodo: (id: number) => void;
+  onToggleTodo: (id: string) => void;
   filteredTodos: TodoItem[];
   className: string;
   selectedDay: string;
-  onDeleteTodo: (id: number) => void;
-  onEditTodo: (id: number, newText: string) => void;
+  onDeleteTodo: (id: string) => void;
+  onEditTodo: (id: string, newText: string) => void;
 }
 
 const TodoListPart: React.FC<TodoListPartProps> = ({
@@ -27,80 +20,22 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onDeleteTodo,
   onEditTodo,
 }) => {
-  const [isGoogleSignedIn, setIsGoogleSignedIn] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [googleTasks, setGoogleTasks] = useState<any[]>([]);
-
-  useEffect(() => {
-    initializeGoogleAuth()
-      .then(() => {
-        setIsGoogleSignedIn(isSignedIn());
-        if (isSignedIn()) {
-          fetchGoogleTasksData();
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
-
-  const fetchGoogleTasksData = async () => {
-    try {
-      const tasks = await fetchGoogleTasks();
-      setGoogleTasks(tasks);
-    } catch (error) {
-      console.error("Error fetching Google Tasks:", error);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await signIn();
-      setIsGoogleSignedIn(true);
-      fetchGoogleTasksData();
-    } catch (error) {
-      console.error("Error signing in:", error);
-    }
-  };
-
-  const handleGoogleSignOut = async () => {
-    try {
-      await signOut();
-      setIsGoogleSignedIn(false);
-      setGoogleTasks([]);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
+  const [hoveredTodoId, setHoveredTodoId] = useState<string | null>(null);
+  const [, setIsEditDeleteClicked] = useState<boolean>(false);
 
   return (
-    <div className={`${className}`}>
-      {isGoogleSignedIn ? (
-        <button
-          onClick={handleGoogleSignOut}
-          className="mb-4 px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Sign out of Google
-        </button>
-      ) : (
-        <button
-          onClick={handleGoogleSignIn}
-          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Sign in with Google
-        </button>
-      )}
-
-      {filteredTodos.length === 0 && googleTasks.length === 0 ? (
+    <div className={`${className} mt-3`}>
+      {filteredTodos.length === 0 ? (
         <p className="text-center text-gray-500">
           {selectedDay} 할 일 목록이 없습니다
         </p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {filteredTodos.map((todo) => (
             <li
               key={todo.id}
-              className="flex items-center justify-between bg-white rounded p-2"
+              className="flex items-center justify-between h-[25px] bg-white rounded p-2"
+              onMouseEnter={() => setHoveredTodoId(todo.id)}
             >
               <div className="flex items-center flex-grow">
                 <TodoCheckbox
@@ -112,32 +47,17 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
                   {todo.text}
                 </span>
               </div>
-              <EditDelete
-                todoId={todo.id}
-                todoText={todo.text}
-                onEdit={onEditTodo}
-                onDelete={onDeleteTodo}
-              />
-            </li>
-          ))}
-          {googleTasks.map((task) => (
-            <li
-              key={task.id}
-              className="flex items-center justify-between bg-white rounded p-2"
-            >
-              <div className="flex items-center flex-grow">
-                <TodoCheckbox
-                  type="checkbox"
-                  checked={task.status === "completed"}
-                  onChange={() => {
-                    /* Implement Google Task update logic */
-                  }}
+              {hoveredTodoId === todo.id && (
+                <EditDelete
+                  todoId={todo.id}
+                  todoText={todo.text}
+                  onEdit={onEditTodo}
+                  onDelete={onDeleteTodo}
+                  onClick={() => setIsEditDeleteClicked(true)}
+                  onMouseEnter={() => setIsEditDeleteClicked(true)}
+                  onMouseLeave={() => setIsEditDeleteClicked(false)}
                 />
-                <span className="ml-2 text-[#8894A0] flex-grow">
-                  {task.title}
-                </span>
-              </div>
-              {/* Implement Google Task edit/delete functionality */}
+              )}
             </li>
           ))}
         </ul>

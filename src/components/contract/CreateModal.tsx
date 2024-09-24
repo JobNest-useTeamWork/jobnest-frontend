@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
   const navigate = useNavigate();
+  const [inputForm, setInputForm] = useState({
+    contract_type: "다세대주택",
+    transition_type: "전세",
+    juso: "소재지",
+  });
   return (
     <div className="modal bg-white absolute p-[40px] rounded-[10px] flex flex-col gap-[26px]">
       <h1 className="text-[24px] font-medium">계약서 작성</h1>
@@ -13,6 +19,8 @@ const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
           id=""
         >
           <option value="">선택</option>
+          <option value="아파트">아파트</option>
+          <option value="주상복합">주상복합</option>
         </select>
         <div className="font-medium">거래 유형</div>
         <select
@@ -21,6 +29,9 @@ const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
           id=""
         >
           <option value="">선택</option>
+          <option value="매매">매매</option>
+          <option value="전세">전세</option>
+          <option value="월세">월세</option>
         </select>
       </div>
       <div>
@@ -43,9 +54,9 @@ const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
           onClick={() =>
             navigate("/contract/create", {
               state: {
-                contract_type: "다세대주택",
-                transition_type: "전세",
-                juso: "소재지",
+                contract_type: "아파트",
+                transition_type: "매매",
+                juso: "퀸즈파크",
               },
             })
           }
