@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/register/LoadingSpinner";
 import { useRegisterStore } from "../store/registerStore";
 import OpenRegisterPaginationNav from "../components/register/OpenRegisterPaginationNav";
+import { checkOpenedRegister } from "../api/register";
 
 const SELECT_DATA = [
   { id: 1, name: "10개씩" },
@@ -37,7 +38,9 @@ const RegisterOpen = () => {
   const readLocalStorageRegister = () => {
     const localStorageRegister = localStorage.getItem("openedRegisters");
 
-    return localStorageRegister ? JSON.parse(localStorageRegister) : [];
+    return localStorageRegister
+      ? JSON.parse(localStorageRegister)
+      : { result: [] };
   };
 
   const [localRegister, setLocalRegister] = useState<OpenedRegisterAPIType>(
@@ -61,13 +64,32 @@ const RegisterOpen = () => {
   }, []);
 
   useEffect(() => {
-    setLocalRegister((prev) => ({
-      ...prev,
-      result: prev.result.sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      ),
-    }));
+    checkOpenedRegister().then((data: OpenedRegisterAPIType) => {
+      setLocalRegister((prev) => {
+        const existingIds = prev.result.map((item) => item.id);
+
+        const newItems = data.result
+          .filter((item) => !existingIds.includes(item.id)) // 중복된 항목 제외
+          .map((item) => ({
+            ...item,
+            category:
+              item.category === "iros"
+                ? "등기"
+                : item.category === "building"
+                ? "대장"
+                : item.category,
+          }));
+
+        return {
+          ...prev,
+          result: [...prev.result, ...newItems].sort(
+            (a, b) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+          ),
+        };
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -75,22 +97,12 @@ const RegisterOpen = () => {
   }, [localRegister]);
 
   useEffect(() => {
-    // const findCheckedItem = localRegister.result.some((item) => item.isChecked);
     const findUnCheckedItem = localRegister.result.every(
       (item) => item.isChecked
     );
 
     setIsCheckedAll(findUnCheckedItem);
   }, [localRegister]);
-
-  // pdf-list API 사용 로직
-  // const [openedRegister, setOpenedRegister] = useState<OpenedRegisterAPIType>();
-
-  // useEffect(() => {
-  //   checkOpenedRegister().then((data) => {
-  //     setOpenedRegister(data);
-  //   });
-  // }, []);
 
   const { register } = useForm();
 
@@ -104,11 +116,15 @@ const RegisterOpen = () => {
   };
 
   const handlePrintPdf = (pdf_url: string) => {
-    window.open(
-      pdf_url,
-      "_blank",
-      "width=800, height=600, toolbar=no, scrollbars=yes, resizable=yes"
-    );
+    if (pdf_url !== "") {
+      window.open(
+        pdf_url,
+        "_blank",
+        "width=800, height=600, toolbar=no, scrollbars=yes, resizable=yes"
+      );
+    } else {
+      alert("pdf가 없습니다.");
+    }
   };
 
   const handleDeleteRow = () => {
@@ -155,7 +171,7 @@ const RegisterOpen = () => {
     // register_type 필터링
     const isRegisterTypeMatched =
       searchOpenRegisterData.register_type === "" ||
-      item.register_type === searchOpenRegisterData.register_type;
+      item.category === searchOpenRegisterData.register_type;
 
     // 두 조건이 모두 만족하는 경우에만 필터링
     return isAddressMatched && isRegisterTypeMatched;
@@ -230,20 +246,20 @@ const RegisterOpen = () => {
                               checked={item.isChecked}
                               onClick={() => toggleCheckbox(item.unique)}
                             />,
-                            item.register_type,
+                            item.category,
                             item.unique,
                             item.juso,
                             item.owner.join(", "),
                             item.is_change ? "있음" : "없음",
                             getCurrentDate(item.created_at),
-                            item.register_type?.includes("등기") ? (
+                            item.category?.includes("등기") ? (
                               <Button className='w-[80px] h-7 text-sm'>
                                 열람
                               </Button>
                             ) : (
                               "-"
                             ),
-                            item.register_type?.includes("등기") ? (
+                            item.category?.includes("등기") ? (
                               <Button className='w-[80px] h-7 text-sm'>
                                 작성
                               </Button>
