@@ -1,39 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
-import { searchRegister } from "../../api/register";
-import { useRegisterStore } from "../../store/registerStore";
-import { RegisterAPIType } from "../../types/register";
-import LoadingSpinner from "./LoadingSpinner";
+import { OpenedRegisterType } from "../../types/register";
 
-const PaginationNav = ({ children }: { children: React.ReactNode }) => {
+const OpenRegisterPaginationNav = ({
+  children,
+  filteredData,
+  pageCount,
+}: {
+  children: (data: OpenedRegisterType[]) => React.ReactNode;
+  filteredData: OpenedRegisterType[];
+  pageCount: number;
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const pageButtons = 10;
-
-  const searchData = useRegisterStore((state) => state.searchData);
-  const addSearchRegister = useRegisterStore(
-    (state) => state.addSearchRegister
-  );
-
-  const {
-    data: registers,
-    isLoading,
-    error,
-  } = useQuery<RegisterAPIType>({
-    queryKey: ["registers", currentPage, searchData],
-    queryFn: () => searchRegister(searchData.address, currentPage),
-    staleTime: 1000,
-  });
-
-  // 검색 결과를 zustand store에 저장
-  useEffect(() => {
-    if (registers && registers.result) {
-      addSearchRegister(registers, searchData.register_type);
-    }
-  }, [registers, addSearchRegister]);
+  const pageButtons = 10; // 페이지네이션 버튼
+  const lastPage = Math.ceil(filteredData.length / pageCount); // 마지막 페이지 숫자
 
   const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= Number(registers?.last_page)) {
+    if (page >= 1 && page <= Number(lastPage)) {
       setCurrentPage(page);
     }
   };
@@ -41,10 +24,7 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const startPage = Math.max(1, currentPage - Math.floor(pageButtons / 2));
-    const endPage = Math.min(
-      Number(registers?.last_page),
-      startPage + pageButtons - 1
-    );
+    const endPage = Math.min(Number(lastPage), startPage + pageButtons - 1);
 
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
@@ -62,13 +42,15 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
     return pageNumbers;
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>Error occurred</div>;
+  const currentData = filteredData.slice(
+    (currentPage - 1) * pageCount,
+    currentPage * pageCount
+  );
 
   return (
     <>
       {/** 검색한 리스트 출력 */}
-      {children}
+      {children(currentData)}
 
       {/** 페이지네이션 nav */}
       <div className='flex items-center justify-center mt-6'>
@@ -88,9 +70,9 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === Number(registers?.last_page)}
+          disabled={currentPage === Number(lastPage)}
           className={`p-2 text-[#7f7f7f] ${
-            currentPage === Number(registers?.last_page) ? "opacity-50" : ""
+            currentPage === Number(lastPage) ? "opacity-50" : ""
           }`}
         >
           <FaLongArrowAltRight />
@@ -99,4 +81,4 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-export default PaginationNav;
+export default OpenRegisterPaginationNav;

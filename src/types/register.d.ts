@@ -23,14 +23,16 @@ export type RegisterAPIType = {
 };
 
 export type OpenedRegisterType = {
-  id: number;
+  id: number | string;
+  register_type?: string;
   category: string;
   unique: string;
   juso: string;
   owner: string[];
   is_change: boolean;
   pdf_url: string;
-  created_at: string;
+  created_at: Date;
+  isChecked: boolean;
 };
 
 export type OpenedRegisterAPIType = {
