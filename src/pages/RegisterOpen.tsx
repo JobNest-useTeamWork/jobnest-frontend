@@ -187,7 +187,7 @@ const RegisterOpen = () => {
               {(currentData) => (
                 <div className='max-w-[1264px] mx-10'>
                   <table className='text-sm text-center w-full'>
-                    <thead>
+                    <thead className='bg-[#f7f7f8]'>
                       <tr className='h-[30px]'>
                         {titleHeader.map((item) => {
                           if (item === "체크") {
@@ -237,21 +237,21 @@ const RegisterOpen = () => {
                             item.is_change ? "있음" : "없음",
                             getCurrentDate(item.created_at),
                             item.register_type?.includes("등기") ? (
-                              <Button className='w-[68px] h-6 text-sm'>
+                              <Button className='w-[80px] h-7 text-sm'>
                                 열람
                               </Button>
                             ) : (
                               "-"
                             ),
                             item.register_type?.includes("등기") ? (
-                              <Button className='w-[68px] h-6 text-sm'>
+                              <Button className='w-[80px] h-7 text-sm'>
                                 작성
                               </Button>
                             ) : (
                               "-"
                             ),
                             <Button
-                              className='w-[68px] h-6 text-sm'
+                              className='w-[80px] h-7 text-sm'
                               onClick={() => handlePrintPdf(item.pdf_url)}
                             >
                               다운로드
