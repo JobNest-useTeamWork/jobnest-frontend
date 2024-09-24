@@ -13,7 +13,7 @@ const Home = () => {
         즐겨찾기
       </h1>
       <BookmarkedList />
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <HomeButton>구글 달력</HomeButton>
         <div className="relative">
           {showTodo && (
@@ -25,7 +25,7 @@ const Home = () => {
             오늘 할 일 메모
           </HomeButton>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
