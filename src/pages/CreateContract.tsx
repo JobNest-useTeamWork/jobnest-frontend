@@ -84,7 +84,9 @@ const CreateContract = () => {
           </button>
           <button
             className={twMerge(
-              "rounded-[30px] border border-[#CCCCCC] text-[#8894A0] bg-opacity-30 px-[10px] py-[4px]"
+              "rounded-[30px] border border-[#CCCCCC] text-[#8894A0] bg-opacity-30 px-[10px] py-[4px]",
+              selectedButton === "confirm" &&
+                "border-[#335995] bg-[#335995] text-[#335995]"
             )}
             name="confirm"
             onClick={() => selectContractType("confirm")}
@@ -93,7 +95,9 @@ const CreateContract = () => {
           </button>
           <button
             className={twMerge(
-              "rounded-[30px] border border-[#CCCCCC] text-[#8894A0] bg-opacity-30 px-[10px] py-[4px]"
+              "rounded-[30px] border border-[#CCCCCC] text-[#8894A0] bg-opacity-30 px-[10px] py-[4px]",
+              selectedButton === "receipt" &&
+                "border-[#335995] bg-[#335995] text-[#335995]"
             )}
             name="receipt"
             onClick={() => selectContractType("receipt")}
@@ -111,7 +115,9 @@ const CreateContract = () => {
               <div>
                 {selectedButton === "contract" &&
                   `${data?.juso} |
-          계약서 종류 : ${data?.contract_type} | 거래유형 : ${data?.transition_type}`}
+          계약서 종류 : ${data?.contract_type || "아파트"} | 거래유형 : ${
+                    data?.transaction_type || "매매"
+                  }`}
               </div>
               <div className="flex gap-2">
                 <button
@@ -138,7 +144,7 @@ const CreateContract = () => {
             {selectedButton === "receipt" && <Receipt />}
           </section>
           {selectedButton === "confirm" && (
-            <div className="center-place flex-col self-start mt-[150px]">
+            <div className="center-place flex-col self-start mt-[150px] absolute right-[58px]">
               {["1", "2", "3", "4"].map((page) => (
                 <button
                   className={twMerge(

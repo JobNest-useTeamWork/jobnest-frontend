@@ -41,17 +41,13 @@ const RealEstateSales = () => {
   const location = useLocation();
   const data = location.state;
   const useid = useId();
-  /*
-  "contract_type": "다세대주택",  # 계약서유형
-  "transaction_type": "전세",  # 거래유형
-  "juso": "서울특별시 강남구 테헤란로 152 [역삼동 702]",  # 소재지
-  */
 
   return (
     <div className="flex flex-col gap-[40px] h-lvh">
       {/* Title */}
       <h1 className="center-place text-[40px] p-2 font-medium border border-[#CCCCCC] rounded-[6px] leading-[60px]">
-        부동산({`${data?.contract_type}`}) {`${data?.transition_type}`} 계약서
+        부동산({`${data?.contract_type || "아파트"}`}){" "}
+        {`${data?.transaction_type || "매매"}`} 계약서
       </h1>
       {/* 1. 부동산의 표시 */}
       <section className="flex flex-col gap-[10px]">

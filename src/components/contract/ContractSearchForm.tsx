@@ -1,17 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import { GrPowerReset } from "react-icons/gr";
 import { LiaSearchSolid } from "react-icons/lia";
-import { useEffect, useId, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-
-type TSearchFormType = {
-  startDate: string;
-  endDate: string;
-  contractType: string;
-  transactionType: string;
-  contractStatus: string;
-  brokerageType: string;
-};
+import { useId } from "react";
+import { useForm } from "react-hook-form";
+import { TSearchFormType } from "../../types/contractsearch";
+import { contractSearchFormStore } from "../../store/contractSearchFormStore";
 
 const contractCategory = [
   "아파트",
@@ -27,19 +20,17 @@ const contractCategory = [
 
 const ContractSearchForm = () => {
   const id = useId();
-  const [currentDate, setCurrentDate] = useState("");
-  const { register, handleSubmit, reset, watch } = useForm<TSearchFormType>();
+  const { searchForm, setSearchForm, resetSearchForm } =
+    contractSearchFormStore();
+  const { register, handleSubmit, reset } = useForm<TSearchFormType>({
+    defaultValues: searchForm,
+  });
 
   const onSubmit = (data: TSearchFormType) => {
-    console.log("Filtered data:", data);
-    // 여기서 필터링된 데이터를 사용하면 됩니다.
+    console.log("form", data);
+    setSearchForm(data);
+    resetSearchForm();
   };
-
-  useEffect(() => {
-    const today = new Date();
-    const formattedDate = today.toISOString().slice(0, 10); // YYYY-MM-DD 형식으로 변환
-    setCurrentDate(formattedDate);
-  }, []);
 
   return (
     <section className="p-[30px] h-[460px] bg-white rounded-[10px] max-w-full">
@@ -59,14 +50,12 @@ const ContractSearchForm = () => {
             <input
               type="date"
               className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
-              defaultValue={currentDate}
               {...register("startDate")}
             />
             <span>~</span>
             <input
               type="date"
               className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
-              defaultValue={currentDate}
               {...register("endDate")}
             />
           </div>
@@ -130,15 +119,6 @@ const ContractSearchForm = () => {
           </select>
           <div className="grid grid-cols-[100px_80px_80px_80px] gap-[20px] font-semibold">
             <div className="min-w-[80px] ml-[20px]">계약서 상태</div>
-            {/* <div className="flex gap-[8px] items-center">
-              <input
-                type="checkbox"
-                id="status-all"
-                className="accent-[#335995] w-[14px] h-[14px]"
-                {...register("contractStatus")}
-              />
-              <label htmlFor="status-all">전체</label>
-            </div> */}
             <div className="flex gap-[8px] items-center">
               <input
                 type="checkbox"
