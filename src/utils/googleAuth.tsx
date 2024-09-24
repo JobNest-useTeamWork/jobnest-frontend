@@ -9,8 +9,8 @@ import { CalendarEvent } from "../types/todotypes";
 
 const CALENDAR_URL = "https://www.googleapis.com/calendar/v3/calendars";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
-const CLIENT_ID = import.meta.env.CLIENT_ID;
-const CLIENT_SECRET = import.meta.env.CLIENT_SECRET;
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
 
 export const getUserEmail = (): string => {
   const token = localStorage.getItem("googleToken");

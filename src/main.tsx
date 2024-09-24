@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.CLIENT_ID}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
