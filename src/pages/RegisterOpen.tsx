@@ -218,7 +218,7 @@ const RegisterOpen = () => {
                             );
                           } else {
                             return (
-                              <th className='px-2 border border-[#7f7f7f]'>
+                              <th className='whitespace-nowrap px-2 border border-[#7f7f7f]'>
                                 {item}
                               </th>
                             );
