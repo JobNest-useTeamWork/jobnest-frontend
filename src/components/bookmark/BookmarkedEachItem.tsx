@@ -10,7 +10,7 @@ const BookmarkedEachItem = ({bookmarkId,bookmarkOgImg,bookmarkTitle} : bookmarkD
 
   return(
     <>    
-        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-black border-[1px] rounded-lg"
+        <div className="w-[180px] h-[180px] relative bg-cover bg-center border-slate-400 border-[1px] rounded-2xl"
              style={{ backgroundImage: `url(${bookmarkOgImg})`,
                       backgroundSize: 'contain', // 이미지를 컨테이너에 맞추기
                       backgroundRepeat: 'no-repeat', // 반복 방지
