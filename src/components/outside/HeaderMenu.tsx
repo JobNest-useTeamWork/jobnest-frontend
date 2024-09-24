@@ -27,7 +27,7 @@ const HeaderMenu = ({
     <>
       <div
         ref={outRef}
-        className={`absolute flex flex-col gap-[8px] md:hidden center-place top-[70px] left-[-50px] bg-white shadow-md p-[24px] transition-all duration-300 ease-in-out lg:hidden ${
+        className={`bg-white z-[1000] absolute flex flex-col gap-[8px] md:hidden center-place top-[70px] left-[-50px] bg-white shadow-md p-[24px] transition-all duration-300 ease-in-out lg:hidden ${
           isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
         }`}
       >
