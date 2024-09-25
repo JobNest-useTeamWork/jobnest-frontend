@@ -4,7 +4,7 @@ type TitleType = RegisterTitleType;
 
 const Title = ({ title, desc }: TitleType) => {
   return (
-    <div className='flex items-end gap-8 mb-[100px]'>
+    <div className='flex items-end gap-8 mb-[60px]'>
       <h1 className='font-suit text-[40px] text-[#151515] font-extrabold shrink-0'>
         {title}
       </h1>

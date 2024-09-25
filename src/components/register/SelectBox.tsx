@@ -11,7 +11,7 @@ interface SelectboxType extends React.ComponentPropsWithoutRef<"select"> {
 const SelectBox = ({ selectData, register, ...rest }: SelectboxType) => {
   return (
     <select
-      className='font-suit w-28 h-full border border-[#cccccc]'
+      className='font-suit h-full px-2 border border-[#cccccc]'
       {...register}
       {...rest}
     >
