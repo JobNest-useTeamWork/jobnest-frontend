@@ -6,10 +6,10 @@ interface EditDeleteProps {
   todoText: string
   onEdit: (id: string, newText: string) => void
   onDelete: (id: string) => void
-  onClick: () => void // Add this prop
+  hoveredTodoId: string | null
+  onClick?: () => void // Add this prop
   className?: string
-  onMouseEnter: () => void
-  onMouseLeave: () => void
+  onMouseEnter?: () => void
 }
 
 const EditDelete: React.FC<EditDeleteProps> = ({
@@ -18,9 +18,9 @@ const EditDelete: React.FC<EditDeleteProps> = ({
   onEdit,
   onDelete,
   onClick,
+  hoveredTodoId,
   className,
   onMouseEnter,
-  onMouseLeave,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
@@ -41,7 +41,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
   }
 
   return (
-    <div className={`relative ${className}`} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div className={`relative ${className}`} onClick={onClick} onMouseEnter={onMouseEnter}>
       {isEditing ? (
         <div className="flex items-center">
           <input
@@ -57,12 +57,14 @@ const EditDelete: React.FC<EditDeleteProps> = ({
         </div>
       ) : (
         <>
-          <button onClick={toggleDropdown} className="flex items-center justify-center text-gray-500">
-            <BsThreeDots />
-          </button>
+          {hoveredTodoId === todoId && (
+            <button onClick={toggleDropdown} className="flex items-center justify-center text-gray-500">
+              <BsThreeDots />
+            </button>
+          )}
           {dropdownOpen && (
             //text-center px-4 hover:bg-gray-100 whitespace-nowrap border
-            <div className="absolute right-0 mt-2 w-[66px] bg-white shadow-lg z-[700]">
+            <div className="absolute right-0 mt-2 w-[66px] bg-white  shadow-lg z-10">
               <button
                 onClick={handleEdit}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200 border-b-0"

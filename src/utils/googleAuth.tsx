@@ -11,6 +11,7 @@ const CALENDAR_URL = "https://www.googleapis.com/calendar/v3/calendars";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+const REDIRECT_URL = import.meta.env.VITE_DOMAIN_URL;
 
 export const getUserEmail = (): string => {
   const token = localStorage.getItem("googleToken");
@@ -143,7 +144,7 @@ export const GoogleLoginComponent = () => {
           client_secret: CLIENT_SECRET,
           code: codeResponse.code,
           grant_type: "authorization_code",
-          redirect_uri: "http://localhost:5173",
+          redirect_uri: REDIRECT_URL,
         });
         const { access_token: newAccessToken, refresh_token } =
           tokenResponse.data;
