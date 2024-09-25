@@ -21,7 +21,6 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onEditTodo,
 }) => {
   const [hoveredTodoId, setHoveredTodoId] = useState<string | null>(null);
-  const [, setIsEditDeleteClicked] = useState<boolean>(false);
 
   return (
     <div className={`${className} mt-3`}>
@@ -47,17 +46,13 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
                   {todo.text}
                 </span>
               </div>
-              {hoveredTodoId === todo.id && (
-                <EditDelete
-                  todoId={todo.id}
-                  todoText={todo.text}
-                  onEdit={onEditTodo}
-                  onDelete={onDeleteTodo}
-                  onClick={() => setIsEditDeleteClicked(true)}
-                  onMouseEnter={() => setIsEditDeleteClicked(true)}
-                  onMouseLeave={() => setIsEditDeleteClicked(false)}
-                />
-              )}
+              <EditDelete
+                todoId={todo.id}
+                todoText={todo.text}
+                onEdit={onEditTodo}
+                onDelete={onDeleteTodo}
+                hoveredTodoId={hoveredTodoId}
+              />
             </li>
           ))}
         </ul>
