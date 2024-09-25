@@ -44,7 +44,7 @@ const SelectedDetail = () => {
       result: registers.map((registers) => ({
         id: registers.unique,
         register_type: registers.register_type,
-        category: "-",
+        category: registers.register_type,
         unique: registers.unique,
         juso: registers.address,
         owner: ["-"],
