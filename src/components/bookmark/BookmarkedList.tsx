@@ -23,8 +23,8 @@ const defaultBookmarkData : bookmarkDataInterface[]  = [
     },
     {
         bookmarkId : '3',
-        bookmarkTitle : 'KB부동산',
-        bookmarkURL : 'https://kbland.kr/map?xy=37.5205559,126.9265729,17',
+        bookmarkTitle : '온하우스',
+        bookmarkURL : 'https://www.onhouse.com/',
         bookmarkOgImg : '',
         checked : true,
     },
