@@ -62,7 +62,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
           </button>
           {dropdownOpen && (
             //text-center px-4 hover:bg-gray-100 whitespace-nowrap border
-            <div className="absolute right-0 mt-2 w-[66px] bg-white  shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-[66px] bg-white shadow-lg z-[700]">
               <button
                 onClick={handleEdit}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 border border-gray-200 border-b-0"

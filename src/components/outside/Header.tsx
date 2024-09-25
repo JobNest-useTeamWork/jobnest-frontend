@@ -32,7 +32,7 @@ const Header = () => {
             매물 관리
           </Link>
           <Link
-            to="/contract"
+            to="/create/search"
             className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
           >
             계약 관리

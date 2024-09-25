@@ -17,11 +17,19 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/contract",
+        path: "/create/search",
         element: <Contract />,
       },
       {
-        path: "/contract/create",
+        path: "/create/contract",
+        element: <CreateContract />,
+      },
+      {
+        path: "/create/confirm/:id",
+        element: <CreateContract />,
+      },
+      {
+        path: "/create/receipt",
         element: <CreateContract />,
       },
       {

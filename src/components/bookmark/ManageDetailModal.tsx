@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { bookmarkDataFetch } from "../../api/bookmark";
 import { getBookmarks, saveBookmarks } from "../../hooks/useBookmarks";
 import { bookmarkDataInterface, manageModalInterface } from "../../types/bookmark";
-import logo from "../../assets/logo.png";
-
+//import logo from "../../assets/logo.png";
+//import { FaBookBookmark } from "react-icons/fa6";
 
 
 const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
@@ -133,7 +133,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       if (newBookmark) {
         const bookmarkWithChecked: bookmarkDataInterface = {
           ...newBookmark,
-          bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? logo : newBookmark.bookmarkOgImg,
+          //bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? <FaBookBookmark /> : newBookmark.bookmarkOgImg,
           checked: false,  // 새로운 북마크의 기본 checked 값을 false로 설정
         };
 
@@ -162,19 +162,20 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       <div style={{
         position: 'relative',
         top: '30%',
-      }} className="w-[311px] h-[566px] bg-white border border-black transform -translate-x-1/2 -translate-y-1/2">
-        <div className="w-full h-[51px] flex justify-between p-2">
-          <span className="w-[120px] h-[22px] text-center font-semibold text-lg">즐겨찾기 관리</span>
+      }} className="w-[311px] h-[566px] bg-white border 
+                    rounded-md transform -translate-x-1/2 -translate-y-1/2 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
+        <div className="w-full h-[51px] flex justify-between align-middle p-3">
+          <span className="w-[120px] h-[22px] text-center text-lg">즐겨찾기 관리</span>
           <span onClick={closeModal} className="w-[25px] h-[17px]">
             <IoClose size={28} />
           </span>
         </div>
         <hr />
-        <div className="overflow-y-auto" style={{ maxHeight: '430px' }}>
+        <div className="overflow-y-auto p-2" style={{ maxHeight: '430px' }}>
         {listItem.map((item) => (
           <div key={item.bookmarkId} className="group flex flex-row justify-between p-1 m-1">
-            <label className="text-gray-500 rounded-sm items-center flex space-x-2" key={item.bookmarkId}>
-              <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+            <label className="text-gray-500 rounded-sm items-center flex space-x-3" key={item.bookmarkId}>
+              <input type="checkbox" className="w-4 h-4 accent-[#636363] bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                 id={item.bookmarkId} checked={item.checked || false} onChange={(e) => { chkBookmarkedOne(e.target.checked, item) }} />
               <span>{item.bookmarkTitle}</span>
             </label>
@@ -207,7 +208,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
                 left: '110%',
                 bottom: '30%',
                 transform: 'translateX(0%)',
-              }} className="flex flex-col w-[311px] h-[220px] rounded-md border-[1px] bg-white border-black gap-2 justify-center">
+              }} className="flex flex-col w-[311px] h-[220px] rounded-md bg-white gap-2 justify-center">
               <div className="flex flex-col gap-2 items-center">
                 <input type="text"
                   className="w-[267px] h-[41px] rounded-md border-[1px] p-2"
@@ -219,7 +220,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
                   id="bookmarkURL"
                   placeholder="https://www.example.com"
                   value={fetchUrl}
-                  className={`w-[267px] h-[41px] rounded-md border-[1px] ${errors.bookmarkURL?.message ? "border-red-500" : "border-slate-600"} p-2`}
+                  className={`w-[267px] h-[41px] rounded-md border-[1px] ${errors.bookmarkURL?.message ? "border-red-500" : "border-slate-200"} p-2`}
                   {...register('bookmarkURL', {
                     required: "URL을 입력해주세요",
                     pattern: {
@@ -233,7 +234,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
               </div>
               <div className="flex row-col gap-4 justify-center m-2">
                 <button onClick={closeModal} className="w-[58px] h-[34px] rounded-md border-[1px]">취소</button>
-                <button className="w-[58px] h-[34px] rounded-md bg-slate-400">저장</button>
+                <button className="w-[58px] h-[34px] rounded-md bg-[#747474] text-white">저장</button>
               </div>
             </form>
           )}
