@@ -77,7 +77,7 @@ const SearchForm = ({ title }: { title: string }) => {
 
   return (
     <form
-      className='max-w-[1264px] h-[68px] flex items-center gap-4 mb-[100px] mx-5 p-3 bg-[#f7f7f8]'
+      className='max-w-[1264px] h-[68px] flex items-center gap-4 mb-[60px] mx-5 p-3 bg-[#f7f7f8]'
       onSubmit={handleSubmit(onSubmitSearchAddress)}
     >
       <SelectBox
