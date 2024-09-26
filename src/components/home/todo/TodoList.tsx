@@ -21,7 +21,6 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
   onEditTodo,
 }) => {
   const [hoveredTodoId, setHoveredTodoId] = useState<string | null>(null);
-  const [, setIsEditDeleteClicked] = useState<boolean>(false);
 
   return (
     <div className={`${className} mt-3`}>
@@ -34,7 +33,7 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
           {filteredTodos.map((todo) => (
             <li
               key={todo.id}
-              className="flex items-center justify-between h-[25px] bg-white rounded p-2"
+              className="flex items-center justify-between h-[25px] bg-white rounded p-2 "
               onMouseEnter={() => setHoveredTodoId(todo.id)}
             >
               <div className="flex items-center flex-grow">
@@ -43,21 +42,21 @@ const TodoListPart: React.FC<TodoListPartProps> = ({
                   checked={todo.completed}
                   onChange={() => onToggleTodo(todo.id)}
                 />
-                <span className="ml-2 text-[#8894A0] flex-grow">
+                <span
+                  className={`ml-2  flex-grow ${
+                    todo.isGoogle ? "text-[#347FFF]" : "text-[#8894A0]"
+                  }`}
+                >
                   {todo.text}
                 </span>
               </div>
-              {hoveredTodoId === todo.id && (
-                <EditDelete
-                  todoId={todo.id}
-                  todoText={todo.text}
-                  onEdit={onEditTodo}
-                  onDelete={onDeleteTodo}
-                  onClick={() => setIsEditDeleteClicked(true)}
-                  onMouseEnter={() => setIsEditDeleteClicked(true)}
-                  onMouseLeave={() => setIsEditDeleteClicked(false)}
-                />
-              )}
+              <EditDelete
+                todoId={todo.id}
+                todoText={todo.text}
+                onEdit={onEditTodo}
+                onDelete={onDeleteTodo}
+                hoveredTodoId={hoveredTodoId}
+              />
             </li>
           ))}
         </ul>

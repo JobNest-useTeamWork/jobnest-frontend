@@ -3,9 +3,15 @@ import BookmarkedList from "../components/bookmark/BookmarkedList";
 
 import Todo from "../components/home/todo/Todo";
 import HomeButton from "../components/home/button/BottomButton";
+import Calendar from "../components/home/calendar/Calendar";
+import { getUserEmail } from "../utils/googleAuth";
 
 const Home = () => {
-  const [showTodo, setShowTodo] = useState(true);
+  const [showTodo, setShowTodo] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [userEmail] = useState<string>(
+    localStorage.getItem("userEmail") || getUserEmail()
+  );
 
   return (
     <div className="flex flex-col w-full h-full justify-between relative p-[50px]">
@@ -15,8 +21,15 @@ const Home = () => {
         </h1>
         <BookmarkedList />
       </div>
+      {showCalendar && (
+        <div>
+          <Calendar email={userEmail} />
+        </div>
+      )}
       <div className="flex justify-end">
-        <HomeButton>구글 달력</HomeButton>
+        <HomeButton onClick={() => setShowCalendar(!showCalendar)}>
+          구글 달력
+        </HomeButton>
         <div className="relative">
           {showTodo && (
             <div className="bg-white absolute bottom-[180px] right-10 z-[500]">
