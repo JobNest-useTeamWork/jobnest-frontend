@@ -107,7 +107,7 @@ const BookmarkedList = () => {
                             <div key={item.bookmarkId}>
                                 <BookmarkedEachItem
                                     bookmarkId={item.bookmarkId}
-                                    bookmarkURL={item.bookmarkId}
+                                    bookmarkURL={item.bookmarkURL}
                                     bookmarkTitle={item.bookmarkTitle}
                                     bookmarkOgImg={item.bookmarkOgImg}
                                     checked={item.checked}
