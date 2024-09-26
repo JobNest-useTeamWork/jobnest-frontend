@@ -3,6 +3,7 @@ export interface TodoItem {
   text: string;
   completed: boolean;
   date: Date;
+  isGoogle: boolean;
 }
 
 export interface CalendarEvent {
