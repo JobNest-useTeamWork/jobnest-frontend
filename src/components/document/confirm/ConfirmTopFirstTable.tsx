@@ -48,7 +48,7 @@ const ConfirmTopFirstTable = () => {
         <span>자료요구 사항</span>
       </div>
       <div className="center-place">
-        <textarea className="w-full border border-[#D9D9D9] rounded-[4px] p-2">
+        <textarea className="w-full border border-[#D9D9D9] rounded-[4px] p-2 resize-none">
           {dataRequire}
         </textarea>
       </div>

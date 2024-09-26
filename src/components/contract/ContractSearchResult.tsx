@@ -11,8 +11,7 @@ const ContractSearchResult = () => {
   const [filteredData, setFilteredData] = useState<contractType[]>([]);
 
   useEffect(() => {
-    // fetch(`${import.meta.env.VITE_BASE_URL}/contract-list`) //
-    fetch("/search.json") //
+    fetch(`${import.meta.env.VITE_BASE_URL}/contract-list`) //
       .then((response) => response.json())
       .then((data) => {
         setResultList(data.result);
