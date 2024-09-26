@@ -1,11 +1,13 @@
 import { twMerge } from "tailwind-merge";
 import { GrPowerReset } from "react-icons/gr";
 import { LiaSearchSolid } from "react-icons/lia";
-import { useId } from "react";
+// import { Controller, useForm } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { TSearchFormType } from "../../types/contractsearch";
 import { contractSearchFormStore } from "../../store/contractSearchFormStore";
 import { contractType } from "../../types/contract";
+import { useId } from "react";
+// import CustomDropdown from "./CustomDropdown";
 
 const contractCategory = [
   "아파트",
@@ -28,13 +30,14 @@ const ContractSearchForm = ({
   resultList: contractType[];
   setFilteredData: React.Dispatch<React.SetStateAction<contractType[]>>;
 }) => {
-  const id = useId();
+  const useid = useId();
   const { searchForm, setSearchForm, resetSearchForm } =
     contractSearchFormStore();
   const {
     register,
     handleSubmit,
     reset,
+    // control,
     formState: { errors },
   } = useForm<TSearchFormType>({
     defaultValues: searchForm,
@@ -155,6 +158,7 @@ const ContractSearchForm = ({
           )}
         >
           <div className="font-semibold">계약서 종류</div>
+          {/* Select */}
           <select
             id="contract-type"
             className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f] text-[14px]"
@@ -162,11 +166,27 @@ const ContractSearchForm = ({
           >
             <option value="">선택</option>
             {contractCategory.map((type, index) => (
-              <option value={type} key={`${id}-${index}`}>
+              <option value={type} key={`${useid}-${index}`}>
                 {type}
               </option>
             ))}
           </select>
+          {/* <div className="relative">
+            <Controller
+              name="contractType"
+              control={control}
+              defaultValue="" // 기본값 설정
+              render={({ field }) => (
+                <CustomDropdown
+                  options={contractCategory}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  placeholder="계약서 종류 선택"
+                />
+              )}
+            />
+          </div> */}
           <div className="grid grid-cols-[100px_80px_80px_80px] gap-[20px] font-semibold">
             <div className="min-w-[80px] ml-[20px]">계약서 상태</div>
             <div className="flex gap-[8px] items-center">
