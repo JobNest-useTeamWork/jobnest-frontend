@@ -22,7 +22,7 @@ const Home = () => {
         <BookmarkedList />
       </div>
       {showCalendar && (
-        <div>
+        <div className="">
           <Calendar email={userEmail} />
         </div>
       )}

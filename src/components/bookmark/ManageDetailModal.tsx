@@ -133,8 +133,9 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
       if (newBookmark) {
         const bookmarkWithChecked: bookmarkDataInterface = {
           ...newBookmark,
-          //bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? <FaBookBookmark /> : newBookmark.bookmarkOgImg,
+          bookmarkTitle : data.bookmarkTitle,  //사용자 입력 input으로 저장
           checked: false,  // 새로운 북마크의 기본 checked 값을 false로 설정
+          //bookmarkOgImg : (newBookmark.bookmarkOgImg === "이미지 없음") ? <FaBookBookmark /> : newBookmark.bookmarkOgImg,
         };
 
         const existingBookmarks = getBookmarks();
@@ -215,7 +216,7 @@ const ManageDetailModal = ({ closeModal}: manageModalInterface) => {
                   {...register('bookmarkTitle', {
                     required: "타이틀을 작성해주세요."
                   })} />
-
+                {errors.bookmarkTitle?.message ? <span className="text-red-500">{errors.bookmarkTitle?.message}</span> : null}
                 <input type="text"
                   id="bookmarkURL"
                   placeholder="https://www.example.com"
