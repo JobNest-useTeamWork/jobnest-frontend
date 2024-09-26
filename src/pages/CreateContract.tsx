@@ -47,7 +47,9 @@ const CreateContract = () => {
     const pdfImageHeight = pdfWidth / imageRatio;
 
     pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfImageHeight);
-    pdf.save("document.pdf");
+    if (selectedButton === "contract") pdf.save("계약서.pdf");
+    else if (selectedButton === "confirm") pdf.save("중개대상물_확인서.pdf");
+    else if (selectedButton === "receipt") pdf.save("영수증.pdf");
   };
 
   // 인쇄 핸들러
