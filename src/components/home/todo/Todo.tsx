@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import TodoListPart from "./TodoList";
 import TodoInput from "./TodoInput";
 import DateSelector from "./DateSelector";
 
@@ -9,6 +8,7 @@ import {
   GoogleLoginComponent,
 } from "../../../utils/googleAuth";
 import { TodoItem, CalendarEvent } from "../../../types/todotypes";
+import TodoListPart from "./TodoList";
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>(
@@ -56,6 +56,7 @@ const Todo: React.FC = () => {
             text: event.summary,
             completed: false,
             date: new Date(event.start.date),
+            isGoogle: true,
           }));
 
           setTodos((prevTodos) => {
@@ -84,6 +85,7 @@ const Todo: React.FC = () => {
       text,
       completed: false,
       date: new Date(),
+      isGoogle: false,
     };
     setTodos([...todos, newTodo]);
   };

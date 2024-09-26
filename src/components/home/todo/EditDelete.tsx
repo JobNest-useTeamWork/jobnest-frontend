@@ -6,10 +6,10 @@ interface EditDeleteProps {
   todoText: string;
   onEdit: (id: string, newText: string) => void;
   onDelete: (id: string) => void;
-  onClick: () => void; // Add this prop
+  hoveredTodoId: string | null;
+  onClick?: () => void; // Add this prop
   className?: string;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onMouseEnter?: () => void;
 }
 
 const EditDelete: React.FC<EditDeleteProps> = ({
@@ -18,9 +18,9 @@ const EditDelete: React.FC<EditDeleteProps> = ({
   onEdit,
   onDelete,
   onClick,
+  hoveredTodoId,
   className,
   onMouseEnter,
-  onMouseLeave,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -40,12 +40,19 @@ const EditDelete: React.FC<EditDeleteProps> = ({
     setIsEditing(false);
   };
 
+  const handleKeyboard = (e: React.KeyboardEvent) => {
+    // if(e.key === 'Enter' || e.keyCode === 13) {
+    if (e.key === "Enter") {
+      // 엔터 키 입력 후 발생하는 이벤트 작성
+      handleEditSubmit();
+    }
+  };
+
   return (
     <div
       className={`relative ${className}`}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     >
       {isEditing ? (
         <div className="flex items-center">
@@ -55,6 +62,7 @@ const EditDelete: React.FC<EditDeleteProps> = ({
             onChange={(e) => setEditText(e.target.value)}
             className="mr-2 p-1 border rounded"
             autoFocus
+            onKeyDown={handleKeyboard}
           />
           <button onClick={handleEditSubmit} className="text-blue-200">
             저장
@@ -62,12 +70,14 @@ const EditDelete: React.FC<EditDeleteProps> = ({
         </div>
       ) : (
         <>
-          <button
-            onClick={toggleDropdown}
-            className="flex items-center justify-center text-gray-500"
-          >
-            <BsThreeDots />
-          </button>
+          {hoveredTodoId === todoId && (
+            <button
+              onClick={toggleDropdown}
+              className="flex items-center justify-center text-gray-500"
+            >
+              <BsThreeDots />
+            </button>
+          )}
           {dropdownOpen && (
             //text-center px-4 hover:bg-gray-100 whitespace-nowrap border
             <div className="absolute right-0 mt-2 w-[66px] bg-white  shadow-lg z-10">
