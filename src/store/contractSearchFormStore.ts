@@ -12,7 +12,7 @@ const formattedDate = today.toISOString().slice(0, 10); // YYYY-MM-DD 형식으�
 
 export const contractSearchFormStore = create<SearchFormStore>((set) => ({
   searchForm: {
-    startDate: "",
+    startDate: formattedDate,
     endDate: formattedDate,
     contractType: "",
     contractStatus: [],
@@ -23,7 +23,7 @@ export const contractSearchFormStore = create<SearchFormStore>((set) => ({
   resetSearchForm: () =>
     set({
       searchForm: {
-        startDate: "",
+        startDate: formattedDate,
         endDate: formattedDate,
         contractType: "",
         contractStatus: [],

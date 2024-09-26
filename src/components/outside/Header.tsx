@@ -25,12 +25,12 @@ const Header = () => {
         <div
           className={`flex justify-between items-center gap-[1.5rem] max-md:hidden`}
         >
-          <Link
+          {/* <Link
             to="/"
             className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
           >
             매물 관리
-          </Link>
+          </Link> */}
           <Link
             to="/create/search"
             className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"

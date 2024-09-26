@@ -77,17 +77,18 @@ const SearchForm = ({ title }: { title: string }) => {
 
   return (
     <form
-      className='max-w-[1264px] h-[68px] flex items-center gap-4 mb-[60px] mx-5 p-3 bg-[#f7f7f8]'
+      className="max-w-[1264px] h-[68px] flex items-center gap-4 mb-[60px] mx-5 p-3 bg-[#f7f7f8]"
       onSubmit={handleSubmit(onSubmitSearchAddress)}
     >
       <SelectBox
         selectData={SELECT_DATA}
         register={register("register_type")}
       ></SelectBox>
-      <div className='w-full h-full'>
+
+      <div className="w-full h-full">
         <Input
-          type='text'
-          placeholder='주소를 입력해주세요.'
+          type="text"
+          placeholder="주소를 입력해주세요."
           className={errors.address && "border-red-500"}
           register={register("address", {
             required: ERROR_MESSAGE_REQUIRED,
@@ -95,10 +96,11 @@ const SearchForm = ({ title }: { title: string }) => {
           resetField={() => handleResetField("address")}
         />
         {errors.address && (
-          <p className='text-sm mt-1 text-red-500'>{errors.address?.message}</p>
+          <p className="text-sm mt-1 text-red-500">{errors.address?.message}</p>
         )}
       </div>
-      <Button className='w-24 rounded-md'>검색</Button>
+
+      <Button className="w-24 rounded-md">검색</Button>
     </form>
   );
 };
