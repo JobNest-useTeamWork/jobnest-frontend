@@ -43,7 +43,7 @@ const RealEstateSales = () => {
   const useid = useId();
 
   return (
-    <div className="flex flex-col gap-[40px] h-lvh">
+    <div className="flex flex-col gap-[40px] min-h-screen">
       {/* Title */}
       <h1 className="center-place text-[40px] p-2 font-medium border border-[#CCCCCC] rounded-[6px] leading-[60px]">
         부동산({`${data?.contract_type || "아파트"}`}){" "}

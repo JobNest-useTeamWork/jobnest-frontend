@@ -1,10 +1,12 @@
 import { IoAlertCircleOutline } from "react-icons/io5";
 const ConfirmSecondTable = () => {
   return (
-    <section className="grid grid-cols-[130px_210px_130px_1fr_130px_1fr] grid-rows-[40px_170px_170px] border-y border-black">
+    <section className="grid grid-cols-[140px_210px_140px_1fr_140px_1fr] grid-rows-[40px_170px_170px] border-y border-black">
       <div className="row-span-3 border-r border-black center-place flex-col gap-2">
         <div>권리관계</div>
-        <button className="blue-button p-2">PDF 열람 및 연동</button>
+        <button className="blue-button p-2 print-hidden">
+          PDF 열람 및 연동
+        </button>
       </div>
       <div className="row-span-3 border-r border-black center-place flex-col">
         <div>등기부 기재사항</div>

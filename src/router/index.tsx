@@ -21,15 +21,7 @@ const router = createBrowserRouter([
         element: <Contract />,
       },
       {
-        path: "/create/contract",
-        element: <CreateContract />,
-      },
-      {
-        path: "/create/confirm/:id",
-        element: <CreateContract />,
-      },
-      {
-        path: "/create/receipt",
+        path: "/create/:type/:id?",
         element: <CreateContract />,
       },
       {

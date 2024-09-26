@@ -12,7 +12,7 @@ const SideBar = () => {
     <>
       <nav
         className={twMerge(
-          "bg-[#f8f8f8] h-[100vh] sticky top-0 left-0 p-4 flex flex-col gap-[16px] items-center z-[1000]",
+          "bg-[#f8f8f8] h-[100vh] sticky top-0 left-0 p-4 flex flex-col gap-[16px] items-center z-[900]",
           isFixed
             ? "w-[310px] block flex flex-col gap-[16px] "
             : "w-[50px] hover:w-[310px] group transition-all duration-300 ease-in-out "
