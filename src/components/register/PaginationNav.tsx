@@ -8,6 +8,7 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const PaginationNav = ({ children }: { children: React.ReactNode }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState<number | null>(null);
   const pageButtons = 10;
 
   const searchData = useRegisterStore((state) => state.searchData);
@@ -29,6 +30,11 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (registers && registers.result) {
       addSearchRegister(registers, searchData.register_type);
+
+      // last_page 값을 처음 불러올 때만 저장
+      if (lastPage === null && registers.last_page) {
+        setLastPage(Number(registers?.last_page));
+      }
     }
   }, [registers, addSearchRegister]);
 
@@ -41,10 +47,7 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const startPage = Math.max(1, currentPage - Math.floor(pageButtons / 2));
-    const endPage = Math.min(
-      Number(registers?.last_page),
-      startPage + pageButtons - 1
-    );
+    const endPage = Math.min(Number(lastPage), startPage + pageButtons - 1);
 
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
@@ -62,39 +65,50 @@ const PaginationNav = ({ children }: { children: React.ReactNode }) => {
     return pageNumbers;
   };
 
-  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error occurred</div>;
 
   return (
     <>
-      {/** 검색한 리스트 출력 */}
-      {children}
-
       {/** 페이지네이션 nav */}
-      <div className='flex items-center justify-center mt-6'>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={`p-2 text-[#7f7f7f] ${
-            currentPage === 1 ? "opacity-50" : ""
-          }`}
-        >
-          <FaLongArrowAltLeft />
-        </button>
+      <div className='relative'>
+        <div className='relative'>
+          {/** 검색한 리스트 출력 */}
+          <div className='relative'>
+            {isLoading && (
+              <div className='absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center'>
+                <LoadingSpinner />
+              </div>
+            )}
+            {children}
+          </div>
 
-        <div className='flex items-center p-1 rounded-full bg-[#f8f8f8]'>
-          {renderPageNumbers()}
+          {/** 페이지네이션 숫자 버튼 */}
+          <div className='flex items-center justify-center mt-6'>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`p-2 text-[#7f7f7f] ${
+                currentPage === 1 ? "opacity-50" : ""
+              }`}
+            >
+              <FaLongArrowAltLeft />
+            </button>
+
+            <div className='flex items-center p-1 rounded-full bg-[#f8f8f8]'>
+              {renderPageNumbers()}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === Number(registers?.last_page)}
+              className={`p-2 text-[#7f7f7f] ${
+                currentPage === Number(registers?.last_page) ? "opacity-50" : ""
+              }`}
+            >
+              <FaLongArrowAltRight />
+            </button>
+          </div>
         </div>
-
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === Number(registers?.last_page)}
-          className={`p-2 text-[#7f7f7f] ${
-            currentPage === Number(registers?.last_page) ? "opacity-50" : ""
-          }`}
-        >
-          <FaLongArrowAltRight />
-        </button>
       </div>
     </>
   );
