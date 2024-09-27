@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface SelectboxType extends React.ComponentPropsWithoutRef<"select"> {
   selectData: {
     id: number;
@@ -8,10 +10,18 @@ interface SelectboxType extends React.ComponentPropsWithoutRef<"select"> {
   };
 }
 
-const SelectBox = ({ selectData, register, ...rest }: SelectboxType) => {
+const SelectBox = ({
+  selectData,
+  register,
+  className,
+  ...rest
+}: SelectboxType) => {
   return (
     <select
-      className='font-suit h-full px-2 border border-[#cccccc]'
+      className={twMerge(
+        "font-suit h-full px-2 border border-[#cccccc]",
+        className
+      )}
       {...register}
       {...rest}
     >

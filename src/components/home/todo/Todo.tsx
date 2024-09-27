@@ -3,12 +3,13 @@ import TodoInput from "./TodoInput";
 import DateSelector from "./DateSelector";
 
 import {
-  getTodayEvents,
+  getAllEvents,
   getUserEmail,
   GoogleLoginComponent,
 } from "../../../utils/googleAuth";
 import { TodoItem, CalendarEvent } from "../../../types/todotypes";
 import TodoListPart from "./TodoList";
+import { isBefore, isSameDay, startOfDay } from "date-fns";
 
 const Todo: React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>(
@@ -47,9 +48,8 @@ const Todo: React.FC = () => {
   useEffect(() => {
     const fetchCalendarEvents = async () => {
       if (accessToken) {
-        const events = await getTodayEvents(accessToken, userEmail);
+        const events = await getAllEvents(accessToken, userEmail);
         setCalendarEvents(events);
-
         if (Array.isArray(events)) {
           const calendarTodos = events.map((event) => ({
             id: event.id,
@@ -112,19 +112,24 @@ const Todo: React.FC = () => {
     );
   };
 
-  const filteredTodos = todos.filter((todo) => {
-    const todoDate = new Date(todo.date); // todo.date는 Date 객체라고 가정
-    const today = new Date();
+  function filteredTodos(todos: TodoItem[], selectedDay: string): TodoItem[] {
+    return todos.filter((todo) => {
+      console.log(todo);
+      const todoDate = startOfDay(new Date(todo.date)); // Normalize todo.date to start of the day
+      const today = startOfDay(new Date()); // Normalize today to start of the day
 
-    if (selectedDay === "오늘") {
-      return (
-        todoDate.toDateString() === today.toDateString() // '오늘' 할 일 필터링
-      );
-    } else if (selectedDay === "지난 내역") {
-      return todoDate < today; // '지난 내역' 할 일 필터링
-    }
-    return true;
-  });
+      if (selectedDay === "오늘") {
+        // Check if the todoDate is the same as today
+        return isSameDay(todoDate, today);
+      } else if (selectedDay === "지난 내역") {
+        // Check if the todoDate is before today
+        return isBefore(todoDate, today);
+      }
+
+      // Return all todos if no specific filter is selected
+      return true;
+    });
+  }
 
   console.log(calendarEvents);
 
@@ -141,7 +146,7 @@ const Todo: React.FC = () => {
         <TodoListPart
           className="w-full h-full"
           onToggleTodo={toggleTodoCompletion}
-          filteredTodos={filteredTodos}
+          filteredTodos={filteredTodos(todos, selectedDay)}
           selectedDay={selectedDay}
           onDeleteTodo={deleteTodo}
           onEditTodo={editTodo}

@@ -5,6 +5,7 @@ import Title from "./Title";
 import Button from "./Button";
 import SearchForm from "./SearchForm";
 import { useRegisterStore } from "../../store/registerStore";
+import OpenRegisterSearchForm from "./OpenRegisterSearchForm";
 
 interface RegisterLayoutType {
   children: React.ReactNode;
@@ -51,7 +52,9 @@ const RegisterWrapper = ({
           뒤로가기
         </Button>
       )}
-      <SearchForm title={title} />
+      {title === "등기/대장 열람" && <SearchForm />}
+      {title === "등기/대장 열람내역" && <OpenRegisterSearchForm />}
+
       {children}
     </div>
   );

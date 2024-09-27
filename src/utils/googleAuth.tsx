@@ -53,16 +53,14 @@ export const getGoogleCalendarEvents = async (
   }
 };
 
-export const getTodayEvents = async (
+export const getAllEvents = async (
   token: string,
   calendarId: string
 ): Promise<CalendarEvent[]> => {
-  const today = new Date().toISOString().split("T")[0];
   try {
     const response = await axios.get(
-      `${CALENDAR_URL}/${calendarId}/events?access_token=${token}&timeMin=${today}T00:00:00Z&timeMax=${today}T23:59:59Z`
+      `${CALENDAR_URL}/${calendarId}/events?access_token=${token}`
     );
-    console.log(response.data);
     return response.data.items;
   } catch (error) {
     // TODO: implement get access token from refresh token
