@@ -170,6 +170,7 @@ const RegisterOpen = () => {
 
     // register_type 필터링
     const isRegisterTypeMatched =
+      searchOpenRegisterData.register_type === "전체" ||
       searchOpenRegisterData.register_type === "" ||
       item.category === searchOpenRegisterData.register_type;
 
@@ -253,7 +254,10 @@ const RegisterOpen = () => {
                             item.is_change ? "있음" : "없음",
                             getCurrentDate(item.created_at),
                             item.category?.includes("등기") ? (
-                              <Button className='w-[80px] h-7 text-sm'>
+                              <Button
+                                className='w-[80px] h-7 text-sm'
+                                onClick={() => handlePrintPdf(item.pdf_url)}
+                              >
                                 열람
                               </Button>
                             ) : (
