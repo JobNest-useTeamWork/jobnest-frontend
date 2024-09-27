@@ -7,6 +7,20 @@ type TCreateModalForm = {
   juso: string;
 };
 
+const contractCategory = [
+  "아파트",
+  "오피스텔",
+  "단독주택",
+  "다세대주택",
+  "다가구주택",
+  "주상복합",
+  "도시형생활주택",
+  "상가",
+  "사무실",
+  "연립",
+  "아파트분양권",
+];
+
 const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
   const navigate = useNavigate();
   const {
@@ -41,8 +55,11 @@ const CreateModal = ({ closeModal }: { closeModal: () => void }) => {
           })}
         >
           <option value="">선택</option>
-          <option value="아파트">아파트</option>
-          <option value="주상복합">주상복합</option>
+          {contractCategory.map((type) => (
+            <option value={type} key={type}>
+              {type}
+            </option>
+          ))}
         </select>
 
         <div className="font-medium">거래 유형</div>
