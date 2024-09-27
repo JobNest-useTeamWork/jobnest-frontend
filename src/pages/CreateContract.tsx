@@ -74,7 +74,7 @@ const CreateContract = () => {
   };
 
   return (
-    <div className="bg-[#F7F8F9] w-full flex justify-center min-h-screen ">
+    <div className="bg-[#F7F8F9] w-full flex justify-center min-h-screen">
       <div className="p-[24px] flex flex-col gap-[20px] w-[1300px]">
         <div className="flex items-center gap-[8px] text-[20px] font-semibold">
           <img src={writingIcon} alt="계약서 작성 아이콘" />
