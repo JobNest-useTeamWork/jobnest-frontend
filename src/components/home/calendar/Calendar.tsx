@@ -7,7 +7,7 @@ const Calendar: React.FC<{ email: string }> = ({ email }) => {
   const apiKey = import.meta.env.VITE_API_KEY;
 
   return (
-    <div className="cal-container">
+    <div className="cal-container mt-[60px]">
       <FullCalendar
         plugins={[dayGridPlugin, googleCalendarPlugin]}
         initialView="dayGridMonth"

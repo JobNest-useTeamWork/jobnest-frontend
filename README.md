@@ -9,12 +9,12 @@
 ## 목차
 
 - [기술 스택](#기술-스택)
-- [팀 소개](#팀-소개)
 - [개발 기간](#개발-기간)
 - [배포 주소](#배포-주소)
-- [설치 및 실행 방법](#설치-및-실행-방법)
+- [기획안 주소](#기획안-주소)
 - [주요 기능](#주요-기능)
-- [폴더 구조](#폴더-구조)
+- [설치 및 실행 방법](#설치-및-실행-방법)
+- [팀 소개](#팀-소개)
 
 ## 기술 스택
 
@@ -69,6 +69,8 @@ https://smooth-newt-3c9.notion.site/useTeamWork-9315fa5454a74739943f31da67a35491
 ### 홈 대시보드 (즐겨찾기)
 
 - 공인중개사들이 빠르게 자주 이용하는 사이트에 접근할 수 있도록 즐겨찾기 기능을 구현했습니다.
+- 드래그 앤 드랍 기능 구현 : 즐겨찾기 요소들의 위치를 드래그 앤 드랍으로 변경이 가능합니다. DnD Kit 라이브러리를 사용했으며 신생 라이브러리이지만 가장 공식문서가 잘되있고 npm download trends가 가장 급격하게 증가중인 이점이 있어 사용했습니다.
+- 즐겨찾기 CRUD 기능 : 테라파이에서 제공받은 API를 통해 웹 사이트별로 메타데이터를 가져와서 LocalStorage에 저장 후 데이터를 가공해 사용했습니다.
 
 ### 할 일 목록과 구글 캘린더 연동
 
@@ -137,33 +139,34 @@ yarn dev
     <th>정다솜 (팀원)</th>
   </tr>
   <tr>
-    <td style="width: 25%;">
+    <td width=300>
       <img src='https://github.com/user-attachments/assets/6c25a1d1-99c1-4ad4-819e-5f3af98140f7' alt='seungyun' />
     </td>
-    <td style="width: 25%;">
+    <td width=300>
       <img src='https://github.com/user-attachments/assets/93174298-b5f3-4ea3-9588-259104581cb1' alt='yunseo' />
     </td>
-    <td style="width: 25%;">
+    <td width=300>
       <img src='https://github.com/user-attachments/assets/3d510fdc-e193-4248-919f-3c72225f1ce4' alt='sujin' />
     </td>
-    <td style="width: 25%;">
+    <td width=300>
       <img src='https://github.com/user-attachments/assets/1a071a7d-92f1-4943-9d3a-7fb4d077ddbf' alt='dasom' />
     </td>
   </tr>
   <tr>
-    <td style="width: 25%;">
+    <td>
       <div>* Header/Navigation Layout </div>
       <div>* 계약관리 </div>
     </td>
-    <td style="width: 25%;">
+    <td>
       <div>* 메인페이지 Todo</div>
       <div>* Google Calender</div>
     </td>
-    <td style="width: 25%;">
+    <td>
       <div>* 등기/대장 발급</div>
     </td>
-    <td style="width: 25%;">
+    <td>
       <div>* 메인페이지 즐겨찾기</div>
     </td>
   </tr>
 </table>
+

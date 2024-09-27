@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const HeaderMenu = ({
   isOpen,
-  toggleMenu,
 }: {
   isOpen: boolean;
   toggleMenu: () => void;
@@ -34,14 +33,14 @@ const HeaderMenu = ({
         <address className="text-[#8894A0] sm:hidden not-italic border-b border-[#EDEDED] mb-[4px]">
           010-0000-0000
         </address>
-        <Link
+        {/* <Link
           to="/"
           className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
         >
           매물관리
-        </Link>
+        </Link> */}
         <Link
-          to="/contract"
+          to="/create/search"
           className="active:text-main-color hover:text-main-color active:font-bold hover:font-bold"
         >
           계약 관리

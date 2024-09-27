@@ -1,35 +1,75 @@
 import { twMerge } from "tailwind-merge";
 import { GrPowerReset } from "react-icons/gr";
 import { LiaSearchSolid } from "react-icons/lia";
-import { useId } from "react";
+// import { Controller, useForm } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { TSearchFormType } from "../../types/contractsearch";
 import { contractSearchFormStore } from "../../store/contractSearchFormStore";
+import { contractType } from "../../types/contract";
+import { useId } from "react";
+// import CustomDropdown from "./CustomDropdown";
 
 const contractCategory = [
   "아파트",
-  "주상복합",
   "오피스텔",
+  "단독주택",
+  "다세대주택",
+  "다가구주택",
+  "주상복합",
   "도시형생활주택",
   "상가",
   "사무실",
   "연립",
-  "다세대",
   "아파트분양권",
 ];
 
-const ContractSearchForm = () => {
-  const id = useId();
+const ContractSearchForm = ({
+  resultList,
+  setFilteredData,
+}: {
+  resultList: contractType[];
+  setFilteredData: React.Dispatch<React.SetStateAction<contractType[]>>;
+}) => {
+  const useid = useId();
   const { searchForm, setSearchForm, resetSearchForm } =
     contractSearchFormStore();
-  const { register, handleSubmit, reset } = useForm<TSearchFormType>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    // control,
+    formState: { errors },
+  } = useForm<TSearchFormType>({
     defaultValues: searchForm,
   });
 
   const onSubmit = (data: TSearchFormType) => {
-    console.log("form", data);
     setSearchForm(data);
+    filterResults(data);
     resetSearchForm();
+  };
+
+  const filterResults = (searchForm: TSearchFormType) => {
+    const filtered = resultList.filter((contract: contractType) => {
+      // 날짜 필터
+      const matchesDateRange =
+        (!searchForm.startDate ||
+          new Date(contract.contract_date) >= new Date(searchForm.startDate)) &&
+        (!searchForm.endDate ||
+          new Date(contract.contract_date) <= new Date(searchForm.endDate));
+      // 계약서 종류 필터
+      const matchesContractType =
+        !searchForm.contractType ||
+        contract.contract_type === searchForm.contractType;
+      // 거래 유형 종류 필터
+      const matchesTransactionType =
+        !searchForm.transactionType ||
+        contract.transaction_type === searchForm.transactionType;
+
+      return matchesDateRange && matchesContractType && matchesTransactionType;
+    });
+
+    setFilteredData([...filtered]);
   };
 
   return (
@@ -47,18 +87,26 @@ const ContractSearchForm = () => {
         >
           <div className="font-semibold">날짜조회</div>
           <div className="flex items-center gap-[10px]">
+            {/* 시작날짜 */}
             <input
               type="date"
               className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
               {...register("startDate")}
             />
             <span>~</span>
+            {/* 종료날짜 */}
             <input
               type="date"
               className="p-[10px] border border-[#CCCCCC] rounded-[6px] w-[136px]"
-              {...register("endDate")}
+              {...register("endDate", {
+                validate: (endDate, formValues) =>
+                  !formValues.startDate ||
+                  new Date(formValues.startDate) <= new Date(endDate) ||
+                  "날짜를 확인해주세요.",
+              })}
             />
           </div>
+
           <div className="flex gap-[16px] min-w-[300px]">
             <div className="flex gap-[6px] items-center">
               <input
@@ -96,6 +144,11 @@ const ContractSearchForm = () => {
               />
               <label htmlFor="1year">1년</label>
             </div>
+            {/* 오류 메시지 출력 */}
+            <div className="col-span-3 text-red-500">
+              {errors.startDate && <span>{errors.startDate.message}</span>}
+              {errors.endDate && <span>{errors.endDate.message}</span>}
+            </div>
           </div>
         </div>
         {/* 두 번째 행 */}
@@ -105,6 +158,7 @@ const ContractSearchForm = () => {
           )}
         >
           <div className="font-semibold">계약서 종류</div>
+          {/* Select */}
           <select
             id="contract-type"
             className="p-[10px] border border-[#CCCCCC] rounded-[6px] text-[#6f6f6f] text-[14px]"
@@ -112,11 +166,27 @@ const ContractSearchForm = () => {
           >
             <option value="">선택</option>
             {contractCategory.map((type, index) => (
-              <option value={type} key={`${id}-${index}`}>
+              <option value={type} key={`${useid}-${index}`}>
                 {type}
               </option>
             ))}
           </select>
+          {/* <div className="relative">
+            <Controller
+              name="contractType"
+              control={control}
+              defaultValue="" // 기본값 설정
+              render={({ field }) => (
+                <CustomDropdown
+                  options={contractCategory}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  placeholder="계약서 종류 선택"
+                />
+              )}
+            />
+          </div> */}
           <div className="grid grid-cols-[100px_80px_80px_80px] gap-[20px] font-semibold">
             <div className="min-w-[80px] ml-[20px]">계약서 상태</div>
             <div className="flex gap-[8px] items-center">

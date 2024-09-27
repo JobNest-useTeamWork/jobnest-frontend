@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
 interface EditDeleteProps {

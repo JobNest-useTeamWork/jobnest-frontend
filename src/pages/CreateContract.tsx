@@ -3,28 +3,30 @@ import writingIcon from "../assets/writing.svg";
 import RealEstateSales from "../components/document/realestate/RealEstateSales";
 import { useRef, useState } from "react";
 import Receipt from "../components/document/receipt/Receipt";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import ContractConfirm from "../components/contract/ContractConfirm";
 
 const CreateContract = () => {
+  const { type } = useParams();
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate();
-  const [selectedButton, setSelectedButton] = useState("contract");
-  const selectContractType = (selected: string) => {
-    setSelectedButton(selected);
-    navigate(
-      `/create/${selected}${selected === "confirm" ? `/${selectedPage}` : ""}`
-    );
-  };
 
   const [selectedPage, setSelectedPage] = useState("1");
   const selectConfirmPage = (selected: string) => {
     setSelectedPage(selected);
     navigate(`/create/confirm/${selected}`);
+  };
+
+  const [selectedButton, setSelectedButton] = useState(type);
+  const selectContractType = (selected: string) => {
+    setSelectedButton(selected);
+    navigate(
+      `/create/${selected}${selected === "confirm" ? `/${selectedPage}` : ""}`
+    );
   };
 
   // PDF 출력
@@ -45,7 +47,9 @@ const CreateContract = () => {
     const pdfImageHeight = pdfWidth / imageRatio;
 
     pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfImageHeight);
-    pdf.save("document.pdf");
+    if (selectedButton === "contract") pdf.save("계약서.pdf");
+    else if (selectedButton === "confirm") pdf.save("중개대상물_확인서.pdf");
+    else if (selectedButton === "receipt") pdf.save("영수증.pdf");
   };
 
   // 인쇄 핸들러
@@ -60,13 +64,18 @@ const CreateContract = () => {
 
       // 인쇄 후 원래 페이지로 복구
       document.body.innerHTML = originalContents;
-      window.location.reload(); // 페이지 새로고침을 통해 상태 복구
+      // window.location.reload(); // 페이지 새로고침을 통해 상태 복구
+      window.location.replace(
+        `/create/${selectedButton}${
+          selectedButton === "confirm" ? `/${selectedPage}` : ""
+        }`
+      );
     }
   };
 
   return (
-    <div className="bg-[#F7F8F9] w-full flex justify-center">
-      <div className="p-[24px] flex flex-col gap-[20px] w-[1400px]">
+    <div className="bg-[#F7F8F9] w-full flex justify-center min-h-screen">
+      <div className="p-[24px] flex flex-col gap-[20px] w-[1300px]">
         <div className="flex items-center gap-[8px] text-[20px] font-semibold">
           <img src={writingIcon} alt="계약서 작성 아이콘" />
           <h1>계약서 작성</h1>
@@ -105,10 +114,10 @@ const CreateContract = () => {
             영수증
           </button>
         </div>
-        <div className="flex">
+        <div className="relative">
           <section
             ref={printRef}
-            className="print-container w-[1300px] h-[1800px] mx-auto bg-white p-[50px] w-[1200px] flex flex-col gap-[40px] text-[14px] rounded-[10px] border border-[#CCCCCC] border-opacity-80 relative"
+            className="print-container w-[1300px] min-h-[1800px] mx-auto bg-white p-[50px] w-[1200px] flex flex-col gap-[40px] text-[14px] rounded-[10px] border border-[#CCCCCC] border-opacity-80 relative"
           >
             {/* 머리말 */}
             <div className="print-hidden flex justify-between items-center border-b border-[#CCCCCC] pb-[14px]">
@@ -144,7 +153,7 @@ const CreateContract = () => {
             {selectedButton === "receipt" && <Receipt />}
           </section>
           {selectedButton === "confirm" && (
-            <div className="center-place flex-col self-start mt-[150px] absolute right-[58px]">
+            <div className="center-place flex-col self-start absolute top-[150px] right-[-144px]">
               {["1", "2", "3", "4"].map((page) => (
                 <button
                   className={twMerge(
